@@ -35,13 +35,8 @@ public class AppSpectorPlugin implements MethodCallHandler {
 
     @Override
     public void onMethodCall(MethodCall call, Result result) {
-        Log.d("AppSpectorPlugin", "onMethodCall");
         switch (call.method) {
-            case "getPlatformVersion":
-                result.success("Android " + android.os.Build.VERSION.RELEASE);
-                break;
-
-            case "initSDK":
+            case "run":
                 @SuppressWarnings("unchecked")
                 Map<String, Object> configs = (Map<String, Object>) call.arguments;
                 initAppSpector((String) configs.get("androidApiKey"), (Boolean) configs.get("debugLogging"));
@@ -52,7 +47,6 @@ public class AppSpectorPlugin implements MethodCallHandler {
     }
 
     private void initAppSpector(String apiKey, Boolean enableDebugLogging) {
-        Log.d("AppSpectorPlugin", "initAppSpector");
         AppSpector.build(application)
                 .withDefaultMonitors()
                 .run(apiKey);

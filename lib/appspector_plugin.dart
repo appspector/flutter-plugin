@@ -11,7 +11,7 @@ class AppSpectorPlugin {
     return version;
   }
 
-  static Future<void> init(Map<String, Object> configs) async {
-    await _channel.invokeMethod('initSDK', configs);
+  static Future<void> run(Map<String, Object> configs) async {
+    await _channel.invokeMethod('run', configs);
   }
 }

@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       "iosApiKey": "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2",
       "debugLogging": true
     };
-    await AppSpectorPlugin.init(configs);
+    await AppSpectorPlugin.run(configs);
   }
 
   @override
