@@ -1,6 +1,7 @@
 package com.appspector.flutter.plugin;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.appspector.sdk.AppSpector;
 import com.appspector.sdk.core.util.AppspectorLogger;
@@ -34,6 +35,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
 
     @Override
     public void onMethodCall(MethodCall call, Result result) {
+        Log.d("AppSpectorPlugin", "onMethodCall");
         switch (call.method) {
             case "getPlatformVersion":
                 result.success("Android " + android.os.Build.VERSION.RELEASE);
@@ -41,18 +43,21 @@ public class AppSpectorPlugin implements MethodCallHandler {
 
             case "initSDK":
                 @SuppressWarnings("unchecked")
-                Map<String, String> configs = (Map<String, String>) call.arguments;
-                initAppSpector(configs.get("androidApiKey"));
+                Map<String, Object> configs = (Map<String, Object>) call.arguments;
+                initAppSpector((String) configs.get("androidApiKey"), (Boolean) configs.get("debugLogging"));
                 break;
             default:
                 result.notImplemented();
         }
     }
 
-    private void initAppSpector(String apiKey) {
+    private void initAppSpector(String apiKey, Boolean enableDebugLogging) {
+        Log.d("AppSpectorPlugin", "initAppSpector");
         AppSpector.build(application)
                 .withDefaultMonitors()
                 .run(apiKey);
-        AppspectorLogger.AndroidLogger.enableDebugLogging(false);
+        if (enableDebugLogging != null) {
+            AppspectorLogger.AndroidLogger.enableDebugLogging(enableDebugLogging);
+        }
     }
 }

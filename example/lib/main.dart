@@ -1,8 +1,12 @@
 import 'dart:async';
 
 import 'package:appspector_plugin/appspector_plugin.dart';
+import 'package:appspector_plugin_example/color.dart';
+import 'package:appspector_plugin_example/http_page.dart';
+import 'package:appspector_plugin_example/main_page.dart';
+import 'package:appspector_plugin_example/routes.dart';
+import 'package:appspector_plugin_example/sqlite_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
 
   @override
   void initState() {
@@ -22,29 +25,34 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    Map<String, String> configs = {
+    Map<String, Object> configs = {
       "androidApiKey": "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz",
       "iosApiKey": "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2",
+      "debugLogging": true
     };
     await AppSpectorPlugin.init(configs);
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('AppSpector plugin sample app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+      title: 'AppSpector plugin sample app',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
+        // counter didn't reset back to zero; the application is not restarted.
+          primarySwatch: appSpectorPrimary,
+          accentColor: appSpectorAccent),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        Routes.SQLiteMonitorPage: (BuildContext context) => SQLitePage(),
+        Routes.HttpMonitorPage: (BuildContext context) => HttpMonitorPage(),
+      },
     );
   }
 }
