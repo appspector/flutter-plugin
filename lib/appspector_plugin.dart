@@ -10,4 +10,8 @@ class AppSpectorPlugin {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
+  static Future<void> init(Map<String, String> configs) async {
+    await _channel.invokeMethod('initSDK', configs);
+  }
 }

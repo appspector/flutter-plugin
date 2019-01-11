@@ -1,4 +1,4 @@
-group 'com.appspector.flutter.appspectorplugin'
+group 'com.appspector.flutter.plugin'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -14,15 +14,14 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
-        google()
-        jcenter()
+        mavenLocal()
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
@@ -31,4 +30,8 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    implementation "com.appspector:android-sdk:1.0.10-SNAPSHOT"
 }
