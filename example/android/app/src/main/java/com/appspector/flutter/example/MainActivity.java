@@ -1,4 +1,4 @@
-package com.appspector.flutter.appspectorpluginexample;
+package com.appspector.flutter.example;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

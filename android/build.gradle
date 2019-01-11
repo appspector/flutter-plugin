@@ -1,4 +1,4 @@
-group 'com.appspector.flutter.appspectorplugin'
+group 'com.appspector.flutter'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -8,21 +8,20 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
 rootProject.allprojects {
     repositories {
-        google()
-        jcenter()
+        maven { url "https://maven.appspector.com/artifactory/android-sdk" }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
@@ -31,4 +30,8 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    implementation "com.appspector:android-sdk:1.0.9"
 }
