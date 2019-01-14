@@ -25,12 +25,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    Map<String, Object> configs = {
-      "androidApiKey": "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz",
-      "iosApiKey": "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2",
-      "debugLogging": true
-    };
-    await AppSpectorPlugin.run(configs);
+    var config = new Config();
+    config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
+    config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
+    await AppSpectorPlugin.run(config);
   }
 
   @override

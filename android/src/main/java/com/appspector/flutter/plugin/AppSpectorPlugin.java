@@ -39,7 +39,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
             case "run":
                 @SuppressWarnings("unchecked")
                 Map<String, Object> configs = (Map<String, Object>) call.arguments;
-                initAppSpector((String) configs.get("androidApiKey"), (Boolean) configs.get("debugLogging"));
+                initAppSpector((String) configs.get("apiKey"), (Boolean) configs.get("debugLogging"));
                 break;
             default:
                 result.notImplemented();
