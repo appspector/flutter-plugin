@@ -1,14 +1,42 @@
-# appspector_plugin
+# ![AppSpector](https://github.com/appspector/ios-sdk/raw/master/github-cover.png)
 
-A AppSpector Flutter plugin.
+With AppSpector you can remotely debug your app running in the same room or on another continent. 
+You can measure app performance, view database content, logs, network requests and many more in realtime. 
+This is the instrument that you've been looking for. Don't limit yourself only to simple logs. 
+Debugging doesn't have to be painful!
 
-## Getting Started
+# Installation
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.io/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Each app you want to use with AppSpector SDK you have to register on the web (https://app.appspector.com)
+and add two native applications(for iOS and Android). Application API keys will be available on 
+the app settings page.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Add AppSpector SDK to pubspec.yaml
+```yaml
+dependencies:
+  appspector_plugin: '0.0.1'
+```
+
+## Initialize AppSpector SDK
+```dart
+void main() {
+  runAppSpector();
+  runApp(MyApp());
+}
+
+Future<void> runAppSpector() async {
+  var config = new Config();
+  config.iosApiKey = "Your iOS API_KEY";
+  config.androidApiKey = "Your Android API_KEY";
+  await AppSpectorPlugin.run(config);
+}
+```
+
+## Build and Run
+Build your project and see everything work! When your app is up and running you can go 
+to https://app.appspector.com and connect to your application session.
+
+# Features
+
+AppSpector provides many monitors that are can be different for both platforms.
+For mode details, you can visit [AppSpector SDK](https://github.com/appspector/android-sdk/) and [iOS SDK](https://github.com/appspector/ios-sdk) pages.

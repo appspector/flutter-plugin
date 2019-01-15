@@ -8,7 +8,17 @@ import 'package:appspector_plugin_example/routes.dart';
 import 'package:appspector_plugin_example/sqlite_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runAppSpector();
+  runApp(MyApp());
+}
+
+Future<void> runAppSpector() async {
+  var config = new Config();
+  config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
+  config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
+  await AppSpectorPlugin.run(config);
+}
 
 class MyApp extends StatefulWidget {
 
@@ -17,19 +27,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    var config = new Config();
-    config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
-    config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
-    await AppSpectorPlugin.run(config);
-  }
 
   @override
   Widget build(BuildContext context) {
