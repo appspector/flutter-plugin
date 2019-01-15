@@ -1,6 +1,6 @@
-# appspector_plugin
+# AppSpector
 
-A plugin that integrate AppSpector to Flutter project.
+A plugin that integrate AppSpector to your Flutter project.
 
 With AppSpector you can remotely debug your app running in the same room or on another continent. 
 You can measure app performance, view database content, logs, network requests and many more in realtime. 
@@ -16,7 +16,7 @@ the app settings page.
 ## Add AppSpector SDK to pubspec.yaml
 ```yaml
 dependencies:
-  appspector_plugin: '0.0.1'
+  appspector: '0.0.1'
 ```
 
 ## Initialize AppSpector SDK
@@ -26,11 +26,11 @@ void main() {
   runApp(MyApp());
 }
 
-Future<void> runAppSpector() async {
+void runAppSpector() {
   var config = new Config();
   config.iosApiKey = "Your iOS API_KEY";
   config.androidApiKey = "Your Android API_KEY";
-  await AppSpectorPlugin.run(config);
+  AppSpectorPlugin.run(config);
 }
 ```
 
@@ -41,4 +41,4 @@ to https://app.appspector.com and connect to your application session.
 # Features
 
 AppSpector provides many monitors that are can be different for both platforms.
-For mode details, you can visit [AppSpector SDK](https://github.com/appspector/android-sdk/) and [iOS SDK](https://github.com/appspector/ios-sdk) pages.
+For mode details, you can visit [Android SDK](https://github.com/appspector/android-sdk/) and [iOS SDK](https://github.com/appspector/ios-sdk) pages.

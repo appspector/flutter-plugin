@@ -1,4 +1,4 @@
-group 'com.appspector.flutter.plugin'
+group 'com.appspector.flutter'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -14,7 +14,7 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
-        mavenLocal()
+        maven { url "https://maven.appspector.com/artifactory/android-sdk" }
     }
 }
 
@@ -33,5 +33,5 @@ android {
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.0.10-SNAPSHOT"
+    implementation "com.appspector:android-sdk:1.0.9"
 }

@@ -1,9 +1,9 @@
-import 'package:appspector_plugin/appspector_plugin.dart';
-import 'package:appspector_plugin_example/color.dart';
-import 'package:appspector_plugin_example/http_page.dart';
-import 'package:appspector_plugin_example/main_page.dart';
-import 'package:appspector_plugin_example/routes.dart';
-import 'package:appspector_plugin_example/sqlite_page.dart';
+import 'package:appspector/appspector.dart';
+import 'color.dart';
+import 'http_page.dart';
+import 'main_page.dart';
+import 'routes.dart';
+import 'sqlite_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

@@ -1,4 +1,4 @@
-package com.appspector.flutter.plugin;
+package com.appspector.flutter;
 
 import android.app.Application;
 import android.util.Log;
