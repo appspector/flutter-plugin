@@ -1,4 +1,6 @@
-# ![AppSpector](https://github.com/appspector/ios-sdk/raw/master/github-cover.png)
+# appspector_plugin
+
+A plugin that integrate AppSpector to Flutter project.
 
 With AppSpector you can remotely debug your app running in the same room or on another continent. 
 You can measure app performance, view database content, logs, network requests and many more in realtime. 

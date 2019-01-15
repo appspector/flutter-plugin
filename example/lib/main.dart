@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:appspector_plugin/appspector_plugin.dart';
 import 'package:appspector_plugin_example/color.dart';
 import 'package:appspector_plugin_example/http_page.dart';
@@ -13,11 +11,11 @@ void main() {
   runApp(MyApp());
 }
 
-Future<void> runAppSpector() async {
+void runAppSpector() {
   var config = new Config();
   config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
   config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
-  await AppSpectorPlugin.run(config);
+  AppSpectorPlugin.run(config);
 }
 
 class MyApp extends StatefulWidget {
