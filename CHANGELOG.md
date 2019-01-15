@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.0.1 - 20 Jan 2018
 
-* TODO: Describe initial release.
+* Initial release with base initialization of AppSpector
