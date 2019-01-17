@@ -1,10 +1,10 @@
 package com.appspector.flutter;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.appspector.sdk.AppSpector;
 import com.appspector.sdk.core.util.AppspectorLogger;
+import com.appspector.sdk.monitors.http.HttpMonitor;
 
 import java.util.Map;
 
@@ -49,6 +49,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
     private void initAppSpector(String apiKey, Boolean enableDebugLogging) {
         AppSpector.build(application)
                 .withDefaultMonitors()
+                .removeMonitor(HttpMonitor.class)
                 .run(apiKey);
         if (enableDebugLogging != null) {
             AppspectorLogger.AndroidLogger.enableDebugLogging(enableDebugLogging);

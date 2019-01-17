@@ -14,8 +14,9 @@
   if ([@"run" isEqualToString:call.method]) {
     NSDictionary *args = (NSDictionary*)call.arguments;
     NSString *apiKey = (NSString*)args[@"apiKey"];
-
-    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey];
+    NSSet *monitorIDs = [NSSet setWithObjects:AS_LOG_MONITOR, AS_SCREENSHOT_MONITOR, AS_SQLITE_MONITOR, AS_LOCATION_MONITOR, AS_ENVIRONMENT_MONITOR, AS_NOTIFICATION_MONITOR, AS_ANALYTICS_MONITOR, nil];
+    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIDs];
+      
 
     [config setValue:@YES forKey:@"extendedDebug"];
     [config setValue:@YES forKey:@"verbose"];
