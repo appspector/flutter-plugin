@@ -1,6 +1,6 @@
 # AppSpector
 
-A plugin that integrate AppSpector to your Flutter project.
+A plugin that integrate [AppSpector](https://appspector.com/?utm_source=flutter_readme) to your Flutter project.
 
 With AppSpector you can remotely debug your app running in the same room or on another continent. 
 You can measure app performance, view database content, logs, network requests and many more in realtime. 
@@ -36,7 +36,7 @@ void runAppSpector() {
 ```
 
 ## Build and Run
-Build your project and see everything work! When your app is up and running you can go to [https://app.appspector.com](https://app.appspector.com?utm_source=flutter_readme) and connect to your application session.
+Build your project and see everything work! When your app is up and running you can go to [https://app.appspector.com](https://app.appspector.com/?utm_source=flutter_readme) and connect to your application session.
 
 
 # Features
