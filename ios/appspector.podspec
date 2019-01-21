@@ -15,7 +15,7 @@ AppSpector SDK
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'AppSpectorSDK'
+  s.dependency 'AppSpectorSDK', '1.1.6'
 
   s.ios.deployment_target = '8.0'
 end

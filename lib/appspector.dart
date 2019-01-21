@@ -1,6 +1,9 @@
 import 'dart:io' show Platform;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 /// This class needed to aggregate AppSpector properties and arguments.
 class Config {
@@ -48,6 +51,8 @@ class AppSpectorPlugin {
 
   /// Method for starting AppSpector with supplied configs
   static run(Config config) {
+    _initCallHandler();
+
     if (Platform.isAndroid) {
       ArgumentError.checkNotNull(config.androidApiKey, "androidApiKey");
       _initAppSpector(config.androidApiKey);
@@ -62,5 +67,32 @@ class AppSpectorPlugin {
   static _initAppSpector(apiKey) async {
     var configMap = {"apiKey": apiKey};
     await _channel.invokeMethod('run', configMap);
+  }
+
+  static _initCallHandler() {
+    _channel.setMethodCallHandler(_handler);
+  }
+
+  static Future<dynamic> _handler(MethodCall call) async {
+    switch (call.method) {
+      case "take_screenshot":
+        return _takeScreenshot(
+            call.arguments["max_width"], call.arguments["quality"]);
+      default:
+      //todo
+    }
+  }
+
+  static Future<Uint8List> _takeScreenshot(int maxWidth, int quality) async {
+    var renderViewElement =
+        WidgetsFlutterBinding.ensureInitialized().renderViewElement;
+    var renderObject = renderViewElement.findRenderObject();
+    var ratio = maxWidth / renderObject.paintBounds.width;
+
+    var image = await renderObject.layer.toImage(renderObject.paintBounds,
+        pixelRatio: ratio > 1.0 ? 1.0 : ratio);
+
+    var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    return byteData.buffer.asUint8List();
   }
 }
