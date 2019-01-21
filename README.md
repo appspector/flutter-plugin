@@ -7,8 +7,7 @@ You can measure app performance, view database content, logs, network requests a
 This is the instrument that you've been looking for. Don't limit yourself only to simple logs. 
 Debugging doesn't have to be painful!
 
-![AppSpector demonstration](static/appspector_demo.gif)
-
+<img src="https://github.com/appspector/appspector-flutter/raw/master/static/appspector_demo.gif" width="700px" alt="AppSpector demonstration" />
 
 # Installation
 
@@ -17,7 +16,7 @@ Each app you want to use with AppSpector SDK you have to register on the web ([h
 ## Add AppSpector SDK to pubspec.yaml
 ```yaml
 dependencies:
-  appspector: '0.0.1'
+  appspector: '0.0.2
 ```
 
 ## Initialize AppSpector SDK
