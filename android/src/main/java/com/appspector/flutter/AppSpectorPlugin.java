@@ -2,9 +2,10 @@ package com.appspector.flutter;
 
 import android.app.Application;
 
+import com.appspector.flutter.screenshot.FlutterScreenshotFactory;
 import com.appspector.sdk.AppSpector;
-import com.appspector.sdk.core.util.AppspectorLogger;
 import com.appspector.sdk.monitors.http.HttpMonitor;
+import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
 
 import java.util.Map;
 
@@ -19,10 +20,12 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  */
 public class AppSpectorPlugin implements MethodCallHandler {
 
-    private Application application;
+    private final Application application;
+    private final MethodChannel channel;
 
-    private AppSpectorPlugin(Application application) {
+    private AppSpectorPlugin(Application application, MethodChannel channel) {
         this.application = application;
+        this.channel = channel;
     }
 
     /**
@@ -30,7 +33,10 @@ public class AppSpectorPlugin implements MethodCallHandler {
      */
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "appspector_plugin");
-        channel.setMethodCallHandler(new AppSpectorPlugin((Application) registrar.context().getApplicationContext()));
+        channel.setMethodCallHandler(new AppSpectorPlugin(
+                (Application) registrar.context().getApplicationContext(),
+                channel
+        ));
     }
 
     @Override
@@ -49,6 +55,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
     private void initAppSpector(String apiKey) {
         AppSpector.build(application)
                 .withDefaultMonitors()
+                .addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(channel)))
                 .removeMonitor(HttpMonitor.class)
                 .run(apiKey);
     }
