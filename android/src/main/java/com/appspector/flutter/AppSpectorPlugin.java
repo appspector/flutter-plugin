@@ -1,13 +1,10 @@
 package com.appspector.flutter;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.appspector.flutter.http.FlutterHttpTracker;
 import com.appspector.flutter.screenshot.FlutterScreenshotFactory;
 import com.appspector.sdk.AppSpector;
-import com.appspector.sdk.core.util.AppspectorLogger;
-import com.appspector.sdk.monitors.http.HttpMonitor;
 import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
 
 import java.util.Map;
@@ -70,6 +67,5 @@ public class AppSpectorPlugin implements MethodCallHandler {
                 .withDefaultMonitors()
                 .addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(channel)))
                 .run(apiKey);
-//        AppspectorLogger.AndroidLogger.enableDebugLogging(true);
     }
 }
