@@ -1,6 +1,8 @@
 import 'package:appspector/appspector.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+
 void main() {
   runAppSpector();
   runApp(MyApp());
@@ -65,6 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+    _executeHttpCall();
+  }
+
+  void _executeHttpCall() {
+    print("Strat HTTP GET request");
+    http.get("https://techery.io").then((response) {
+      print("HTTP response recived  :: $response");
     });
   }
 

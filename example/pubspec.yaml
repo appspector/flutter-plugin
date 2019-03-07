@@ -10,6 +10,7 @@ dependencies:
     sdk: flutter
   appspector:
     path: ../
+  http: ^0.12.0+1
 
 flutter:
   uses-material-design: true
