@@ -8,13 +8,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 
 rootProject.allprojects {
     repositories {
-        maven { url "https://maven.appspector.com/artifactory/android-sdk" }
+        maven { url "https://maven.appspector.com/artifactory/android-sdk-beta" }
     }
 }
 
@@ -33,5 +33,5 @@ android {
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.0.10"
+    implementation "com.appspector:android-sdk:1.1.0-SNAPSHOT"
 }
