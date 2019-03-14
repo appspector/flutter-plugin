@@ -2,12 +2,12 @@ package com.appspector.flutter;
 
 import android.app.Application;
 
-import com.appspector.flutter.http.FlutterHttpTracker;
+import com.appspector.flutter.event.EventReceiver;
+import com.appspector.flutter.event.http.HttpRequestEvent;
+import com.appspector.flutter.event.http.HttpResponseEvent;
 import com.appspector.flutter.screenshot.FlutterScreenshotFactory;
 import com.appspector.sdk.AppSpector;
 import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
-
-import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -21,13 +21,22 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class AppSpectorPlugin implements MethodCallHandler {
 
     private final Application application;
-    private final MethodChannel channel;
-    private final FlutterHttpTracker httpTracker;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final EventReceiver eventReceiver;
+    private final RequestSender requestSender;
 
-    private AppSpectorPlugin(Application application, MethodChannel channel) {
+    private AppSpectorPlugin(Application application,
+                             EventReceiver eventReceiver,
+                             RequestSender requestSender) {
         this.application = application;
-        this.channel = channel;
-        this.httpTracker = new FlutterHttpTracker();
+        this.eventReceiver = eventReceiver;
+        this.requestSender = requestSender;
+        registerEvents(eventReceiver);
+    }
+
+    private void registerEvents(EventReceiver dispatcher) {
+        dispatcher.registerEvent(new HttpRequestEvent());
+        dispatcher.registerEvent(new HttpResponseEvent());
     }
 
     /**
@@ -35,9 +44,13 @@ public class AppSpectorPlugin implements MethodCallHandler {
      */
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "appspector_plugin");
+        final MethodChannel eventChannel = new MethodChannel(registrar.messenger(), "appspector_event_channel");
+        final MethodChannel requestChannel = new MethodChannel(registrar.messenger(), "appspector_request_channel");
+
         channel.setMethodCallHandler(new AppSpectorPlugin(
                 (Application) registrar.context().getApplicationContext(),
-                channel
+                new EventReceiver(eventChannel),
+                new RequestSender(requestChannel)
         ));
     }
 
@@ -46,16 +59,8 @@ public class AppSpectorPlugin implements MethodCallHandler {
     public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
             case "run":
-                Map<String, Object> configs = (Map<String, Object>) call.arguments;
-                initAppSpector((String) configs.get("apiKey"));
-                break;
-            case "trackHttpResponse":
-                Map<String, Object> responseData = (Map<String, Object>) call.arguments;
-                httpTracker.trackResponse(responseData);
-                break;
-            case "trackHttpRequest":
-                Map<String, Object> requestData = (Map<String, Object>) call.arguments;
-                httpTracker.trackRequest(requestData);
+                initAppSpector((String) call.argument("apiKey"));
+                result.success(null);
                 break;
             default:
                 result.notImplemented();
@@ -65,7 +70,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
     private void initAppSpector(String apiKey) {
         AppSpector.build(application)
                 .withDefaultMonitors()
-                .addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(channel)))
+                .addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(requestSender)))
                 .run(apiKey);
     }
 }
