@@ -1,13 +1,8 @@
-import 'dart:async' show Future;
 import 'dart:io' show Platform, HttpOverrides;
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
-import 'package:appspector/src/method_call.dart';
 import 'package:appspector/src/http/http_overrides.dart';
-import 'package:appspector/src/method_channel_holder.dart';
-import 'package:flutter/services.dart' as services;
-import 'package:flutter/widgets.dart';
+import 'package:appspector/src/request_receiver.dart';
+import 'package:flutter/services.dart' show MethodChannel;
 
 /// This class needed to aggregate AppSpector properties and arguments.
 class Config {
@@ -50,58 +45,26 @@ class Config {
 /// </pre></p>
 /// <p>For more information visit the <a href="https://docs.appspector.com">AppSpector Page</a>.</p>
 class AppSpectorPlugin {
+  static const MethodChannel _channel =
+      const MethodChannel('appspector_plugin');
+  static final RequestReceiver _requestReceiver = new RequestReceiver();
 
   /// Method for starting AppSpector with supplied configs
-  static run(Config config) {
+  static Future<dynamic> run(Config config) {
     HttpOverrides.global = AppSpectorHttpOverrides();
-    MethodChannelHolder.setMethodCallHandler(_handler);
+    _requestReceiver.observeChannel();
 
     if (Platform.isAndroid) {
       ArgumentError.checkNotNull(config.androidApiKey, "androidApiKey");
-      _initAppSpector(config.androidApiKey);
+      return _initAppSpector(config.androidApiKey);
     } else if (Platform.isIOS) {
       ArgumentError.checkNotNull(config.iosApiKey, "iosApiKey");
-      _initAppSpector(config.iosApiKey);
+      return _initAppSpector(config.iosApiKey);
     } else {
-      print("AppSpector doesn't support currect platform");
+      return Future.error("AppSpector doesn't support currect platform");
     }
   }
 
   static _initAppSpector(String apiKey) =>
-      MethodChannelHolder.invokeMethod(_InitSdkMethodCall(apiKey));
-
-  static Future<dynamic> _handler(services.MethodCall call) async {
-    switch (call.method) {
-      case "take_screenshot":
-        return _takeScreenshot(
-            call.arguments["max_width"], call.arguments["quality"]);
-      default:
-      //todo
-    }
-  }
-
-  static Future<Uint8List> _takeScreenshot(int maxWidth, int quality) async {
-    var renderViewElement =
-        WidgetsFlutterBinding.ensureInitialized().renderViewElement;
-    var renderObject = renderViewElement.findRenderObject();
-    var ratio = maxWidth / renderObject.paintBounds.width;
-
-    var image = await renderObject.layer.toImage(renderObject.paintBounds,
-        pixelRatio: ratio > 1.0 ? 1.0 : ratio);
-
-    var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    return byteData.buffer.asUint8List();
-  }
-}
-
-class _InitSdkMethodCall extends MethodCall {
-  final String _apiKey;
-
-  _InitSdkMethodCall(this._apiKey);
-
-  @override
-  String get name => "run";
-
-  @override
-  Map<String, dynamic> get arguments => {"apiKey": _apiKey};
+      _channel.invokeMethod("run", {"apiKey": apiKey});
 }

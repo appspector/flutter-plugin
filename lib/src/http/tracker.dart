@@ -1,8 +1,8 @@
 import 'dart:io' show HttpHeaders;
 import 'dart:typed_data' show Uint8List;
 
-import 'package:appspector/src/http/method_calls.dart';
-import 'package:appspector/src/method_channel_holder.dart';
+import 'package:appspector/src/event_sender.dart' show EventSender;
+import 'package:appspector/src/http/events.dart';
 
 class HttpEventTracker {
   final String _url;
@@ -24,7 +24,7 @@ class HttpEventTracker {
   void onError(Exception e) {
     _sendRequestEvent({});
 
-    MethodChannelHolder.invokeMethod(new TrackHttpResponseMethodCall(
+    EventSender.sendEvent(new HttpResponseEvent(
         _uid, _calcDurationTime(), 0, {}, e.toString(), null));
   }
 
@@ -36,19 +36,14 @@ class HttpEventTracker {
       _sendRequestEvent(_headersToMap(headers));
 
   void _sendRequestEvent(Map<String, String> headers) {
-    MethodChannelHolder.invokeMethod(
-        new TrackHttpRequestMethodCall(_uid, _url, _method, headers, data));
+    EventSender.sendEvent(
+        new HttpRequestEvent(_uid, _url, _method, headers, data));
   }
 
   void sendSuccessResponse(
       int statusCode, HttpHeaders headers, List<int> data) {
-    MethodChannelHolder.invokeMethod(new TrackHttpResponseMethodCall(
-        _uid,
-        _calcDurationTime(),
-        statusCode,
-        _headersToMap(headers),
-        null,
-        Uint8List.fromList(data)));
+    EventSender.sendEvent(new HttpResponseEvent(_uid, _calcDurationTime(),
+        statusCode, _headersToMap(headers), null, Uint8List.fromList(data)));
   }
 
   int _calcDurationTime() {

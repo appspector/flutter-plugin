@@ -1,18 +1,17 @@
 package com.appspector.flutter.screenshot;
 
+import com.appspector.flutter.RequestSender;
 import com.appspector.sdk.monitors.screenshot.ScreenshotCallback;
 import com.appspector.sdk.monitors.screenshot.ScreenshotFactory;
 
 import java.util.HashMap;
 
-import io.flutter.plugin.common.MethodChannel;
-
 public class FlutterScreenshotFactory implements ScreenshotFactory {
 
-    private final MethodChannel methodChannel;
+    private final RequestSender requestSender;
 
-    public FlutterScreenshotFactory(MethodChannel methodChannel) {
-        this.methodChannel = methodChannel;
+    public FlutterScreenshotFactory(RequestSender requestSender) {
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -20,20 +19,15 @@ public class FlutterScreenshotFactory implements ScreenshotFactory {
         final HashMap<String, Integer> args = new HashMap<>();
         args.put("max_width", maxWidth);
         args.put("quality", quality);
-        methodChannel.invokeMethod("take_screenshot", args, new MethodChannel.Result() {
+        requestSender.executeRequest("take_screenshot", args, new RequestSender.ResponseCallback() {
             @Override
-            public void success(Object o) {
-                screenshotCallback.onSuccess((byte[]) o);
+            public void onSuccess(Object result) {
+                screenshotCallback.onSuccess((byte[]) result);
             }
 
             @Override
-            public void error(String s, String s1, Object o) {
-                screenshotCallback.onError(s + " " + s1);
-            }
-
-            @Override
-            public void notImplemented() {
-                screenshotCallback.onError("take_screenshot method is not implemented");
+            public void onError(String message) {
+                screenshotCallback.onError(message);
             }
         });
     }

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:appspector/src/method_call.dart';
+import 'package:appspector/src/event_sender.dart' show Event;
 
-class TrackHttpResponseMethodCall extends MethodCall {
+class HttpResponseEvent extends Event {
   final String uid;
   final int timeMs;
   final int code;
@@ -10,11 +10,11 @@ class TrackHttpResponseMethodCall extends MethodCall {
   final String error;
   final Uint8List body;
 
-  TrackHttpResponseMethodCall(
+  HttpResponseEvent(
       this.uid, this.timeMs, this.code, this.headers, this.error, this.body);
 
   @override
-  String get name => "trackHttpResponse";
+  String get name => "http-response";
 
   @override
   Map<String, dynamic> get arguments => {
@@ -27,7 +27,7 @@ class TrackHttpResponseMethodCall extends MethodCall {
       };
 }
 
-class TrackHttpRequestMethodCall extends MethodCall {
+class HttpRequestEvent extends Event {
   final String uid;
   final String url;
   final String method;
@@ -35,10 +35,9 @@ class TrackHttpRequestMethodCall extends MethodCall {
   final Uint8List body;
 
   @override
-  String get name => "trackHttpRequest";
+  String get name => "http-request";
 
-  TrackHttpRequestMethodCall(
-      this.uid, this.url, this.method, this.headers, this.body);
+  HttpRequestEvent(this.uid, this.url, this.method, this.headers, this.body);
 
   @override
   Map<String, dynamic> get arguments => {
