@@ -6,10 +6,16 @@ import 'http_page.dart';
 import 'main_page.dart';
 import 'routes.dart';
 import 'sqlite_page.dart';
+import 'package:logging/logging.dart' as logger;
 
 void main() {
   runAppSpector();
   runApp(MyApp());
+  logger.Logger.root.level = logger.Level.ALL;
+  logger.Logger.root.onRecord.listen((logger.LogRecord rec) {
+    Logger.log(LogLevel.DEBUG, rec.loggerName, "(${rec.level.name}) ${rec.message}");
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
 }
 
 void runAppSpector() {

@@ -1,12 +1,12 @@
 package com.appspector.flutter.event.http;
 
-import com.appspector.flutter.event.Event;
+import com.appspector.flutter.event.EventHandler;
 
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 
-public final class HttpResponseEvent extends Event {
+public final class HttpResponseEventHandler extends EventHandler {
 
     @Override
     public String eventName() {
@@ -15,7 +15,7 @@ public final class HttpResponseEvent extends Event {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void track(MethodCall call) {
+    public void handle(MethodCall call) {
         final Map<String, Object> responseData = (Map<String, Object>) call.arguments;
         FlutterHttpTracker.trackResponse(responseData);
     }

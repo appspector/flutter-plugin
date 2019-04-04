@@ -1,7 +1,5 @@
 package com.appspector.flutter.event;
 
-import android.util.Log;
-
 import com.appspector.sdk.core.util.AppspectorLogger;
 
 import java.util.HashMap;
@@ -18,10 +16,10 @@ public final class EventReceiver {
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final MethodChannel methodChannel;
-    private final Map<String, Event> registeredEvents = new HashMap<>();
+    private final Map<String, EventHandler> registeredEvents = new HashMap<>();
 
     public EventReceiver(MethodChannel eventMethodChannel) {
-        eventMethodChannel.setMethodCallHandler(new EventHandler());
+        eventMethodChannel.setMethodCallHandler(new InternalMethodCallHandler());
         this.methodChannel = eventMethodChannel;
     }
 
@@ -29,19 +27,19 @@ public final class EventReceiver {
      * Registration of Sdk Method. In case when sdk method with the same name is already
      * registered at current dispatcher method will throw IllegalStateException
      *
-     * @param event is Sdk Method what should be registered
+     * @param eventHandler is Sdk Method what should be registered
      */
-    public void registerEvent(Event event) {
-        if (registeredEvents.containsKey(event.eventName())) {
+    public void registerEventHandler(EventHandler eventHandler) {
+        if (registeredEvents.containsKey(eventHandler.eventName())) {
             throw new IllegalStateException("Action with same method name (%s) is already registered");
         }
-        registeredEvents.put(event.eventName(), event);
+        registeredEvents.put(eventHandler.eventName(), eventHandler);
     }
 
     private void handleEvent(MethodCall call, MethodChannel.Result result) {
-        final Event action = registeredEvents.get(call.method);
+        final EventHandler action = registeredEvents.get(call.method);
         if (action != null) {
-            action.track(call);
+            action.handle(call);
             result.success(null);
             return;
         }
@@ -49,7 +47,7 @@ public final class EventReceiver {
         result.notImplemented();
     }
 
-    private class EventHandler implements MethodChannel.MethodCallHandler {
+    private class InternalMethodCallHandler implements MethodChannel.MethodCallHandler {
 
         @Override
         public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
