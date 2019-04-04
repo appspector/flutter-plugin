@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart' as logger;
+import 'package:appspector/appspector.dart' show Logger;
+
 import 'app_drawer.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -20,6 +23,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final logger.Logger log = new logger.Logger('MyHomePageState');
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -33,6 +38,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     debugPrint("Button IncrementCounter was clicked");
+    log.fine("Button IncrementCounter was clicked");
+  }
+
+  void _clickLogErrorButton() {
+    try {
+      _throwError();
+    } catch (error, stackTrace) {
+      log.finer("TAG _clickLogErrorButton log.finer", error, stackTrace);
+      Logger.d("TAG", "_clickLogErrorButton Logger.d", error, stackTrace);
+    }
+  }
+
+  void _throwError() {
+    throw Error();
   }
 
   @override
@@ -75,6 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
+            ),
+            FlatButton(
+              child: Text('Click here to log error'),
+              onPressed: _clickLogErrorButton,
             ),
           ],
         ),
