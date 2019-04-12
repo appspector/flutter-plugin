@@ -24,7 +24,7 @@ static ASPluginMethodName * const kResponseMethodName   = @"http-response";
 
 - (BOOL)argumentsValid:(ASPluginMethodArgumentsList *)arguments
                   call:(ASPluginMethodName *)methodName
-          errorMessage:(__autoreleasing NSString **)errorMessage;
+          errorMessage:(__autoreleasing NSString *_Nonnull*)errorMessage;
 
 
 

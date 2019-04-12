@@ -57,18 +57,22 @@
 
 - (void)handleRequestCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
+    NSData *body = [NSData data];
+    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
+        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
+    }
     NSDictionary *payload = @{ @"uuid"          : arguments[@"uid"],
                                @"url"           : arguments[@"url"],
                                @"method"        : arguments[@"method"],
-                               @"body"          : [(FlutterStandardTypedData *)arguments[@"body"] data],
+                               @"body"          : body,
                                @"hasLargeBody"  : @(NO),
                                @"headers"       : arguments[@"headers"] };
 
     NSLog(@"HTTP request payload: %@", payload);
     
     // Send event
-    //ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-request" payload:payload];
-    //[AppSpector sendEvent:event];
+//    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-request" payload:payload];
+//    [AppSpector sendEvent:event];
     
     result(@"Ok");
 }
