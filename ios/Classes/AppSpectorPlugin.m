@@ -27,12 +27,18 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
     static AppSpectorPlugin *rootPlugin = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        rootPlugin = [[[self class] alloc] init];
-        
-        rootPlugin.callValidator = [ASPluginCallValidator new];
-        rootPlugin.eventsHandler = [[ASPluginEventsHandler alloc] initWithCallValidator:rootPlugin.callValidator];
+        rootPlugin = [[[self class] alloc] initWithCallValidator:[ASPluginCallValidator new]];
     });
     return rootPlugin;
+}
+
+- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator {
+    if (self = [super init]) {
+        _callValidator = validator;
+        _eventsHandler = [[ASPluginEventsHandler alloc] initWithCallValidator:validator];
+    }
+    
+    return self;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
@@ -44,7 +50,7 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    if ([self.callValidator eventMethodSupported:call.method]) {
+    if ([self.callValidator controlMethodSupported:call.method]) {
         // Validate arguments
         NSString *validationErrorMessage = nil;
         if (![self.callValidator argumentsValid:call.arguments
@@ -58,7 +64,6 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
         if ([call.method isEqualToString:kRunMethodName]) {
             [self handleRunCall:call.arguments result:result];
         }
-        
     } else {
         result(FlutterMethodNotImplemented);
     }
