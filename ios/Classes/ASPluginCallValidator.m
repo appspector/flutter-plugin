@@ -54,6 +54,7 @@
         if (![arguments.allKeys containsObject:argName]) {
             isValid = NO;
             *errorMessage = [self errorMessageForMissingArgument:argName inCall:methodName];
+            *stop = YES;
         }
     }];
     

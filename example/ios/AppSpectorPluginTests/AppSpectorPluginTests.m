@@ -10,6 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
+#import <AppSpectorSDK/AppSpector.h>
 #import "AppSpectorPlugin.h"
 
 @interface AppSpectorPluginTests : XCTestCase
@@ -34,12 +35,65 @@
 - (void)testHandlerSupportsRunCall {
     XCTestExpectation *e = [self expectationWithDescription:@""];
     
-    OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:[OCMArg any] call:[OCMArg any] errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
-    
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"apiKey" : @"DEADBEEF" }];
+    OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+
+    id sdkMock = OCMClassMock([AppSpector class]);
+    OCMExpect(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));
+    
     [self.handler handleMethodCall:call result:^(id result) {
         expect(result).equal(@"Ok");
+        OCMVerifyAll(sdkMock);
+        [e fulfill];
+    }];
+    
+    [self waitForExpectations:@[e] timeout:0.1];
+}
+
+- (void)testHandlerValidatesCallArguments {
+    XCTestExpectation *e = [self expectationWithDescription:@""];
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"invalidArg" : @"DEADBEEF" }];
+    
+    OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
+    OCMExpect([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    
+    [self.handler handleMethodCall:call result:^(id result) {
+        OCMVerifyAll(self.validatorMock);
+        [e fulfill];
+    }];
+    
+    [self waitForExpectations:@[e] timeout:0.1];
+}
+
+- (void)testHandlerDoesntPerformCallWithInvalidArgs {
+    XCTestExpectation *e = [self expectationWithDescription:@""];
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"invalidArg" : @"DEADBEEF" }];
+    OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(NO);
+    
+    id sdkMock = OCMClassMock([AppSpector class]);
+    OCMReject(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));
+    
+    [self.handler handleMethodCall:call result:^(id result) {
+        OCMVerifyAll(sdkMock);
+        [e fulfill];
+    }];
+    
+    [self waitForExpectations:@[e] timeout:0.1];
+}
+
+- (void)testHandlerRejectsUnknownCalls {
+    XCTestExpectation *e = [self expectationWithDescription:@""];
+    
+    OCMExpect([self.validatorMock controlMethodSupported:[OCMArg any]]);
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"foo" arguments:@{}];
+    [self.handler handleMethodCall:call result:^(id result) {
+        expect(result).notTo.equal(@"Ok");
+        OCMVerifyAll(self.validatorMock);
         [e fulfill];
     }];
     
