@@ -14,7 +14,7 @@ void main() {
 
 void runAppSpector() {
   var config = new Config();
-  config.iosApiKey = "NGVlZjhjOTUtNDU4My00OWE0LTljODctYTk0NzA4M2U1NjU4";
+  config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
   config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
   AppSpectorPlugin.run(config);
 }
