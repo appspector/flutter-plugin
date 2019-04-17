@@ -3,8 +3,9 @@ package com.appspector.flutter;
 import android.app.Application;
 
 import com.appspector.flutter.event.EventReceiver;
-import com.appspector.flutter.event.http.HttpRequestEvent;
-import com.appspector.flutter.event.http.HttpResponseEvent;
+import com.appspector.flutter.event.http.HttpRequestEventHandler;
+import com.appspector.flutter.event.http.HttpResponseEventHandler;
+import com.appspector.flutter.event.log.LogEventHandler;
 import com.appspector.flutter.screenshot.FlutterScreenshotFactory;
 import com.appspector.sdk.AppSpector;
 import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
@@ -34,9 +35,10 @@ public class AppSpectorPlugin implements MethodCallHandler {
         registerEvents(eventReceiver);
     }
 
-    private void registerEvents(EventReceiver dispatcher) {
-        dispatcher.registerEvent(new HttpRequestEvent());
-        dispatcher.registerEvent(new HttpResponseEvent());
+    private void registerEvents(EventReceiver eventReceiver) {
+        eventReceiver.registerEventHandler(new HttpRequestEventHandler());
+        eventReceiver.registerEventHandler(new HttpResponseEventHandler());
+        eventReceiver.registerEventHandler(new LogEventHandler());
     }
 
     /**

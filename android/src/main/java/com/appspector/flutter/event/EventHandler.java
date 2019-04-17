@@ -4,21 +4,21 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 /**
- * Abstract Event to handle calls from AppSpector Flutter SDK
+ * Abstract EventHandler to handle calls from AppSpector Flutter SDK
  */
-public abstract class Event {
+public abstract class EventHandler {
 
     /**
-     * Event name what uses in Flutter part of SDK
+     * Event identifier what is used in Flutter part of SDK
      *
      * @return event name. Cannot be null
      */
     public abstract String eventName();
 
     /**
-     * Method for dispatching invocation to registered method
+     * Method for handling received event
      *
      * @param call   contains method name and arguments
      */
-    public abstract void track(MethodCall call);
+    public abstract void handle(MethodCall call);
 }
