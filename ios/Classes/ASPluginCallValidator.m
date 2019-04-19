@@ -7,6 +7,11 @@
 
 #import "ASPluginCallValidator.h"
 
+ASPluginMethodName * const kRunMethodName        = @"run";
+ASPluginMethodName * const kHTTPRequestMethodName    = @"http-request";
+ASPluginMethodName * const kHTTPResponseMethodName   = @"http-response";
+ASPluginMethodName * const kLogEventMethodName   = @"log-event";
+
 @interface ASPluginCallValidator ()
 
 @property (strong, nonatomic) NSArray <ASPluginMethodName *> *controlMethodNames;
@@ -20,17 +25,20 @@
 - (instancetype)init {
     if (self = [super init]) {
         _controlMethodNames = @[kRunMethodName];
-        _eventMethodNames = @[kRequestMethodName, kResponseMethodName];
-        _methodParameters = @{ kRequestMethodName   : @[ @"uid",
+        _eventMethodNames = @[kHTTPRequestMethodName, kHTTPResponseMethodName, kLogEventMethodName];
+        _methodParameters = @{ kHTTPRequestMethodName   : @[ @"uid",
                                                          @"url",
                                                          @"method",
                                                          @"body",
                                                          @"headers" ],
-                               kResponseMethodName  : @[ @"uid",
+                               kHTTPResponseMethodName  : @[ @"uid",
                                                          @"code",
                                                          @"body",
                                                          @"headers",
                                                          @"tookMs" ],
+                               kLogEventMethodName : @[@"level",
+                                                       @"tag",
+                                                       @"message"],
                                kRunMethodName       : @[@"apiKey"] };
     }
     

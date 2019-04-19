@@ -41,11 +41,11 @@
         }
         
         // Handle call
-        if ([call.method isEqualToString:kRequestMethodName]) {
+        if ([call.method isEqualToString:kHTTPRequestMethodName]) {
             [self handleRequestCall:call.arguments result:result];
         }
         
-        if ([call.method isEqualToString:kResponseMethodName]) {
+        if ([call.method isEqualToString:kHTTPResponseMethodName]) {
             [self handleResponseCall:call.arguments result:result];
         }
     } else {
@@ -95,5 +95,20 @@
     
     result(@"Ok");
 }
+
+- (void)handleLogEventCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    // Build event payload
+    NSDictionary *payload = @{ @"level"   : arguments[@"level"],
+                               @"message" : arguments[@"message"] };
+    
+    NSLog(@"Log event payload: %@", payload);
+    
+    // Send event
+    //    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_LOG_MONITOR eventID:@"log" payload:payload];
+    //    [AppSpector sendEvent:event];
+    
+    result(@"Ok");
+}
+
 
 @end
