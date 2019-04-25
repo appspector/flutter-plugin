@@ -1,28 +1,78 @@
+//
+//  AppSpectorPlugin.m
+//  appspector
+//
+//  Created by Deszip on 10/04/2019.
+//
+
 #import "AppSpectorPlugin.h"
 #import <AppSpectorSDK/AppSpector.h>
 
+#import "ASPluginEventsHandler.h"
+
+static NSString * const kControlChannelName = @"appspector_plugin";
+static NSString * const kEventChannelName   = @"appspector_event_channel";
+static NSString * const kRequestChannelName = @"appspector_request_channel";
+
+@interface AppSpectorPlugin ()
+
+@property (strong, nonatomic) ASPluginCallValidator *callValidator;
+@property (strong, nonatomic) ASPluginEventsHandler *eventsHandler;
+
+@end
+
 @implementation AppSpectorPlugin
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"appspector_plugin"
-            binaryMessenger:[registrar messenger]];
-  AppSpectorPlugin* instance = [[AppSpectorPlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
+
++ (instancetype)rootPlugin {
+    static AppSpectorPlugin *rootPlugin = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        rootPlugin = [[[self class] alloc] initWithCallValidator:[ASPluginCallValidator new]];
+    });
+    return rootPlugin;
 }
 
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"run" isEqualToString:call.method]) {
-    NSDictionary *args = (NSDictionary*)call.arguments;
-    NSString *apiKey = (NSString*)args[@"apiKey"];
-    NSSet *monitorIDs = [NSSet setWithObjects:AS_LOG_MONITOR, AS_SCREENSHOT_MONITOR, AS_SQLITE_MONITOR, AS_LOCATION_MONITOR, AS_ENVIRONMENT_MONITOR, AS_NOTIFICATION_MONITOR, AS_ANALYTICS_MONITOR, nil];
-    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIDs];
+- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator {
+    if (self = [super init]) {
+        _callValidator = validator;
+        _eventsHandler = [[ASPluginEventsHandler alloc] initWithCallValidator:validator];
+    }
+    
+    return self;
+}
 
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+    FlutterMethodChannel *controlChannel = [FlutterMethodChannel methodChannelWithName:kControlChannelName binaryMessenger:[registrar messenger]];
+    FlutterMethodChannel *eventChannel = [FlutterMethodChannel methodChannelWithName:kEventChannelName binaryMessenger:[registrar messenger]];
+    
+    [registrar addMethodCallDelegate:[AppSpectorPlugin rootPlugin] channel:controlChannel];
+    [registrar addMethodCallDelegate:[[AppSpectorPlugin rootPlugin] eventsHandler] channel:eventChannel];
+}
+
+- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
+    if ([self.callValidator controlMethodSupported:call.method]) {
+        // Validate arguments
+        NSString *validationErrorMessage = nil;
+        if (![self.callValidator argumentsValid:call.arguments
+                                           call:call.method
+                                   errorMessage:&validationErrorMessage]) {
+            result(validationErrorMessage);
+            return;
+        }
+        
+        // Handle call
+        if ([call.method isEqualToString:kRunMethodName]) {
+            [self handleRunCall:call.arguments result:result];
+        }
+    } else {
+        result(FlutterMethodNotImplemented);
+    }
+}
+
+- (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:arguments[@"apiKey"]];
     [AppSpector runWithConfig:config];
-
     result(@"Ok");
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
 }
 
 @end

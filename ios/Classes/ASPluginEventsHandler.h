@@ -1,17 +1,18 @@
 //
-//  AppSpectorPlugin.h
+//  ASPluginEventsHandler.h
 //  appspector
 //
 //  Created by Deszip on 10/04/2019.
 //
 
-#import <Flutter/Flutter.h>
+#import <Foundation/Foundation.h>
 
+#import <Flutter/Flutter.h>
 #import "ASPluginCallValidator.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AppSpectorPlugin : NSObject <FlutterPlugin>
+@interface ASPluginEventsHandler : NSObject <FlutterPlugin>
 
 - (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
