@@ -13,9 +13,10 @@ typedef NSString ASPluginMethodName;
 typedef NSString ASPluginMethodArgumentName;
 typedef NSDictionary <ASPluginMethodArgumentName *, id> ASPluginMethodArgumentsList;
 
-static ASPluginMethodName * const kRunMethodName        = @"run";
-static ASPluginMethodName * const kRequestMethodName    = @"http-request";
-static ASPluginMethodName * const kResponseMethodName   = @"http-response";
+extern ASPluginMethodName * const kRunMethodName;
+extern ASPluginMethodName * const kHTTPRequestMethodName;
+extern ASPluginMethodName * const kHTTPResponseMethodName;
+extern ASPluginMethodName * const kLogEventMethodName;
 
 @interface ASPluginCallValidator : NSObject
 
