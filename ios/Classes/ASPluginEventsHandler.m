@@ -67,12 +67,10 @@
                                @"body"          : body,
                                @"hasLargeBody"  : @(NO),
                                @"headers"       : arguments[@"headers"] };
-
-    NSLog(@"HTTP request payload: %@", payload);
     
     // Send event
-//    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-request" payload:payload];
-//    [AppSpector sendEvent:event];
+    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-request" payload:payload];
+    [AppSpector sendEvent:event];
     
     result(@"Ok");
 }
@@ -87,11 +85,9 @@
                                @"responseDuration"  : arguments[@"tookMs"],
                                @"error"             : @"" };
     
-    NSLog(@"HTTP request payload: %@", payload);
-    
     // Send event
-//    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-response" payload:payload];
-//    [AppSpector sendEvent:event];
+    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_HTTP_MONITOR eventID:@"http-response" payload:payload];
+    [AppSpector sendEvent:event];
     
     result(@"Ok");
 }
@@ -101,11 +97,9 @@
     NSDictionary *payload = @{ @"level"   : arguments[@"level"],
                                @"message" : arguments[@"message"] };
     
-    NSLog(@"Log event payload: %@", payload);
-    
     // Send event
-    //    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_LOG_MONITOR eventID:@"log" payload:payload];
-    //    [AppSpector sendEvent:event];
+    ASExternalEvent *event = [[ASExternalEvent alloc] initWithMonitorID:AS_LOG_MONITOR eventID:@"log" payload:payload];
+    [AppSpector sendEvent:event];
     
     result(@"Ok");
 }
