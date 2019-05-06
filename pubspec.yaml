@@ -1,6 +1,6 @@
 name: appspector
 description: A plugin that integrate AppSpector to your Flutter project.
-version: 0.0.3
+version: 0.0.4
 author: AppSpector <info@appspector.com>
 homepage: https://github.com/appspector/flutter-plugin
 

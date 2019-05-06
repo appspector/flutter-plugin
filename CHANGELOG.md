@@ -1,8 +1,14 @@
+## 0.0.4 - 6 May 2019
+
+* Update README
+
+
 ## 0.0.3 - 25 Apr 2019
 
 * Add Http Monitor
 * Add SharedPreference/UserDefaults Monitor 
 * Add Logger to collect logs only into AppSpector Service
+
 
 ## 0.0.2 - 22 Jan 2019
 
