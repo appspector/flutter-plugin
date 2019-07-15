@@ -1,5 +1,5 @@
 group 'com.appspector.flutter'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.4.2'
     }
 }
 
@@ -33,5 +33,5 @@ android {
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.1.0"
+    implementation "com.appspector:android-sdk:1.1.1"
 }

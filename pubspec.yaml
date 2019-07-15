@@ -5,7 +5,7 @@ author: AppSpector <info@appspector.com>
 homepage: https://github.com/appspector/flutter-plugin
 
 environment:
-  sdk: ">=2.2.1-dev.1.0 <3.0.0"
+  sdk: ">=2.3.1-dev.1.0 <3.0.0"
 
 dependencies:
   flutter:

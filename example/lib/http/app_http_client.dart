@@ -147,7 +147,7 @@ class IOHttpClient extends AppHttpClient {
     return requestFuture.then((request) {
       return request.close();
     }).then((response) {
-      response.transform(Utf8Decoder()).listen((data) {
+      Utf8Decoder().bind(response).listen((data) {
         print("Client IO has received: $data");
       });
       return response.statusCode;
@@ -162,7 +162,7 @@ class IOHttpClient extends AppHttpClient {
       request.add(body.buffer.asUint8List());
       return request.close();
     }).then((response) {
-      response.transform(Utf8Decoder()).listen((data) {
+      Utf8Decoder().bind(response).listen((data) {
         print("Client IO has received: $data");
       });
       return response.statusCode;

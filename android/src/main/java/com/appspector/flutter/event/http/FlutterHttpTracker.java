@@ -15,12 +15,13 @@ final class FlutterHttpTracker {
 
     @SuppressWarnings({"ConstantConditions", "unchecked"})
     static void trackResponse(Map<String, Object> response) {
+        Object tookMs = response.get("tookMs");
         HttpMonitorObserver.getTracker(TRACKER_ID).track(new HttpResponse.Builder()
                 .requestUid((String) response.get("uid"))
                 .code((int) response.get("code"))
                 .error((String) response.get("error"))
                 .body((byte[]) response.get("body"))
-                .tookMs((int) response.get("tookMs"))
+                .tookMs(tookMs instanceof Long ? (Long) tookMs : ((Integer) tookMs).longValue())
                 .addHeaders((Map<String, String>) response.get("headers"))
                 .build());
     }
