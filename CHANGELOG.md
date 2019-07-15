@@ -1,3 +1,8 @@
+## 0.0.6 - 15 Jul 2019
+
+* Fix compatibility issues with new dart version
+* Bug fixes
+
 ## 0.0.4 - 6 May 2019
 
 * Update README
