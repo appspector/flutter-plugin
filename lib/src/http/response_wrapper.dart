@@ -2,7 +2,7 @@ import 'dart:async' show StreamView;
 import 'dart:io';
 import 'dart:typed_data';
 
-class HttpResponseWrapper extends StreamView<Uint8List>
+class HttpResponseWrapper extends StreamView<List<int>>
     implements HttpClientResponse {
   final HttpClientResponse _httpClientResponse;
 
@@ -49,5 +49,6 @@ class HttpResponseWrapper extends StreamView<Uint8List>
   int get statusCode => _httpClientResponse.statusCode;
 
   @override
-  HttpClientResponseCompressionState get compressionState => _httpClientResponse.compressionState;
+  HttpClientResponseCompressionState get compressionState =>
+      _httpClientResponse.compressionState;
 }
