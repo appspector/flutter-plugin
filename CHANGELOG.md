@@ -1,3 +1,7 @@
+## 0.0.7 - 29 Jul 2019
+
+* Fix compatibility issues with the latest flutter version
+
 ## 0.0.6 - 15 Jul 2019
 
 * Fix compatibility issues with new dart version
