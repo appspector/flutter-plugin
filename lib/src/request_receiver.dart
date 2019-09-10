@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -35,7 +36,7 @@ Future<Uint8List> _takeScreenshot(dynamic args) async {
   var renderObject = renderViewElement.findRenderObject();
   var ratio = maxWidth / renderObject.paintBounds.width;
 
-  var image = await renderObject.layer
+  var image = await (renderObject.layer as OffsetLayer)
       .toImage(renderObject.paintBounds, pixelRatio: ratio > 1.0 ? 1.0 : ratio);
 
   var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
