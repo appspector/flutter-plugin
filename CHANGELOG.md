@@ -1,6 +1,7 @@
 ## 0.0.8 (SNAPSHOT)
 * Add WidgetsFlutterBinding.ensureInitialized(); to README.md
 * Fix issue about 'toImage' isn't defined for the class 'ContainerLayer
+* Use MethodChannel only on MainThread
 
 ## 0.0.7 - 29 Jul 2019
 
