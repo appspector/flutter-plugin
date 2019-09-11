@@ -22,6 +22,7 @@ dependencies:
 ## Initialize AppSpector SDK
 ```dart
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runAppSpector();
   runApp(MyApp());
 }

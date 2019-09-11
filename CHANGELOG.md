@@ -1,3 +1,7 @@
+## 0.0.8 (SNAPSHOT)
+* Add WidgetsFlutterBinding.ensureInitialized(); to README.md
+* Fix issue about 'toImage' isn't defined for the class 'ContainerLayer
+
 ## 0.0.7 - 29 Jul 2019
 
 * Fix compatibility issues with the latest flutter version
