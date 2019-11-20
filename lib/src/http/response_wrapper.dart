@@ -1,12 +1,11 @@
 import 'dart:async' show StreamView;
 import 'dart:io';
-import 'dart:typed_data';
 
 class HttpResponseWrapper extends StreamView<List<int>>
     implements HttpClientResponse {
   final HttpClientResponse _httpClientResponse;
 
-  HttpResponseWrapper(this._httpClientResponse, Stream<Uint8List> stream)
+  HttpResponseWrapper(this._httpClientResponse, Stream<List<int>> stream)
       : super(stream);
 
   @override

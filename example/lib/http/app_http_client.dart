@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io' show HttpClient, HttpClientRequest, HttpHeaders;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 
@@ -71,8 +72,16 @@ class FlutterHttpClient extends AppHttpClient {
 
   @override
   Future<int> executePost(String url) async {
-    final body = await rootBundle.loadString("assets/post.json");
-    return http.post(url, body: body).then((response) {
+//    final body = await rootBundle.loadString("assets/post.json");
+    final data = """{
+      "eventId": 1,
+      "companyId": 201,
+      "jobRoleId": "3",
+      "expressBadge": false,
+      "fcmToken": "svsdfvdsvf"
+    }""";
+    final headers = {"Content-Type": "application/json; charset=utf-8"};
+    return http.post(url, headers: headers, body: data).then((response) {
       return response.statusCode;
     });
   }
@@ -167,5 +176,76 @@ class IOHttpClient extends AppHttpClient {
       });
       return response.statusCode;
     });
+  }
+}
+
+class DioHttpClient extends AppHttpClient {
+
+  final Dio dio = new Dio();
+
+  @override
+  Future<int> executeDelete(String url) {
+    return dio.delete(url).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executeGet(String url) {
+    return dio.get(url).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executeGetImage() {
+    return dio.get("https://raw.githubusercontent.com/appspector/android-sdk/master/images/github-cover.png").then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executeHead(String url) {
+    return dio.head(url).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executeOptions(String url) {
+    throw Exception("OPTION request is not supported by current client");
+  }
+
+  @override
+  Future<int> executePatch(String url) {
+    return dio.patch(url).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executePost(String url) {
+    final data = {
+      'eventId': 1,
+      'companyId': 201,
+      'jobRoleId': '3',
+      'expressBadge': false,
+      'fcmToken': 'svsdfvdsvf'
+    };
+    return dio.post(url, data: data).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executePut(String url) {
+    return dio.put(url).then((response) {
+      return response.statusCode;
+    });
+  }
+
+  @override
+  Future<int> executeTrace(String url) {
+    throw Exception("TRACE request is not supported by current client");
   }
 }

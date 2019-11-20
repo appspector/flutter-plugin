@@ -29,21 +29,21 @@ class HttpRequestWrapper extends HttpClientRequest {
 
   @override
   void addError(Object error, [StackTrace stackTrace]) {
-    print("HttpRequestWrapper :: request addError $error");
     _httpClientRequest.addError(error, stackTrace);
   }
 
   @override
   Future addStream(Stream<List<int>> stream) {
     final body = List<int>();
-    return _httpClientRequest.addStream(stream
-        .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
+    final streamTransformer = StreamTransformer.fromHandlers(handleData: (List<int> data, EventSink<List<int>> sink) {
       sink.add(data);
       body.addAll(data);
     }, handleDone: (sink) {
       _httpEventTracker.addData(body);
       sink.close();
-    })));
+    });
+    final Stream<List<int>> resultedStream = streamTransformer.bind(stream);
+    return _httpClientRequest.addStream(resultedStream);
   }
 
   @override
@@ -55,14 +55,12 @@ class HttpRequestWrapper extends HttpClientRequest {
     return new HttpResponseWrapper(
         response,
         response
-            .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
-          print("HttpRequestWrapper :: transform response handleData");
+            .transform(StreamTransformer.fromHandlers(handleData: (List<int> data, EventSink<List<int>> sink) {
           sink.add(data);
           body.addAll(data);
         }, handleError: (error, stackTrace, sink) {
           print("HttpRequestWrapper :: ERROR RESPONSE $error $stackTrace");
         }, handleDone: (sink) {
-          print("HttpRequestWrapper :: Transform response handleDone");
           _httpEventTracker.sendSuccessResponse(
               response.statusCode, response.headers, body);
           sink.close();

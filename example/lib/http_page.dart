@@ -12,10 +12,12 @@ class HttpMonitorPage extends StatefulWidget {
 class HttpMonitorPageState extends State<HttpMonitorPage> {
   static const _CLIENT_HTTP_LIB = 0;
   static const _CLIENT_IO = 1;
+  static const _CLIENT_DIO = 2;
 
   final _url = "https://google.com";
   final _flutterHttpClient = FlutterHttpClient();
   final _ioHttpClient = IOHttpClient();
+  final _dioHttpClient = DioHttpClient();
 
   final List<HttpRequestItems> requestMethods = [
     new HttpRequestItems("GET Request", (httpClient, url) {
@@ -76,14 +78,21 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
                       child: RadioListTile(
                           value: _CLIENT_HTTP_LIB,
                           groupValue: _selectedClient,
-                          title: const Text("HTTP Library"),
+                          title: const Text("HTTP Lib"),
                           onChanged: _onClientSelectChanged)
                   ),
                   Expanded(child: RadioListTile(
                       value: _CLIENT_IO,
-                      title: const Text("Client IO"),
+                      title: const Text("IO"),
                       groupValue: _selectedClient,
-                      onChanged: _onClientSelectChanged))
+                      onChanged: _onClientSelectChanged)
+                  ),
+                  Expanded(child: RadioListTile(
+                      value: _CLIENT_DIO,
+                      title: const Text("DIO"),
+                      groupValue: _selectedClient,
+                      onChanged: _onClientSelectChanged)
+                  )
                 ]),
                 Container(
                     margin: EdgeInsets.only(top: 24.0),
@@ -127,6 +136,7 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     switch (_selectedClient) {
       case _CLIENT_HTTP_LIB: return _flutterHttpClient;
       case _CLIENT_IO: return _ioHttpClient;
+      case _CLIENT_DIO: return _dioHttpClient;
     }
     throw Exception("Unknown client id");
   }
