@@ -1,3 +1,6 @@
+## 0.0.9 20 Nov 2019
+* Fix compatibility with DIO library
+
 ## 0.0.8 11 Sep 2019
 * Add WidgetsFlutterBinding.ensureInitialized(); to README.md
 * Fix issue about 'toImage' isn't defined for the class 'ContainerLayer
