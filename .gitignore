@@ -7,12 +7,17 @@
 pubspec.lock
 
 build/
+doc/
 
 *.iml
 
 /.idea/workspace.xml
+/.idea/markdown-*.xml
+/.idea/checkstyle-idea.xml
+/.idea/encodings.xml
+
 /.idea/libraries
 /.idea/dictionaries
 /.idea/runConfigurations
-/doc/
-.idea
+/.idea/sonarlint
+/.idea/markdown-navigator

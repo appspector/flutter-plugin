@@ -9,6 +9,7 @@ import 'record.dart';
 
 abstract class RecordStorage {
   void save(Record record);
+  Future<int> getRecordsCount();
 }
 
 class RecordStorageImpl implements RecordStorage {
@@ -25,10 +26,10 @@ class RecordStorageImpl implements RecordStorage {
     return _db;
   }
 
-  //Creating a database with name test.dn in your directory
+  //Creating a database with name test.db in your directory
   initDb() async {
-    io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    var path = join(documentsDirectory.path, "test.db");
+    io.Directory documentsDirectory = await getApplicationSupportDirectory();
+    var path = join(documentsDirectory.path.substring(0, documentsDirectory.path.length - "files".length), "databases/test.db");
     var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     return theDb;
   }
@@ -56,5 +57,12 @@ class RecordStorageImpl implements RecordStorage {
     dict[_columnAddress] = record.address;
     dict[_columnPhone] = record.phone;
     return dict;
+  }
+
+  @override
+  Future<int> getRecordsCount() async {
+    var dbClient = await db;
+    var records = await dbClient.query(_tableName);
+    return records.length;
   }
 }

@@ -46,4 +46,8 @@ class HttpResponseWrapper extends StreamView<List<int>>
 
   @override
   int get statusCode => _httpClientResponse.statusCode;
+
+  @override
+  HttpClientResponseCompressionState get compressionState =>
+      _httpClientResponse.compressionState;
 }

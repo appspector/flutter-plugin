@@ -9,6 +9,7 @@ import 'sqlite_page.dart';
 import 'package:logging/logging.dart' as logger;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runAppSpector();
   runApp(MyApp());
   logger.Logger.root.level = logger.Level.ALL;
