@@ -7,10 +7,10 @@
 
 #import "ASPluginCallValidator.h"
 
-ASPluginMethodName * const kRunMethodName        = @"run";
-ASPluginMethodName * const kHTTPRequestMethodName    = @"http-request";
-ASPluginMethodName * const kHTTPResponseMethodName   = @"http-response";
-ASPluginMethodName * const kLogEventMethodName   = @"log-event";
+ASPluginMethodName * const kRunMethodName           = @"run";
+ASPluginMethodName * const kHTTPRequestMethodName   = @"http-request";
+ASPluginMethodName * const kHTTPResponseMethodName  = @"http-response";
+ASPluginMethodName * const kLogEventMethodName      = @"log-event";
 
 @interface ASPluginCallValidator ()
 
