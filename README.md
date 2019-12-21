@@ -86,7 +86,6 @@ And naturally you can post notifications to your app from the frontend.
 
 For mode details, you can visit [Android SDK](https://github.com/appspector/android-sdk/) and [iOS SDK](https://github.com/appspector/ios-sdk) pages.
 
-
 # Feedback
 Let us know what do you think or what would you like to be improved: [info@appspector.com](mailto:info@appspector.com).
 
