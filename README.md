@@ -1,8 +1,6 @@
 [![GitHub release](https://img.shields.io/github/release/appspector/flutter-plugin.svg)](https://github.com/appspector/flutter-plugin)
 # ![AppSpector](https://github.com/appspector/flutter-plugin/raw/master/github-cover.png)
 
-# AppSpector
-
 A plugin that integrate [AppSpector](https://appspector.com/?utm_source=flutter_readme) to your Flutter project.
 
 With AppSpector you can remotely debug your app running in the same room or on another continent. 
