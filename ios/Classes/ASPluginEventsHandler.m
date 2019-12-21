@@ -48,6 +48,10 @@
         if ([call.method isEqualToString:kHTTPResponseMethodName]) {
             [self handleResponseCall:call.arguments result:result];
         }
+        
+        if ([call.method isEqualToString:kLogEventMethodName]) {
+            [self handleLogEventCall:call.arguments result:result];
+        }
     } else {
         result(FlutterMethodNotImplemented);
     }
