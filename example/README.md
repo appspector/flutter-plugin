@@ -1,6 +1,6 @@
-# appspector_plugin_example
+# AppSpector plugin example app
 
-Demonstrates how to use the appspector plugin.
+Demonstrates how to use the AppSpector plugin.
 
 ## Getting Started
 
