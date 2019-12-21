@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/appspector/flutter-plugin.svg)](https://github.com/appspector/flutter-plugin)
-# ![AppSpector](https://github.com/appspector/ios-sdk/raw/master/github-cover.png)
+# ![AppSpector](https://github.com/appspector/flutter-plugin/raw/master/github-cover.png)
 
 # AppSpector
 
