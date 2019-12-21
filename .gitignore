@@ -21,3 +21,8 @@ doc/
 /.idea/runConfigurations
 /.idea/sonarlint
 /.idea/markdown-navigator
+AppSpector Flutter/.idea
+.idea
+example/.flutter-plugins-dependencies
+example/ios/Flutter/Flutter.podspec
+.packages_
