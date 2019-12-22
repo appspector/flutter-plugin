@@ -22,6 +22,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9C4C6BE719A3BF5A96BA2A91 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F88522C84F84D6E2A18364F /* libPods-Runner.a */; };
+		D9DD8EDD23AFC31200DD3029 /* ASPluginCallValidatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B91A4303FD1012A0AA40A996 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		CF3A9CE843C1DAB0B2BD4E3B /* Pods-AppSpectorPluginTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppSpectorPluginTests.profile.xcconfig"; path = "Pods/Target Support Files/Pods-AppSpectorPluginTests/Pods-AppSpectorPluginTests.profile.xcconfig"; sourceTree = "<group>"; };
+		D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASPluginCallValidatorTests.m; sourceTree = "<group>"; };
 		DB203E060E1FB4D7A4350465 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		FC08905B5326445FF96F3DD5 /* Pods-AppSpectorPluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppSpectorPluginTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppSpectorPluginTests/Pods-AppSpectorPluginTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 			children = (
 				0EB522EF2260D6F40076C990 /* AppSpectorPluginTests.m */,
 				0EB522F12260D6F40076C990 /* Info.plist */,
+				D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */,
 			);
 			path = AppSpectorPluginTests;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EB522F02260D6F40076C990 /* AppSpectorPluginTests.m in Sources */,
+				D9DD8EDD23AFC31200DD3029 /* ASPluginCallValidatorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

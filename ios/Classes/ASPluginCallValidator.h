@@ -18,6 +18,20 @@ extern ASPluginMethodName * const kHTTPRequestMethodName;
 extern ASPluginMethodName * const kHTTPResponseMethodName;
 extern ASPluginMethodName * const kLogEventMethodName;
 
+extern ASPluginMethodArgumentName * const kAPIKeyArgument;
+
+extern ASPluginMethodArgumentName * const kUIDArgument;
+extern ASPluginMethodArgumentName * const kURLArgument;
+extern ASPluginMethodArgumentName * const kMethodArgument;
+extern ASPluginMethodArgumentName * const kBodyArgument;
+extern ASPluginMethodArgumentName * const kHeadersArgument;
+extern ASPluginMethodArgumentName * const kCodeArgument;
+extern ASPluginMethodArgumentName * const kTookMSArgument;
+extern ASPluginMethodArgumentName * const kLevelArgument;
+extern ASPluginMethodArgumentName * const kTagArgument;
+extern ASPluginMethodArgumentName * const kMessageArgument;
+
+
 @interface ASPluginCallValidator : NSObject
 
 - (BOOL)controlMethodSupported:(ASPluginMethodName *)methodName;
@@ -25,9 +39,7 @@ extern ASPluginMethodName * const kLogEventMethodName;
 
 - (BOOL)argumentsValid:(ASPluginMethodArgumentsList *)arguments
                   call:(ASPluginMethodName *)methodName
-          errorMessage:(__autoreleasing NSString *_Nonnull*)errorMessage;
-
-
+                 error:(NSError **)error;
 
 @end
 
