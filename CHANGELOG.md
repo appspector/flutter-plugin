@@ -1,3 +1,6 @@
+## 0.1 24 Dec 2019
+* Fixed logging module
+
 ## 0.0.9 20 Nov 2019
 * Fix compatibility with DIO library
 
