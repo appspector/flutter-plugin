@@ -17,7 +17,7 @@ Each app you want to use with AppSpector SDK you have to register on the web ([h
 ## Add AppSpector SDK to pubspec.yaml
 ```yaml
 dependencies:
-  appspector: '0.0.9
+  appspector: '0.1.0
 ```
 
 ## Initialize AppSpector SDK
