@@ -17,7 +17,7 @@ Each app you want to use with AppSpector SDK you have to register on the web ([h
 ## Add AppSpector SDK to pubspec.yaml
 ```yaml
 dependencies:
-  appspector: '0.1.0
+  appspector: '0.1.0'
 ```
 
 ## Initialize AppSpector SDK
@@ -41,7 +41,6 @@ Build your project and see everything work! When your app is up and running you 
 
 
 # Features
-
 AppSpector provides many monitors that are can be different for both platforms.
 
 ### SQLite monitor
