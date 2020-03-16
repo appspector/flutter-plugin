@@ -1,12 +1,12 @@
 import 'package:appspector/appspector.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart' as logger;
 
 import 'color.dart';
 import 'http_page.dart';
 import 'main_page.dart';
 import 'routes.dart';
 import 'sqlite_page.dart';
-import 'package:logging/logging.dart' as logger;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +20,12 @@ void main() {
 }
 
 void runAppSpector() {
-  var config = new Config();
-  config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
-  config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
+  var config = new Config()
+    ..iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2"
+    ..androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz"
+    ..monitors = [Monitors.screenshot, Monitors.http, Monitors.logs]
+    ..metadata = {MetadataKeys.deviceName: "CustomName"};
+
   AppSpectorPlugin.run(config);
 }
 
