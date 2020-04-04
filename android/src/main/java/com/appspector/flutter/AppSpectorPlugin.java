@@ -16,6 +16,7 @@ import com.appspector.sdk.core.util.AppspectorLogger;
 import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final EventReceiver eventReceiver;
     private final RequestSender requestSender;
+    private final Map<String, MonitorInitializer> monitorInitializerMap;
 
     private AppSpectorPlugin(Application application,
                              EventReceiver eventReceiver,
@@ -41,6 +43,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
         this.application = application;
         this.eventReceiver = eventReceiver;
         this.requestSender = requestSender;
+        this.monitorInitializerMap = createMonitorInitializerMap();
         registerEvents(eventReceiver);
     }
 
@@ -70,9 +73,9 @@ public class AppSpectorPlugin implements MethodCallHandler {
         switch (call.method) {
             case "run":
                 initAppSpector(result,
-                        call.<String>argument("apiKey"),
-                        call.<Map<String, String>>argument("metadata"),
-                        call.<List<String>>argument("enabledMonitors")
+                        call.argument("apiKey"),
+                        call.argument("metadata"),
+                        call.argument("enabledMonitors")
                 );
                 break;
             case "stop":
@@ -125,12 +128,24 @@ public class AppSpectorPlugin implements MethodCallHandler {
         }
 
         final Builder builder = AppSpector.build(application)
-                .addMetadata(metadata != null ? metadata : Collections.<String, String>emptyMap());
+                .addMetadata(metadata != null ? metadata : Collections.emptyMap());
 
         addMonitors(builder, enabledMonitors);
 
-
         builder.run(apiKey);
+    }
+
+    private Map<String, MonitorInitializer> createMonitorInitializerMap() {
+        return new HashMap<String, MonitorInitializer>() {{
+            put("logs", Builder::addLogMonitor);
+            put("screenshot", builder -> builder.addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(requestSender))));
+            put("environment", Builder::addEnvironmentMonitor);
+            put("http", Builder::addHttpMonitor);
+            put("location", Builder::addLocationMonitor);
+            put("performance", Builder::addPerformanceMonitor);
+            put("sqlite", Builder::addSQLMonitor);
+            put("shared-preferences", Builder::addSharedPreferenceMonitor);
+        }};
     }
 
     private void addMonitors(@NonNull Builder builder, @Nullable List<String> enabledMonitors) {
@@ -142,34 +157,16 @@ public class AppSpectorPlugin implements MethodCallHandler {
         }
 
         for (String monitor : enabledMonitors) {
-            switch (monitor) {
-                case "logs":
-                    builder.addLogMonitor();
-                    break;
-                case "screenshot":
-                    builder.addMonitor(new ScreenshotMonitor(new FlutterScreenshotFactory(requestSender)));
-                    break;
-                case "environment":
-                    builder.addEnvironmentMonitor();
-                    break;
-                case "http":
-                    builder.addHttpMonitor();
-                    break;
-                case "location":
-                    builder.addLocationMonitor();
-                    break;
-                case "performance":
-                    builder.addPerformanceMonitor();
-                    break;
-                case "sqlite":
-                    builder.addSQLMonitor();
-                    break;
-                case "shared-preferences":
-                    builder.addSharedPreferenceMonitor();
-                    break;
-                default:
-                    AppspectorLogger.d("Unknown monitor: %s", monitor);
+            MonitorInitializer initializer = monitorInitializerMap.get(monitor);
+            if (initializer != null) {
+                initializer.init(builder);
+            } else {
+                AppspectorLogger.d("Unknown monitor: %s", monitor);
             }
         }
+    }
+
+    private interface MonitorInitializer {
+        void init(@NonNull Builder builder);
     }
 }
