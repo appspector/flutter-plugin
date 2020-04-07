@@ -26,6 +26,11 @@ class SampleAppDrawer extends StatelessWidget {
           onTap: () =>
               Navigator.pushReplacementNamed(context, Routes.HttpMonitorPage),
         ),
+        ListTile(
+          title: Text("Edit Metadata"),
+          onTap: () =>
+              Navigator.pushReplacementNamed(context, Routes.MetadataPage),
+        ),
       ],
     ));
   }

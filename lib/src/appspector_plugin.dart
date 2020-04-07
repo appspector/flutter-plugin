@@ -1,9 +1,9 @@
 import 'dart:io' show Platform, HttpOverrides;
 
 import 'package:appspector/src/http/http_overrides.dart';
-import 'package:appspector/src/request_receiver.dart';
 import 'package:appspector/src/monitors.dart';
-import 'package:flutter/services.dart' show MethodChannel;
+import 'package:appspector/src/request_receiver.dart';
+import 'package:flutter/services.dart' show MethodCall, MethodChannel;
 
 /// This class needed to aggregate AppSpector properties and arguments.
 class Config {
@@ -61,15 +61,17 @@ class Config {
 /// <p>For more information visit the <a href="https://docs.appspector.com">AppSpector Page</a>.</p>
 class AppSpectorPlugin {
 
+  static AppSpectorPlugin _appSpectorPlugin;
+
   final MethodChannel _channel = const MethodChannel('appspector_plugin');
   final RequestReceiver _requestReceiver = new RequestReceiver();
 
-  static AppSpectorPlugin _appSpectorPlugin;
+  Function(String) sessionUrlListener;
 
   AppSpectorPlugin._withConfig(Config config) {
     HttpOverrides.global = AppSpectorHttpOverrides();
     _requestReceiver.observeChannel();
-
+    _channel.setMethodCallHandler(_handlePluginCalls);
     _appSpectorPlugin = this;
   }
 
@@ -82,6 +84,14 @@ class AppSpectorPlugin {
       return _initAppSpector(config.iosApiKey, _filterByPlatform(config.monitors, SupportedPlatform.ios), config.metadata);
     } else {
       return Future.error("AppSpector doesn't support currect platform");
+    }
+  }
+
+  Future<dynamic> _handlePluginCalls(MethodCall methodCall) async {
+    if (methodCall.method == "onSessionUrl") {
+      if (sessionUrlListener != null) {
+        sessionUrlListener(methodCall.arguments);
+      }
     }
   }
 
@@ -109,6 +119,19 @@ class AppSpectorPlugin {
 
   /// Returns true if sdk is started
   Future<bool> isStarted() => _channel.invokeMethod("isStarted");
+
+  /// Set metadata value
+  Future<void> setMetadata(String key, String value) =>
+      _channel.invokeMethod("setMetadata", {
+        "key": key,
+        "value": value
+      });
+
+  /// Remove metadata value
+  Future<void> removeMetadata(String key) =>
+      _channel.invokeMethod("removeMetadata", {
+        "key": key
+      });
 
   Iterable<Monitor> _filterByPlatform(List<Monitor> monitors, SupportedPlatform platform) {
     return monitors?.where((m) => m.platforms.contains(platform));
