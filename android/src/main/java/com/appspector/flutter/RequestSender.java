@@ -2,14 +2,17 @@ package com.appspector.flutter;
 
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+
 import io.flutter.plugin.common.MethodChannel;
 
 public class RequestSender {
 
     private final MethodChannel methodChannel;
-    private final Handler handler = new Handler();
+    private final Handler handler;
 
-    public RequestSender(MethodChannel requestMethodChannel) {
+    public RequestSender(@NonNull Handler mainHandler, @NonNull MethodChannel requestMethodChannel) {
+        this.handler = mainHandler;
         this.methodChannel = requestMethodChannel;
     }
 

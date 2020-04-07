@@ -1,6 +1,7 @@
 package com.appspector.flutter;
 
 import android.app.Application;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import com.appspector.flutter.event.log.LogEventHandler;
 import com.appspector.flutter.screenshot.FlutterScreenshotFactory;
 import com.appspector.sdk.AppSpector;
 import com.appspector.sdk.Builder;
+import com.appspector.sdk.SessionUrlListener;
 import com.appspector.sdk.core.util.AppspectorLogger;
 import com.appspector.sdk.monitors.screenshot.ScreenshotMonitor;
 
@@ -35,14 +37,17 @@ public class AppSpectorPlugin implements MethodCallHandler {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final EventReceiver eventReceiver;
     private final RequestSender requestSender;
+    private final SessionUrlListener sessionUrlListener;
     private final Map<String, MonitorInitializer> monitorInitializerMap;
 
     private AppSpectorPlugin(Application application,
+                             SessionUrlListener sessionUrlListener,
                              EventReceiver eventReceiver,
                              RequestSender requestSender) {
         this.application = application;
         this.eventReceiver = eventReceiver;
         this.requestSender = requestSender;
+        this.sessionUrlListener = sessionUrlListener;
         this.monitorInitializerMap = createMonitorInitializerMap();
         registerEvents(eventReceiver);
     }
@@ -57,14 +62,16 @@ public class AppSpectorPlugin implements MethodCallHandler {
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
+        final Handler mainHandler = new Handler();
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "appspector_plugin");
         final MethodChannel eventChannel = new MethodChannel(registrar.messenger(), "appspector_event_channel");
         final MethodChannel requestChannel = new MethodChannel(registrar.messenger(), "appspector_request_channel");
 
         channel.setMethodCallHandler(new AppSpectorPlugin(
                 (Application) registrar.context().getApplicationContext(),
+                new InternalAppSpectorSessionListener(mainHandler, channel),
                 new EventReceiver(eventChannel),
-                new RequestSender(requestChannel)
+                new RequestSender(mainHandler, requestChannel)
         ));
     }
 
@@ -79,46 +86,63 @@ public class AppSpectorPlugin implements MethodCallHandler {
                 );
                 break;
             case "stop":
-                pauseSdk(result);
+                stopSdk(result);
                 break;
             case "start":
-                resumeSdk(result);
+                startSdk(result);
                 break;
             case "isStarted":
                 checkSdkStarted(result);
+                break;
+            case "setMetadata":
+                setMetadata(call.argument("key"), call.argument("value"), result);
+                break;
+            case "removeMetadata":
+                removeMetadata(call.argument("key"), result);
                 break;
             default:
                 result.notImplemented();
         }
     }
 
+    private void setMetadata(@Nullable String key, @Nullable String value, @NonNull Result result) {
+        if (key == null || value == null) {
+            AppspectorLogger.e("AppSpectorPlugin :: key or value is null");
+            return;
+        }
+        withSharedInstance(result, sharedInstance -> {
+            sharedInstance.setMetadataValue(key, value);
+            return null;
+        });
+    }
+
+    private void removeMetadata(@Nullable String key, @NonNull Result result) {
+        if (key == null) {
+            AppspectorLogger.e("AppSpectorPlugin :: key is null");
+            return;
+        }
+        withSharedInstance(result, sharedInstance -> {
+            sharedInstance.removeMetadataValue(key);
+            return null;
+        });
+    }
+
     private void checkSdkStarted(@NonNull Result result) {
-        final AppSpector sharedInstance = AppSpector.shared();
-        if (sharedInstance != null) {
-            result.success(sharedInstance.isStarted());
-        } else {
-            result.error("NotInitialized", "AppSpector shared instance is null", null);
-        }
+        withSharedInstance(result, AppSpector::isStarted);
     }
 
-    private void pauseSdk(@NonNull Result result) {
-        final AppSpector sharedInstance = AppSpector.shared();
-        if (sharedInstance != null) {
+    private void stopSdk(@NonNull Result result) {
+        withSharedInstance(result, sharedInstance -> {
             sharedInstance.stop();
-            result.success(null);
-        } else {
-            result.error("NotInitialized", "AppSpector shared instance is null", null);
-        }
+            return null;
+        });
     }
 
-    private void resumeSdk(@NonNull Result result) {
-        final AppSpector sharedInstance = AppSpector.shared();
-        if (sharedInstance != null) {
+    private void startSdk(@NonNull Result result) {
+        withSharedInstance(result, sharedInstance -> {
             sharedInstance.start();
-            result.success(null);
-        } else {
-            result.error("NotInitialized", "AppSpector shared instance is null", null);
-        }
+            return null;
+        });
     }
 
     private void initAppSpector(@NonNull Result result, @Nullable String apiKey, @Nullable Map<String, String> metadata, @Nullable List<String> enabledMonitors) {
@@ -133,6 +157,9 @@ public class AppSpectorPlugin implements MethodCallHandler {
         addMonitors(builder, enabledMonitors);
 
         builder.run(apiKey);
+
+        //noinspection ConstantConditions
+        AppSpector.shared().setSessionUrlListener(sessionUrlListener);
     }
 
     private Map<String, MonitorInitializer> createMonitorInitializerMap() {
@@ -164,6 +191,36 @@ public class AppSpectorPlugin implements MethodCallHandler {
                 AppspectorLogger.d("Unknown monitor: %s", monitor);
             }
         }
+    }
+
+    private void withSharedInstance(@NonNull Result result, @NonNull SharedInstanceAction action) {
+        final AppSpector sharedInstance = AppSpector.shared();
+        if (sharedInstance != null) {
+            result.success(action.run(sharedInstance));
+        } else {
+            result.error("NotInitialized", "AppSpector shared instance is null", null);
+        }
+    }
+
+    private static class InternalAppSpectorSessionListener implements SessionUrlListener {
+
+        private final MethodChannel sessionUrlChannel;
+        private final Handler handler;
+
+        private InternalAppSpectorSessionListener(@NonNull Handler mainHandler, @NonNull MethodChannel sessionUrlChannel) {
+            this.handler = mainHandler;
+            this.sessionUrlChannel = sessionUrlChannel;
+        }
+
+        @Override
+        public void onReceived(@NonNull String sessionUrl) {
+            handler.post(() -> sessionUrlChannel.invokeMethod("onSessionUrl", sessionUrl));
+        }
+    }
+
+    private interface SharedInstanceAction {
+        @Nullable
+        Object run(@NonNull  AppSpector appSpector);
     }
 
     private interface MonitorInitializer {

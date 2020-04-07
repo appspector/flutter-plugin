@@ -23,12 +23,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+abstract class AbsMyHomePageState extends State<MyHomePage> {
+  void onSessionUrlChanged(String sessionUrl);
+}
+
+class _MyHomePageState extends AbsMyHomePageState {
   final logger.Logger log = new logger.Logger('MyHomePageState');
 
   int _counter = 0;
 
   bool isSdkRunning = true;
+  String _sessionUrl = "Unknown";
+
+  @override
+  void onSessionUrlChanged(String sessionUrl) {
+    setState(() {
+      _sessionUrl = sessionUrl ?? "Unknown";
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -117,6 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Text(
+              _sessionUrl
+            ),
             const SizedBox(height: 124),
             _createSwitchSdkStateButton(),
             const SizedBox(height: 124),
