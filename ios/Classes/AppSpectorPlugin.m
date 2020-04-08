@@ -70,7 +70,11 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 }
 
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
-    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:arguments[@"apiKey"]];
+    NSString *apiKey = arguments[@"apiKey"];
+    NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
+    NSDictionary *metadata = arguments[@"metadata"];
+    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
+    config.metadata = metadata;
     [AppSpector runWithConfig:config];
     result(@"Ok");
 }
