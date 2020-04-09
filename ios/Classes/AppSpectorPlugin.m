@@ -13,6 +13,7 @@
 static NSString * const kControlChannelName = @"appspector_plugin";
 static NSString * const kEventChannelName   = @"appspector_event_channel";
 static NSString * const kRequestChannelName = @"appspector_request_channel";
+static NSString * const kDeviceNameMetadataKey = @"userSpecifiedDeviceName";
 
 @interface AppSpectorPlugin ()
 
@@ -60,9 +61,24 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
             return;
         }
         
-        // Handle call
+        // Handle calls
         if ([call.method isEqualToString:kRunMethodName]) {
             [self handleRunCall:call.arguments result:result];
+        }
+        if ([call.method isEqualToString:kStopMethodName]) {
+            [self handleStopCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kStartMethodName]) {
+            [self handleStartCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kIsStartedMethodName]) {
+            [self handleIsStartedCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kSetMetadataMethodName]) {
+            [self handleSetMetadataCall:call.arguments result:result];
+        }
+        if ([call.method isEqualToString:kRemoveMetadataMethodName]) {
+            [self handleRemoveMetadataCall:call.arguments result:result];
         }
     } else {
         result(FlutterMethodNotImplemented);
@@ -72,11 +88,50 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *apiKey = arguments[@"apiKey"];
     NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
-    NSDictionary *metadata = arguments[@"metadata"];
+    NSDictionary *rawMetadata = arguments[@"metadata"];
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    config.metadata = metadata;
+    config.metadata = [self mapMetadatafrom:rawMetadata];
     [AppSpector runWithConfig:config];
     result(@"Ok");
 }
 
+- (ASMetadata *)mapMetadatafrom:(NSDictionary *)rawMetadata {
+    BOOL isValidMetadata = (rawMetadata != nil) && [rawMetadata.allKeys containsObject: kDeviceNameMetadataKey];
+  
+    if (isValidMetadata) {
+      NSString *deviceName = rawMetadata[kDeviceNameMetadataKey];
+      return @{AS_DEVICE_NAME_KEY : deviceName};
+    } else {
+      return @{};
+    }
+}
+
+- (void)handleStopCallWithResult:(FlutterResult)result {
+    [AppSpector stop];
+    result(@"Ok");
+}
+
+- (void)handleStartCallWithResult:(FlutterResult)result {
+    [AppSpector start];
+    result(@"Ok");
+}
+
+- (void)handleIsStartedCallWithResult:(FlutterResult)result {
+    BOOL isStarted = [AppSpector isRunning];
+    result(@(isStarted));
+}
+
+- (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    NSString *key = arguments[@"key"];
+    NSString *value = arguments[@"value"];
+    NSDictionary *rawMetadata = @{key : value};
+    [AppSpector updateMetadata:[self mapMetadatafrom:rawMetadata]];
+    result(@"Ok");
+}
+
+- (void)handleRemoveMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    ASMetadata *emptyMetadata = @{};
+    [AppSpector updateMetadata:emptyMetadata];
+    result(@"Ok");
+}
 @end

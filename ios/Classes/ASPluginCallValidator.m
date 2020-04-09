@@ -7,10 +7,15 @@
 
 #import "ASPluginCallValidator.h"
 
-ASPluginMethodName * const kRunMethodName           = @"run";
-ASPluginMethodName * const kHTTPRequestMethodName   = @"http-request";
-ASPluginMethodName * const kHTTPResponseMethodName  = @"http-response";
-ASPluginMethodName * const kLogEventMethodName      = @"log-event";
+ASPluginMethodName * const kRunMethodName            = @"run";
+ASPluginMethodName * const kStopMethodName           = @"stop";
+ASPluginMethodName * const kStartMethodName          = @"start";
+ASPluginMethodName * const kIsStartedMethodName      = @"isStarted";
+ASPluginMethodName * const kSetMetadataMethodName    = @"setMetadata";
+ASPluginMethodName * const kRemoveMetadataMethodName = @"removeMetadata";
+ASPluginMethodName * const kHTTPRequestMethodName    = @"http-request";
+ASPluginMethodName * const kHTTPResponseMethodName   = @"http-response";
+ASPluginMethodName * const kLogEventMethodName       = @"log-event";
 
 @interface ASPluginCallValidator ()
 
@@ -24,24 +29,34 @@ ASPluginMethodName * const kLogEventMethodName      = @"log-event";
 
 - (instancetype)init {
     if (self = [super init]) {
-        _controlMethodNames = @[kRunMethodName];
+        _controlMethodNames = @[kRunMethodName,
+                                kStopMethodName,
+                                kStartMethodName,
+                                kIsStartedMethodName,
+                                kSetMetadataMethodName,
+                                kRemoveMetadataMethodName];
         _eventMethodNames = @[kHTTPRequestMethodName, kHTTPResponseMethodName, kLogEventMethodName];
-        _methodParameters = @{ kHTTPRequestMethodName   : @[ @"uid",
-                                                         @"url",
-                                                         @"method",
-                                                         @"body",
-                                                         @"headers" ],
-                               kHTTPResponseMethodName  : @[ @"uid",
-                                                         @"code",
-                                                         @"body",
-                                                         @"headers",
-                                                         @"tookMs" ],
-                               kLogEventMethodName : @[@"level",
-                                                       @"tag",
-                                                       @"message"],
-                               kRunMethodName       : @[@"apiKey"] };
+        _methodParameters = @{ kHTTPRequestMethodName : @[ @"uid",
+                                                           @"url",
+                                                           @"method",
+                                                           @"body",
+                                                           @"headers" ],
+                               kHTTPResponseMethodName : @[ @"uid",
+                                                            @"code",
+                                                            @"body",
+                                                            @"headers",
+                                                            @"tookMs" ],
+                               kLogEventMethodName : @[ @"level",
+                                                        @"tag",
+                                                        @"message" ],
+                               kRunMethodName : @[ @"apiKey",
+                                                   @"enabledMonitors",
+                                                   @"metadata"],
+                               kSetMetadataMethodName : @[@"key",
+                                                          @"value"],
+                               kRemoveMetadataMethodName : @[@"key"] };
     }
-    
+  
     return self;
 }
 
