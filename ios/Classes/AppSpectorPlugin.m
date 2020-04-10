@@ -109,8 +109,14 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 }
 
 - (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
-    ASMetadata *metadata = @{arguments[@"key"] : arguments[@"value"]};
-    [AppSpector updateMetadata:metadata];
+    NSString *key = arguments[@"key"];
+    NSString *value = arguments[@"value"];
+  
+    if (key != nil && value != nil) {
+      ASMetadata *metadata = @{key : value};
+      [AppSpector updateMetadata:metadata];
+    }
+
     result(@"Ok");
 }
 
