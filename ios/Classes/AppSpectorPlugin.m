@@ -13,7 +13,6 @@
 static NSString * const kControlChannelName = @"appspector_plugin";
 static NSString * const kEventChannelName   = @"appspector_event_channel";
 static NSString * const kRequestChannelName = @"appspector_request_channel";
-static NSString * const kDeviceNameMetadataKey = @"userSpecifiedDeviceName";
 
 @interface AppSpectorPlugin ()
 
@@ -88,22 +87,10 @@ static NSString * const kDeviceNameMetadataKey = @"userSpecifiedDeviceName";
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *apiKey = arguments[@"apiKey"];
     NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
-    NSDictionary *rawMetadata = arguments[@"metadata"];
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    config.metadata = [self mapMetadatafrom:rawMetadata];
+    config.metadata = arguments[@"metadata"];
     [AppSpector runWithConfig:config];
     result(@"Ok");
-}
-
-- (ASMetadata *)mapMetadatafrom:(NSDictionary *)rawMetadata {
-    BOOL isValidMetadata = (rawMetadata != nil) && [rawMetadata.allKeys containsObject: kDeviceNameMetadataKey];
-  
-    if (isValidMetadata) {
-      NSString *deviceName = rawMetadata[kDeviceNameMetadataKey];
-      return @{AS_DEVICE_NAME_KEY : deviceName};
-    } else {
-      return @{};
-    }
 }
 
 - (void)handleStopCallWithResult:(FlutterResult)result {
@@ -122,10 +109,8 @@ static NSString * const kDeviceNameMetadataKey = @"userSpecifiedDeviceName";
 }
 
 - (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
-    NSString *key = arguments[@"key"];
-    NSString *value = arguments[@"value"];
-    NSDictionary *rawMetadata = @{key : value};
-    [AppSpector updateMetadata:[self mapMetadatafrom:rawMetadata]];
+    ASMetadata *metadata = @{arguments[@"key"] : arguments[@"value"]};
+    [AppSpector updateMetadata:metadata];
     result(@"Ok");
 }
 
