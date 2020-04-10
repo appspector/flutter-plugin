@@ -60,9 +60,24 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
             return;
         }
         
-        // Handle call
+        // Handle calls
         if ([call.method isEqualToString:kRunMethodName]) {
             [self handleRunCall:call.arguments result:result];
+        }
+        if ([call.method isEqualToString:kStopMethodName]) {
+            [self handleStopCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kStartMethodName]) {
+            [self handleStartCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kIsStartedMethodName]) {
+            [self handleIsStartedCallWithResult:result];
+        }
+        if ([call.method isEqualToString:kSetMetadataMethodName]) {
+            [self handleSetMetadataCall:call.arguments result:result];
+        }
+        if ([call.method isEqualToString:kRemoveMetadataMethodName]) {
+            [self handleRemoveMetadataCall:call.arguments result:result];
         }
     } else {
         result(FlutterMethodNotImplemented);
@@ -70,9 +85,44 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 }
 
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
-    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:arguments[@"apiKey"]];
+    NSString *apiKey = arguments[@"apiKey"];
+    NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
+    AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
+    config.metadata = arguments[@"metadata"];
     [AppSpector runWithConfig:config];
     result(@"Ok");
 }
 
+- (void)handleStopCallWithResult:(FlutterResult)result {
+    [AppSpector stop];
+    result(@"Ok");
+}
+
+- (void)handleStartCallWithResult:(FlutterResult)result {
+    [AppSpector start];
+    result(@"Ok");
+}
+
+- (void)handleIsStartedCallWithResult:(FlutterResult)result {
+    BOOL isStarted = [AppSpector isRunning];
+    result(@(isStarted));
+}
+
+- (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    NSString *key = arguments[@"key"];
+    NSString *value = arguments[@"value"];
+  
+    if (key != nil && value != nil) {
+      ASMetadata *metadata = @{key : value};
+      [AppSpector updateMetadata:metadata];
+    }
+
+    result(@"Ok");
+}
+
+- (void)handleRemoveMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+    ASMetadata *emptyMetadata = @{};
+    [AppSpector updateMetadata:emptyMetadata];
+    result(@"Ok");
+}
 @end

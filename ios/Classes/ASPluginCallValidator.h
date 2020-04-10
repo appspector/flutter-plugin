@@ -14,6 +14,11 @@ typedef NSString ASPluginMethodArgumentName;
 typedef NSDictionary <ASPluginMethodArgumentName *, id> ASPluginMethodArgumentsList;
 
 extern ASPluginMethodName * const kRunMethodName;
+extern ASPluginMethodName * const kStopMethodName;
+extern ASPluginMethodName * const kStartMethodName;
+extern ASPluginMethodName * const kIsStartedMethodName;
+extern ASPluginMethodName * const kSetMetadataMethodName;
+extern ASPluginMethodName * const kRemoveMetadataMethodName;
 extern ASPluginMethodName * const kHTTPRequestMethodName;
 extern ASPluginMethodName * const kHTTPResponseMethodName;
 extern ASPluginMethodName * const kLogEventMethodName;
@@ -25,7 +30,7 @@ extern ASPluginMethodName * const kLogEventMethodName;
 
 - (BOOL)argumentsValid:(ASPluginMethodArgumentsList *)arguments
                   call:(ASPluginMethodName *)methodName
-          errorMessage:(__autoreleasing NSString *_Nonnull*)errorMessage;
+          errorMessage:(__autoreleasing NSString *_Nonnull*_Nullable)errorMessage;
 
 
 
