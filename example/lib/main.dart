@@ -25,7 +25,20 @@ void runAppSpector() {
   var config = new Config()
     ..iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2"
     ..androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz"
-    ..monitors = [Monitors.screenshot, Monitors.http, Monitors.logs, Monitors.sqLite]
+    ..monitors = [
+      Monitors.http,
+      Monitors.logs,
+      Monitors.screenshot,
+      Monitors.environment,
+      Monitors.location,
+      Monitors.performance,
+      Monitors.sqLite,
+      Monitors.sharedPreferences,
+      Monitors.notification,
+      Monitors.analytics,
+      Monitors.userDefaults,
+      Monitors.coreData
+    ]
     ..metadata = {MetadataKeys.deviceName: "CustomName"};
 
   AppSpectorPlugin.run(config);
