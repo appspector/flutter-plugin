@@ -29,8 +29,8 @@ class Monitors {
   static const performance = const Monitor._commonMonitor("performance");
   static const sqLite = const Monitor._commonMonitor("sqlite");
   static const sharedPreferences = const Monitor._androidMonitor("shared-preferences");
-  static const notification = const Monitor._iosMonitor("notification");
   static const analytics = const Monitor._iosMonitor("analytics");
+  static const notification = const Monitor._iosMonitor("notification-center");
   static const userDefaults = const Monitor._iosMonitor("user-defaults");
-  static const coreData = const Monitor._iosMonitor("core-data");
+  static const coreData = const Monitor._iosMonitor("ios-core-data");
 }
