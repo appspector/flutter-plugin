@@ -34,8 +34,8 @@ void runAppSpector() {
       Monitors.performance,
       Monitors.sqLite,
       Monitors.sharedPreferences,
-      Monitors.notification,
       Monitors.analytics,
+      Monitors.notification,
       Monitors.userDefaults,
       Monitors.coreData
     ]
