@@ -121,14 +121,14 @@ class AppSpectorPlugin {
   Future<bool> isStarted() => _channel.invokeMethod("isStarted");
 
   /// Set metadata value
-  Future<void> setMetadata(String key, String value) =>
+  Future<void> setMetadataValue(String key, String value) =>
       _channel.invokeMethod("setMetadata", {
         "key": key,
         "value": value
       });
 
   /// Remove metadata value
-  Future<void> removeMetadata(String key) =>
+  Future<void> removeMetadataValue(String key) =>
       _channel.invokeMethod("removeMetadata", {
         "key": key
       });
