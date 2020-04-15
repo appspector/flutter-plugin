@@ -40,8 +40,7 @@ void runAppSpector(DataObservable<String> sessionObserver) {
       Monitors.notification,
       Monitors.userDefaults,
       Monitors.coreData
-    ]
-    ..metadata = {MetadataKeys.deviceName: "CustomName"};
+    ];
 
   AppSpectorPlugin.run(config);
 
