@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator
+                              channel:(FlutterMethodChannel *)controlChannel NS_DESIGNATED_INITIALIZER;
 
 @end
 

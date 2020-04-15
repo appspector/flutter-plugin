@@ -12,30 +12,33 @@
 
 static NSString * const kControlChannelName = @"appspector_plugin";
 static NSString * const kEventChannelName   = @"appspector_event_channel";
-static NSString * const kRequestChannelName = @"appspector_request_channel";
 
 @interface AppSpectorPlugin ()
 
 @property (strong, nonatomic) ASPluginCallValidator *callValidator;
 @property (strong, nonatomic) ASPluginEventsHandler *eventsHandler;
+@property (strong, nonatomic) FlutterMethodChannel *controlChannel;
 
 @end
 
 @implementation AppSpectorPlugin
 
-+ (instancetype)rootPlugin {
++ (instancetype)rootPluginWithChannel:(FlutterMethodChannel *)controlChannel {
     static AppSpectorPlugin *rootPlugin = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        rootPlugin = [[[self class] alloc] initWithCallValidator:[ASPluginCallValidator new]];
+        rootPlugin = [[[self class] alloc] initWithCallValidator:[ASPluginCallValidator new]
+                                                         channel:controlChannel];
     });
     return rootPlugin;
 }
 
-- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator {
+- (instancetype)initWithCallValidator:(ASPluginCallValidator *)validator
+                              channel:(FlutterMethodChannel *)controlChannel {
     if (self = [super init]) {
         _callValidator = validator;
         _eventsHandler = [[ASPluginEventsHandler alloc] initWithCallValidator:validator];
+        _controlChannel = controlChannel;
     }
     
     return self;
@@ -45,8 +48,10 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
     FlutterMethodChannel *controlChannel = [FlutterMethodChannel methodChannelWithName:kControlChannelName binaryMessenger:[registrar messenger]];
     FlutterMethodChannel *eventChannel = [FlutterMethodChannel methodChannelWithName:kEventChannelName binaryMessenger:[registrar messenger]];
     
-    [registrar addMethodCallDelegate:[AppSpectorPlugin rootPlugin] channel:controlChannel];
-    [registrar addMethodCallDelegate:[[AppSpectorPlugin rootPlugin] eventsHandler] channel:eventChannel];
+    AppSpectorPlugin *plugin = [AppSpectorPlugin rootPluginWithChannel:controlChannel];
+  
+    [registrar addMethodCallDelegate:plugin channel:controlChannel];
+    [registrar addMethodCallDelegate:plugin.eventsHandler channel:eventChannel];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
@@ -87,9 +92,16 @@ static NSString * const kRequestChannelName = @"appspector_request_channel";
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *apiKey = arguments[@"apiKey"];
     NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
+  
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
     config.metadata = arguments[@"metadata"];
+    __weak __auto_type weakSelf = self;
+    config.startCallback = ^(NSURL * _Nonnull sessionURL) {
+      [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
+    };
+  
     [AppSpector runWithConfig:config];
+  
     result(@"Ok");
 }
 
