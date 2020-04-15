@@ -33,10 +33,9 @@ Debugging doesn't have to be painful!
 
 # Installation
 
-Each app you want to use with AppSpector SDK you have to register iOS and
-Android app versions on our service through the web ([https://app.appspector.com](https://app.appspector.com?utm_source=android_readme))
-or the [desktop app](https://appspector.com/download/?utm_source=android_readme).
-After adding the application API keys will be available on the app settings pages.
+Before using AppSPector SDK in your Flutter app you have to register it on ([https://app.appspector.com](https://app.appspector.com?utm_source=android_readme)) via web or [desktop app](https://appspector.com/download/?utm_source=android_readme).
+To use SDK on both platforms (iOS and Android) you have to register two separate apps for different platforms.
+API keys required for the SDK initialisation will be available on the Apps settings pages
 
 ## Add AppSpector plugin to pubspec.yaml
 ```yaml
