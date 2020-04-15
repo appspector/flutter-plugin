@@ -55,11 +55,11 @@ void main() {
 }
 
 void runAppSpector() {
-  var config = new Config()
+  final config = Config()
     ..iosApiKey = "Your iOS API_KEY"
     ..androidApiKey = "Your Android API_KEY";
   
-  // If you don't want to start all monitors you can provide list of them
+  // If you don't want to start all monitors you can specify a list of necessary ones
   config.monitors = [Monitors.http, Monitors.logs, Monitors.screenshot];
   
   AppSpectorPlugin.run(config);
