@@ -22,7 +22,7 @@ void main() {
 }
 
 void runAppSpector() {
-  var config = new Config()
+  final config = Config()
     ..iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2"
     ..androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz"
     ..monitors = [
