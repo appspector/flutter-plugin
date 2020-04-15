@@ -1,12 +1,15 @@
 import 'package:appspector/appspector.dart' show Logger, AppSpectorPlugin;
-import 'package:logging/logging.dart' as logger;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logging/logging.dart' as logger;
 
 import 'app_drawer.dart';
+import 'utils.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final DataObservable<String> _sessionUrlObserver;
+
+  MyHomePage(this._sessionUrlObserver, {Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -20,26 +23,25 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(_sessionUrlObserver);
 }
 
-abstract class AbsMyHomePageState extends State<MyHomePage> {
-  void onSessionUrlChanged(String sessionUrl);
-}
-
-class _MyHomePageState extends AbsMyHomePageState {
+class _MyHomePageState extends State<MyHomePage> {
   final logger.Logger log = new logger.Logger('MyHomePageState');
 
   int _counter = 0;
 
   bool isSdkRunning = true;
-  String _sessionUrl = "Unknown";
+  String _sessionUrl;
 
-  @override
-  void onSessionUrlChanged(String sessionUrl) {
-    setState(() {
-      _sessionUrl = sessionUrl ?? "Unknown";
-    });
+  _MyHomePageState(DataObservable<String> sessionUrlObserver) {
+    sessionUrlObserver.observer = (sessionUrl) =>
+    {
+      setState(() {
+        _sessionUrl = sessionUrl;
+      })
+    };
+    _sessionUrl = sessionUrlObserver.getValue() ?? "Unknown";
   }
 
   void _incrementCounter() {

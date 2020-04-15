@@ -1,6 +1,7 @@
 import 'package:appspector/appspector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appspector_example/metadata_page.dart';
+import 'package:flutter_appspector_example/utils.dart';
 import 'package:logging/logging.dart' as logger;
 
 import 'color.dart';
@@ -11,8 +12,9 @@ import 'sqlite_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runAppSpector();
-  runApp(MyApp());
+  var globalSessionUrlObserver = DataObservable<String>();
+  runAppSpector(globalSessionUrlObserver);
+  runApp(MyApp(globalSessionUrlObserver));
 
   logger.Logger.root.level = logger.Level.ALL;
   logger.Logger.root.onRecord.listen((logger.LogRecord rec) {
@@ -21,7 +23,7 @@ void main() {
   });
 }
 
-void runAppSpector() {
+void runAppSpector(DataObservable<String> sessionObserver) {
   final config = Config()
     ..iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2"
     ..androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz"
@@ -42,18 +44,20 @@ void runAppSpector() {
     ..metadata = {MetadataKeys.deviceName: "CustomName"};
 
   AppSpectorPlugin.run(config);
+
+  AppSpectorPlugin.shared()?.sessionUrlListener = (sessionUrl) => {
+    sessionObserver.setValue(sessionUrl)
+  };
 }
 
 class MyApp extends StatelessWidget {
 
+ final DataObservable<String> _sessionUrlObserver;
+
+  MyApp(this._sessionUrlObserver);
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<AbsMyHomePageState> globalKey = GlobalKey();
-
-    AppSpectorPlugin.shared()?.sessionUrlListener ??= (sessionUrl) => {
-      globalKey.currentState?.onSessionUrlChanged(sessionUrl)
-    };
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -67,7 +71,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
           primarySwatch: appSpectorPrimary,
           accentColor: appSpectorAccent),
-      home: MyHomePage(title: 'Flutter Demo Home Page', key: globalKey),
+      home: MyHomePage(_sessionUrlObserver, title: 'Flutter Demo Home Page'),
       routes: {
         Routes.SQLiteMonitorPage: (BuildContext context) => SQLitePage(),
         Routes.HttpMonitorPage: (BuildContext context) => HttpMonitorPage(),
