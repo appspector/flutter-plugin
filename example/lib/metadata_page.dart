@@ -41,9 +41,9 @@ class MetadataPageState extends State<MetadataPage> {
   void _deviceNameChanged() {
     var newDeviceName = _deviceNameController.text;
     if (newDeviceName.isNotEmpty) {
-      AppSpectorPlugin.shared().setMetadata(MetadataKeys.deviceName, newDeviceName);
+      AppSpectorPlugin.shared().setMetadataValue(MetadataKeys.deviceName, newDeviceName);
     } else {
-      AppSpectorPlugin.shared().removeMetadata(MetadataKeys.deviceName);
+      AppSpectorPlugin.shared().removeMetadataValue(MetadataKeys.deviceName);
     }
   }
 }
