@@ -91,7 +91,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
 
 - (void)handleRunCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *apiKey = arguments[@"apiKey"];
-    NSSet<ASMonitorID> *monitorIds = [NSSet setWithArray:arguments[@"enabledMonitors"]];
+    NSSet<ASMonitorID> *monitorIds = [self validateAndMapRawMonitorIds:arguments[@"enabledMonitors"]];
   
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
     config.metadata = arguments[@"metadata"];
@@ -137,4 +137,41 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     [AppSpector updateMetadata:emptyMetadata];
     result(@"Ok");
 }
+
+- (NSSet<ASMonitorID> *)validateAndMapRawMonitorIds:(NSArray<NSString *> *)rawMonitorIds {
+  NSSet *allMonitors = [NSSet setWithObjects:
+                        AS_SCREENSHOT_MONITOR,
+                        AS_SQLITE_MONITOR,
+                        AS_HTTP_MONITOR,
+                        AS_COREDATA_MONITOR,
+                        AS_PERFORMANCE_MONITOR,
+                        AS_LOG_MONITOR,
+                        AS_LOCATION_MONITOR,
+                        AS_ENVIRONMENT_MONITOR ,
+                        AS_DEFAULTS_MONITOR,
+                        AS_NOTIFICATION_MONITOR,
+                        AS_ANALYTICS_MONITOR,
+                        AS_COMMANDS_MONITOR,
+                        nil];
+  
+  NSMutableSet *selectedMonotirIds = [NSMutableSet new];
+  NSMutableSet *invalidMonitorIds = [NSMutableSet new];
+  
+  for (NSString *monitorId in rawMonitorIds) {
+    if ([allMonitors containsObject:monitorId]) {
+      [selectedMonotirIds addObject:monitorId];
+    } else {
+      [invalidMonitorIds addObject:monitorId];
+    }
+  }
+  
+  if (invalidMonitorIds.count > 0) {
+    NSString *monitors = [[invalidMonitorIds allObjects] componentsJoinedByString:@"\n - "];
+    NSString *message = @"It looks like AppSpector iOS plugin initialized with invalid monitors: \n - %@ \n Please review AppSpectorPlugin initialization code. If the problem persist, please contact us at https://slack.appspector.com/";
+    NSLog(message, monitors);
+  }
+  
+  return selectedMonotirIds;
+}
+
 @end
