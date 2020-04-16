@@ -94,7 +94,9 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     NSSet<ASMonitorID> *monitorIds = [self validateAndMapRawMonitorIds:arguments[@"enabledMonitors"]];
   
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    config.metadata = arguments[@"metadata"];
+    NSDictionary *medatata = arguments[@"metadata"];
+    if (medatata) { config.metadata = medatata; }
+  
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
       [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
