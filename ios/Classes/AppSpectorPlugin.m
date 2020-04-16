@@ -147,7 +147,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
   __block BOOL isValid = YES;
   [rawMetadata enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent
                                        usingBlock:^(id key, id object, BOOL *stop) {
-    if (key == nil || key == NSNull.null || object == nil || object == NSNull.null) {
+    if (key == NSNull.null || object == NSNull.null) {
       isValid = NO;
     }
   }];
