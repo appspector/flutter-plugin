@@ -187,8 +187,4 @@
     [self waitForExpectations:@[e] timeout:0.1];
 }
 
-- (void)testStartSessionSendMesaageToMEthidChannel {
-  
-}
-
 @end
