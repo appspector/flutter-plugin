@@ -167,7 +167,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
   
   if (invalidMonitorIds.count > 0) {
     NSString *monitors = [[invalidMonitorIds allObjects] componentsJoinedByString:@"\n - "];
-    NSString *message = @"It looks like AppSpector iOS plugin initialized with invalid monitors: \n - %@ \n Please review AppSpectorPlugin initialization code. If the problem persist, please contact us at https://slack.appspector.com/";
+    NSString *message = @"It looks like AppSpector iOS plugin initialized with invalid monitors: \n - %@ \n Please review AppSpectorPlugin initialization code. If the problem persists, please contact us at https://slack.appspector.com/";
     NSLog(message, monitors);
   }
   
