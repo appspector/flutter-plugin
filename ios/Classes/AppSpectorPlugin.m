@@ -94,8 +94,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     NSSet<ASMonitorID> *monitorIds = [self validateAndMapRawMonitorIds:arguments[@"enabledMonitors"]];
   
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    NSDictionary *medatata = arguments[@"metadata"];
-    if (medatata) { config.metadata = medatata; }
+    config.metadata = [self validateAndMapRawMeatdata:arguments[@"metadata"]];
   
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
@@ -138,6 +137,29 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     ASMetadata *emptyMetadata = @{};
     [AppSpector updateMetadata:emptyMetadata];
     result(@"Ok");
+}
+
+- (ASMetadata *)validateAndMapRawMeatdata:(NSDictionary *)rawMetadata {
+  if (rawMetadata == nil) {
+    return @{};
+  }
+  
+  __block BOOL isValid = YES;
+  [rawMetadata enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent
+                                       usingBlock:^(id key, id object, BOOL *stop) {
+    if (key == nil || key == NSNull.null || object == nil || object == NSNull.null) {
+      isValid = NO;
+    }
+  }];
+  
+  if (isValid) {
+    return rawMetadata;
+  } else {
+    NSString *metadataString = rawMetadata.description;
+    NSString *message = @"It looks like AppSpector iOS plugin initialized with invalid metadata: \n %@ \n Please review AppSpectorPlugin initialization code. If the problem persists, please contact us at https://slack.appspector.com/";
+    NSLog(message, metadataString);
+    return @{};
+  }
 }
 
 - (NSSet<ASMonitorID> *)validateAndMapRawMonitorIds:(NSArray<NSString *> *)rawMonitorIds {
