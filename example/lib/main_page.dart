@@ -1,11 +1,15 @@
+import 'package:appspector/appspector.dart' show Logger, AppSpectorPlugin;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logging/logging.dart' as logger;
-import 'package:appspector/appspector.dart' show Logger;
 
 import 'app_drawer.dart';
+import 'utils.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final DataObservable<String> _sessionUrlObserver;
+
+  MyHomePage(this._sessionUrlObserver, {Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -19,13 +23,26 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(_sessionUrlObserver);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   final logger.Logger log = new logger.Logger('MyHomePageState');
 
   int _counter = 0;
+
+  bool isSdkRunning = true;
+  String _sessionUrl;
+
+  _MyHomePageState(DataObservable<String> sessionUrlObserver) {
+    sessionUrlObserver.observer = (sessionUrl) =>
+    {
+      setState(() {
+        _sessionUrl = sessionUrl;
+      })
+    };
+    _sessionUrl = sessionUrlObserver.getValue() ?? "Unknown";
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -52,6 +69,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _throwError() {
     throw Error();
+  }
+
+  void _stopSdk() async {
+    await AppSpectorPlugin.shared().stop();
+    setState(() {
+      isSdkRunning = false;
+    });
+  }
+
+  void _startSdk() async {
+    await AppSpectorPlugin.shared().start();
+    setState(() {
+      isSdkRunning = true;
+    });
+  }
+
+  void _checkSdkState() async {
+    var isStarted = await AppSpectorPlugin.shared().isStarted();
+
+    setState(() {
+      isSdkRunning = isStarted;
+    });
+
+    Fluttertoast.showToast(
+      msg: isStarted ? "SDK is started" : "SDK is stopped"
+    );
   }
 
   @override
@@ -86,8 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Text(
+              _sessionUrl
+            ),
+            const SizedBox(height: 124),
+            _createSwitchSdkStateButton(),
+            const SizedBox(height: 124),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -99,6 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Click here to log error'),
               onPressed: _clickLogErrorButton,
             ),
+            RaisedButton(
+              child: Text('Check SDK state'),
+              onPressed: _checkSdkState,
+            )
           ],
         ),
       ),
@@ -107,6 +160,30 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _createSwitchSdkStateButton() {
+    if (isSdkRunning) {
+      return _buildSwitchSdkStateButton("Pause", Colors.redAccent, _stopSdk);
+    } else {
+      return _buildSwitchSdkStateButton("Resume", Colors.green, _startSdk);
+    }
+  }
+
+  Widget _buildSwitchSdkStateButton(String text, Color color, Function() onPressed) {
+    return ButtonTheme(
+        minWidth: 120,
+        height: 120,
+        child: RaisedButton(
+            child: Text(text, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
+            color: color,
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(60),
+                side: BorderSide(color: Colors.transparent)
+            ),
+            onPressed: onPressed
+        )
     );
   }
 }
