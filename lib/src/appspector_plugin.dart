@@ -76,12 +76,13 @@ class AppSpectorPlugin {
   }
 
   Future<dynamic> _init(Config config) {
+    final monitors = config.monitors ?? Monitors.all();
     if (Platform.isAndroid) {
       ArgumentError.checkNotNull(config.androidApiKey, "androidApiKey");
-      return _initAppSpector(config.androidApiKey, _filterByPlatform(config.monitors, SupportedPlatform.android), config.metadata);
+      return _initAppSpector(config.androidApiKey, _filterByPlatform(monitors, SupportedPlatform.android), config.metadata);
     } else if (Platform.isIOS) {
       ArgumentError.checkNotNull(config.iosApiKey, "iosApiKey");
-      return _initAppSpector(config.iosApiKey, _filterByPlatform(config.monitors, SupportedPlatform.ios), config.metadata);
+      return _initAppSpector(config.iosApiKey, _filterByPlatform(monitors, SupportedPlatform.ios), config.metadata);
     } else {
       return Future.error("AppSpector doesn't support currect platform");
     }
@@ -107,8 +108,8 @@ class AppSpectorPlugin {
   _initAppSpector(String apiKey, Iterable<Monitor> monitors, Map<String, String> metadata) =>
       _channel.invokeMethod("run", {
         "apiKey": apiKey,
-        "metadata": metadata,
-        "enabledMonitors": monitors.map((m) => m.id).toList()
+        "enabledMonitors": monitors.map((m) => m.id).toList(),
+        "metadata": metadata
       });
 
   /// Stop all monitors and events sending
@@ -134,7 +135,7 @@ class AppSpectorPlugin {
       });
 
   Iterable<Monitor> _filterByPlatform(List<Monitor> monitors, SupportedPlatform platform) {
-    return monitors?.where((m) => m.platforms.contains(platform));
+    return monitors.where((m) => m.platforms.contains(platform));
   }
 }
 
