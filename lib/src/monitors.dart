@@ -33,4 +33,10 @@ class Monitors {
   static const notification = const Monitor._iosMonitor("notification-center");
   static const userDefaults = const Monitor._iosMonitor("user-defaults");
   static const coreData = const Monitor._iosMonitor("ios-core-data");
+
+  static List<Monitor> all() => [
+    http, logs, screenshot, environment, location, performance, sqLite,
+    analytics, notification, userDefaults, coreData,
+    sharedPreferences
+  ];
 }
