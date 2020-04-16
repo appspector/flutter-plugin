@@ -36,6 +36,6 @@ android {
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.2.0"
+    implementation "com.appspector:android-sdk:1.2.1"
     implementation 'androidx.annotation:annotation:1.1.0'
 }
