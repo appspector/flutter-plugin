@@ -1,9 +1,9 @@
-## 0.2.0 15 Apr 2020
+## 0.2.0 16 Apr 2020
 * Add API to provide list of monitors to enable
 * Add API to provide session metadata (including the device custom name)
 * Add API which allows to stop and start session during the application lifetime
 * Add ability to listen to a session url
-* Use Android SDK version 1.2.0
+* Use Android SDK version 1.2.1
 
 ## 0.1.0 24 Dec 2019
 * Fixed logging module
