@@ -125,7 +125,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     NSString *key = arguments[@"key"];
     NSString *value = arguments[@"value"];
   
-    if (key != nil && value != nil) {
+    if (key != nil && (id)key != NSNull.null && value != nil && (id)value != NSNull.null) {
       ASMetadata *metadata = @{key : value};
       [AppSpector updateMetadata:metadata];
     }
@@ -140,7 +140,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
 }
 
 - (ASMetadata *)validateAndMapRawMeatdata:(NSDictionary *)rawMetadata {
-  if (rawMetadata == nil) {
+  if (rawMetadata == nil || (id)rawMetadata == NSNull.null) {
     return @{};
   }
   
