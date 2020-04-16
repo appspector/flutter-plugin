@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) id validatorMock;
 @property (strong, nonatomic) AppSpectorPlugin *handler;
+@property (strong, nonatomic) FlutterMethodChannel *channel;
 
 @end
 
@@ -24,7 +25,8 @@
 
 - (void)setUp {
     self.validatorMock = OCMClassMock([ASPluginCallValidator class]);
-    self.handler = [[AppSpectorPlugin alloc] initWithCallValidator:self.validatorMock];
+    self.channel = OCMClassMock([FlutterMethodChannel class]);
+    self.handler = [[AppSpectorPlugin alloc] initWithCallValidator:self.validatorMock channel:self.channel];
 }
 
 - (void)tearDown {
@@ -183,6 +185,10 @@
     }];
     
     [self waitForExpectations:@[e] timeout:0.1];
+}
+
+- (void)testStartSessionSendMesaageToMEthidChannel {
+  
 }
 
 @end
