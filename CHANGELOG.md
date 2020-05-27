@@ -1,3 +1,6 @@
+## 0.3.0 27 May 2020
+* Add File System monitor
+
 ## 0.2.0 16 Apr 2020
 * Add API to provide list of monitors to enable
 * Add API to provide session metadata (including the device custom name)

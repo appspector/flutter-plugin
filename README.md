@@ -41,7 +41,7 @@ API keys required for the SDK initialisation will be available on the Apps setti
 ## Add AppSpector plugin to pubspec.yaml
 ```yaml
 dependencies
-  appspector: '0.2.0'
+  appspector: '0.3.0'
 ```
 
 ## Initialize AppSpector plugin
