@@ -8,12 +8,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
     }
 }
 
 rootProject.allprojects {
     repositories {
+        google()
         maven { url "https://maven.appspector.com/artifactory/android-sdk" }
     }
 }
@@ -36,6 +37,6 @@ android {
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.2.1"
+    implementation "com.appspector:android-sdk:1.3.+"
     implementation 'androidx.annotation:annotation:1.1.0'
 }

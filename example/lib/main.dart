@@ -30,6 +30,7 @@ void runAppSpector(DataObservable<String> sessionObserver) {
     ..monitors = [
       Monitors.http,
       Monitors.logs,
+      Monitors.fileSystem,
       Monitors.screenshot,
       Monitors.environment,
       Monitors.location,

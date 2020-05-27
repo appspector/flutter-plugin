@@ -172,6 +172,7 @@ public class AppSpectorPlugin implements MethodCallHandler {
             put("performance", Builder::addPerformanceMonitor);
             put("sqlite", Builder::addSQLMonitor);
             put("shared-preferences", Builder::addSharedPreferenceMonitor);
+            put("file-system", Builder::addFileSystemMonitor);
         }};
     }
 

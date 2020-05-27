@@ -23,6 +23,7 @@ class Monitors {
 
   static const http = const Monitor._commonMonitor("http");
   static const logs = const Monitor._commonMonitor("logs");
+  static const fileSystem = const Monitor._commonMonitor("file-system");
   static const screenshot = const Monitor._commonMonitor("screenshot");
   static const environment = const Monitor._commonMonitor("environment");
   static const location = const Monitor._commonMonitor("location");
@@ -35,7 +36,7 @@ class Monitors {
   static const coreData = const Monitor._iosMonitor("ios-core-data");
 
   static List<Monitor> all() => [
-    http, logs, screenshot, environment, location, performance, sqLite,
+    http, logs, screenshot, environment, location, performance, sqLite, fileSystem,
     analytics, notification, userDefaults, coreData,
     sharedPreferences
   ];

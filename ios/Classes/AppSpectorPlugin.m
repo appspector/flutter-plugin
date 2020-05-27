@@ -176,6 +176,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
                         AS_NOTIFICATION_MONITOR,
                         AS_ANALYTICS_MONITOR,
                         AS_COMMANDS_MONITOR,
+                        AS_FS_MONITOR,
                         nil];
   
   NSMutableSet *selectedMonotirIds = [NSMutableSet new];
