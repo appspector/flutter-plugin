@@ -15,6 +15,7 @@ Debugging doesn't have to be painful!
   * [Initialize AppSpector plugin](#initialize-appspector-plugin)
   * [Build and Run](#build-and-run)
   * [Getting session URL](#getting-session-url)
+  * [Correct SQLite setup for the SDK](#correct-sqlite-setup-for-the-sdk)
 * [Configure](#configure)
   * [Start/Stop data collection](#startstop-data-collection)
   * [Custom device name](#custom-device-name)
@@ -29,12 +30,13 @@ Debugging doesn't have to be painful!
   * [Performance monitor](#performance-monitor)
   * [Environment monitor](#environment-monitor)
   * [Notification Center monitor (only for iOS)](#notification-center-monitor-only-for-ios)
+  * [File System Monitor](#file-system-monitor)
 * [Feedback](#feedback)
 
 
 # Installation
 
-Before using AppSPector SDK in your Flutter app you have to register it on ([https://app.appspector.com](https://app.appspector.com?utm_source=android_readme)) via web or [desktop app](https://appspector.com/download/?utm_source=android_readme).
+Before using AppSpector SDK in your Flutter app you have to register it on ([https://app.appspector.com](https://app.appspector.com?utm_source=android_readme)) via web or [desktop app](https://appspector.com/download/?utm_source=android_readme).
 To use SDK on both platforms (iOS and Android) you have to register two separate apps for different platforms.
 API keys required for the SDK initialisation will be available on the Apps settings pages
 
@@ -148,6 +150,18 @@ AppSpectorPlugin.shared()?.sessionUrlListener = (sessionUrl) => {
 ```
 
 
+## Correct SQLite setup for the SDK
+
+The SQLite monitor on Android demands that any DB files are located at the `database` folder.
+So, if you're using [sqflite](https://pub.dev/packages/sqflite) the code for opening db will be looks like that:
+
+```dart
+var dbPath = await getDatabasesPath() + "/my_database_name";
+var db = await openDatabase(dbPath, version: 1, onCreate: _onCreate);
+```
+
+The `getDatabasesPath()` method is imported from `package:sqflite/sqflite.dart`.
+
 # Features
 
 AppSpector provides many monitors that are can be different for both platforms.
@@ -202,6 +216,9 @@ Gathers all of the environment variables and arguments in one place, info.plist,
 Tracks all posted notifications and subscriptions. You can examine notification user info, sender/reciever objects, etc.
 And naturally you can post notifications to your app from the frontend.
 
+### File System Monitor
+Provides access to the application internal storage on Android and sandbox and bundle on iOS.
+Using this monitor you're able to download, remove or upload files, create directories and just walk around your app FS.
 
 For mode details, you can visit [Android SDK](https://github.com/appspector/android-sdk/) and [iOS SDK](https://github.com/appspector/ios-sdk) pages.
 
