@@ -1,3 +1,6 @@
+## 0.4.0 6 Oct 2020
+* Support new Flutter version (1.22.0)
+
 ## 0.3.0 27 May 2020
 * Add File System monitor
 
