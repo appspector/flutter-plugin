@@ -107,4 +107,9 @@ class HttpRequestWrapper extends HttpClientRequest {
   void writeln([Object obj = ""]) {
     _httpClientRequest.writeln(obj);
   }
+
+  @override
+  void abort([Object exception, StackTrace stackTrace]) {
+    _httpClientRequest.abort(exception, stackTrace);
+  }
 }
