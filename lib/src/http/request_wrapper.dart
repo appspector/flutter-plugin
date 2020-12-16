@@ -10,16 +10,42 @@ class HttpRequestWrapper extends HttpClientRequest {
   final HttpEventTracker _httpEventTracker;
 
   @override
-  Encoding encoding;
+  Encoding get encoding =>  _httpClientRequest.encoding;
 
-  HttpRequestWrapper(this._httpClientRequest, this._httpEventTracker) {
-    this.encoding = _httpClientRequest.encoding;
-    this.persistentConnection = _httpClientRequest.persistentConnection;
-    this.followRedirects = _httpClientRequest.followRedirects;
-    this.maxRedirects = _httpClientRequest.maxRedirects;
-    this.contentLength = _httpClientRequest.contentLength;
-    this.bufferOutput = _httpClientRequest.bufferOutput;
-  }
+  @override
+  set encoding(Encoding value) =>  _httpClientRequest.encoding = value;
+
+  @override
+  int get contentLength => _httpClientRequest.contentLength;
+
+  @override
+  set contentLength(int value) => _httpClientRequest.contentLength = value;
+
+  @override
+  bool get bufferOutput => _httpClientRequest.bufferOutput;
+
+  @override
+  set bufferOutput(bool value) => _httpClientRequest.bufferOutput = value;
+
+  @override
+  bool get followRedirects => _httpClientRequest.followRedirects;
+
+  @override
+  set followRedirects(bool value) => _httpClientRequest.followRedirects = value;
+
+  @override
+  bool get persistentConnection => _httpClientRequest.persistentConnection;
+
+  @override
+  set persistentConnection(bool value) => _httpClientRequest.persistentConnection = value;
+
+  @override
+  int get maxRedirects => _httpClientRequest.maxRedirects;
+
+  @override
+  set maxRedirects(int value) => _httpClientRequest.maxRedirects = value;
+
+  HttpRequestWrapper(this._httpClientRequest, this._httpEventTracker);
 
   @override
   void add(List<int> data) {
