@@ -10,7 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-#import <AppSpectorSDK/AppSpector.h>
+//#import <AppSpectorSDK/AppSpector.h>
 #import "ASPluginCallValidator.h"
 
 
@@ -82,20 +82,20 @@
 #pragma mark - Validators -
 
 - (void)verifyValidParams:(ASPluginMethodArgumentsList *)args forCall:(ASPluginMethodName *)methodName {
-    NSError *validCallError = nil;
-    BOOL success = [self.validator argumentsValid:args call:methodName error:&validCallError];
+    NSString *validCallErrorMessage = nil;
+    BOOL success = [self.validator argumentsValid:args call:methodName errorMessage:&validCallErrorMessage];
     expect(success).to.beTruthy();
-    expect(validCallError).to.beNil();
+    expect(validCallErrorMessage).to.beNil();
 }
 
 - (void)verifyInvalidParams:(ASPluginMethodArgumentsList *)args forCall:(ASPluginMethodName *)methodName {
-    NSError * __autoreleasing invalidCallError = nil;
-    BOOL success = [self.validator argumentsValid:args call:methodName error:&invalidCallError];
+    NSString *invalidCallErrorMessage = nil;
+    BOOL success = [self.validator argumentsValid:args call:methodName errorMessage:&invalidCallErrorMessage];
     expect(success).to.beFalsy();
-    NSError *error = invalidCallError;
-    NSString *errorDescription = invalidCallError.localizedDescription;
-    expect(error).toNot.beNil();
-    expect(errorDescription).toNot.beNil();
+    //NSError *error = invalidCallError;
+    //NSString *errorDescription = invalidCallError.localizedDescription;
+    expect(invalidCallErrorMessage).toNot.beNil();
+    //expect(errorDescription).toNot.beNil();
 }
 
 @end

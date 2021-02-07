@@ -34,8 +34,8 @@
         // Validate arguments
         NSError *validationError = nil;
         if (![self.callValidator argumentsValid:call.arguments
-                                           call:call.method
-                                          error:&validationError]) {
+                                           call:call.method       
+                                   errorMessage:&validationError]) {
             result(validationError.localizedDescription);
             return;
         }

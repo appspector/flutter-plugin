@@ -10,7 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-#import <AppSpectorSDK/AppSpector.h>
+//#import <AppSpectorSDK/AppSpector.h>
 #import "AppSpectorPlugin.h"
 
 @interface AppSpectorPluginTests : XCTestCase
