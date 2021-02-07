@@ -8,12 +8,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:4.1.1'
     }
 }
 
 rootProject.allprojects {
     repositories {
+        google()
         maven { url "https://maven.appspector.com/artifactory/android-sdk" }
     }
 }
@@ -21,17 +22,25 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion 21
     }
+
     lintOptions {
         disable 'InvalidPackage'
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
 dependencies {
-    implementation "com.appspector:android-sdk:1.1.5"
+    implementation("com.appspector:android-sdk:1.4.+") {
+        exclude group:"org.jetbrains.kotlin"
+    }
+    implementation 'androidx.annotation:annotation:1.1.0'
 }

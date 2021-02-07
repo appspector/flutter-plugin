@@ -1,17 +1,21 @@
 import 'package:appspector/appspector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appspector_example/metadata_page.dart';
+import 'package:flutter_appspector_example/utils.dart';
+import 'package:logging/logging.dart' as logger;
 
 import 'color.dart';
 import 'http_page.dart';
 import 'main_page.dart';
 import 'routes.dart';
 import 'sqlite_page.dart';
-import 'package:logging/logging.dart' as logger;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runAppSpector();
-  runApp(MyApp());
+  var globalSessionUrlObserver = DataObservable<String>();
+  runAppSpector(globalSessionUrlObserver);
+  runApp(MyApp(globalSessionUrlObserver));
+
   logger.Logger.root.level = logger.Level.ALL;
   logger.Logger.root.onRecord.listen((logger.LogRecord rec) {
     Logger.log(LogLevel.DEBUG, rec.loggerName, "(${rec.level.name}) ${rec.message}");
@@ -19,15 +23,39 @@ void main() {
   });
 }
 
-void runAppSpector() {
-  var config = new Config();
-  config.iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2";
-  config.androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz";
+void runAppSpector(DataObservable<String> sessionObserver) {
+  final config = Config()
+    ..iosApiKey = "YjU1NDVkZGEtN2U3Zi00MDM3LTk5ZGQtNzdkNzY3YmUzZGY2"
+    ..androidApiKey = "MWM1YTZlOTItMmU4OS00NGI2LWJiNGQtYjdhZDljNjBhYjcz"
+    ..monitors = [
+      Monitors.http,
+      Monitors.logs,
+      Monitors.fileSystem,
+      Monitors.screenshot,
+      Monitors.environment,
+      Monitors.location,
+      Monitors.performance,
+      Monitors.sqLite,
+      Monitors.sharedPreferences,
+      Monitors.analytics,
+      Monitors.notification,
+      Monitors.userDefaults,
+      Monitors.coreData
+    ];
+
   AppSpectorPlugin.run(config);
+
+  AppSpectorPlugin.shared()?.sessionUrlListener = (sessionUrl) => {
+    sessionObserver.setValue(sessionUrl)
+  };
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+ final DataObservable<String> _sessionUrlObserver;
+
+  MyApp(this._sessionUrlObserver);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,10 +71,11 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
           primarySwatch: appSpectorPrimary,
           accentColor: appSpectorAccent),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(_sessionUrlObserver, title: 'Flutter Demo Home Page'),
       routes: {
         Routes.SQLiteMonitorPage: (BuildContext context) => SQLitePage(),
         Routes.HttpMonitorPage: (BuildContext context) => HttpMonitorPage(),
+        Routes.MetadataPage: (BuildContext context) => MetadataPage(),
       },
     );
   }

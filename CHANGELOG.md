@@ -1,3 +1,23 @@
+## 0.5.0 16 Dec 2020
+* Use 1.4.+ AppSpector Android SDK
+* Fix issue with missing Content-Length header
+
+## 0.4.0 6 Oct 2020
+* Support new Flutter version (1.22.0)
+
+## 0.3.0 27 May 2020
+* Add File System monitor
+
+## 0.2.0 16 Apr 2020
+* Add API to provide list of monitors to enable
+* Add API to provide session metadata (including the device custom name)
+* Add API which allows to stop and start session during the application lifetime
+* Add ability to listen to a session url
+* Use Android SDK version 1.2.1
+
+## 0.1.0 24 Dec 2019
+* Fixed logging module
+
 ## 0.0.9 20 Nov 2019
 * Fix compatibility with DIO library
 

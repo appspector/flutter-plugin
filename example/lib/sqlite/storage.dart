@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'record.dart';
@@ -28,9 +25,8 @@ class RecordStorageImpl implements RecordStorage {
 
   //Creating a database with name test.db in your directory
   initDb() async {
-    io.Directory documentsDirectory = await getApplicationSupportDirectory();
-    var path = join(documentsDirectory.path.substring(0, documentsDirectory.path.length - "files".length), "databases/test.db");
-    var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    var dbPath = await getDatabasesPath() + "/test.db";
+    var theDb = await openDatabase(dbPath, version: 1, onCreate: _onCreate);
     return theDb;
   }
 
