@@ -1,3 +1,10 @@
+## 0.5.0 16 Dec 2020
+* Use 1.4.+ AppSpector Android SDK
+* Fix issue with missing Content-Length header
+
+## 0.4.0 6 Oct 2020
+* Support new Flutter version (1.22.0)
+
 ## 0.3.0 27 May 2020
 * Add File System monitor
 
