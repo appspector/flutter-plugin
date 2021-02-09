@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "AC7AA52D-790A-4B2A-B085-2AE5B3C71E2A",
+      "name" : "Configuration 1",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:Runner.xcodeproj",
+          "identifier" : "97C146ED1CF9000F007C117D",
+          "name" : "Runner"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Runner.xcodeproj",
+        "identifier" : "0EB522EC2260D6F40076C990",
+        "name" : "AppSpectorPluginTests"
+      }
+    }
+  ],
+  "version" : 1
+}

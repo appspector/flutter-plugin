@@ -18,6 +18,8 @@ ASPluginMethodName * const kHTTPResponseMethodName   = @"http-response";
 ASPluginMethodName * const kLogEventMethodName       = @"log-event";
 
 ASPluginMethodArgumentName * const kAPIKeyArgument = @"apiKey";
+ASPluginMethodArgumentName * const kEnabledMonitorsArgument = @"enabledMonitors";
+ASPluginMethodArgumentName * const kMetadataArgument = @"metadata";
 
 ASPluginMethodArgumentName * const kUIDArgument = @"uid";
 ASPluginMethodArgumentName * const kURLArgument = @"url";

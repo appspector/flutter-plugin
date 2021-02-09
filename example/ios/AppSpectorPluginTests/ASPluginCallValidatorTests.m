@@ -10,7 +10,6 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-//#import <AppSpectorSDK/AppSpector.h>
 #import "ASPluginCallValidator.h"
 
 
@@ -44,7 +43,10 @@
 }
 
 - (void)testRunCallParametersValidation {
-    [self verifyValidParams:@{ kAPIKeyArgument : @"API_KEY"} forCall:kRunMethodName];
+    [self verifyValidParams:@{ kAPIKeyArgument : @"API_KEY",
+                               kEnabledMonitorsArgument : @[],
+                               kMetadataArgument : @""
+    } forCall:kRunMethodName];
     [self verifyInvalidParams:@{ @"FAKE_ARG" : @"FAKE_VALUE"} forCall:kRunMethodName];
 }
 
@@ -82,20 +84,18 @@
 #pragma mark - Validators -
 
 - (void)verifyValidParams:(ASPluginMethodArgumentsList *)args forCall:(ASPluginMethodName *)methodName {
-    NSString *validCallErrorMessage = nil;
-    BOOL success = [self.validator argumentsValid:args call:methodName errorMessage:&validCallErrorMessage];
+    NSError *validCallError = nil;
+    BOOL success = [self.validator argumentsValid:args call:methodName error:&validCallError];
     expect(success).to.beTruthy();
-    expect(validCallErrorMessage).to.beNil();
+    expect(validCallError).to.beNil();
 }
 
 - (void)verifyInvalidParams:(ASPluginMethodArgumentsList *)args forCall:(ASPluginMethodName *)methodName {
-    NSString *invalidCallErrorMessage = nil;
-    BOOL success = [self.validator argumentsValid:args call:methodName errorMessage:&invalidCallErrorMessage];
+    NSError *invalidCallError = nil;
+    BOOL success = [self.validator argumentsValid:args call:methodName error:&invalidCallError];
     expect(success).to.beFalsy();
-    //NSError *error = invalidCallError;
-    //NSString *errorDescription = invalidCallError.localizedDescription;
-    expect(invalidCallErrorMessage).toNot.beNil();
-    //expect(errorDescription).toNot.beNil();
+    expect(invalidCallError).toNot.beNil();
+    expect(invalidCallError.localizedDescription).toNot.beNil();
 }
 
 @end

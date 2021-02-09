@@ -60,7 +60,7 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
         NSError *validationError = nil;
         if (![self.callValidator argumentsValid:call.arguments
                                            call:call.method       
-                                   errorMessage:&validationError]) {
+                                          error:&validationError]) {
             result(validationError.localizedDescription);
             return;
         }

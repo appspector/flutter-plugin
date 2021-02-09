@@ -10,7 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-//#import <AppSpectorSDK/AppSpector.h>
+#import <AppSpectorSDK/AppSpector.h>
 #import "AppSpectorPlugin.h"
 
 @interface AppSpectorPluginTests : XCTestCase
@@ -31,7 +31,7 @@
 
 - (void)tearDown {
     self.validatorMock = nil;
-    self.plugin = nil;
+    self.handler = nil;
 }
 
 - (void)testHandlerSupportsRunCall {
@@ -47,7 +47,7 @@
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMExpect(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));
     
-    [self.plugin handleMethodCall:call result:^(id result) {
+    [self.handler handleMethodCall:call result:^(id result) {
         expect(result).equal(@"Ok");
         OCMVerifyAll(sdkMock);
         [e fulfill];
@@ -61,7 +61,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"stop" arguments:@{}];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMExpect(ClassMethod([sdkMock stop]));
@@ -80,7 +80,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"isStarted" arguments:@{}];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMStub(ClassMethod([sdkMock isRunning])).andReturn(YES);
@@ -100,7 +100,7 @@
                                                                                               @"value" : @"device name"
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     ASMetadata *expectedMetadata = @{AS_DEVICE_NAME_KEY:@"device name"};
   
@@ -122,7 +122,7 @@
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"removeMetadata" arguments:@{ @"key" : @"userSpecifiedDeviceName"
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     ASMetadata *expectedMetadata = @{};
   
@@ -146,7 +146,7 @@
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
     OCMExpect([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
     
-    [self.plugin handleMethodCall:call result:^(id result) {
+    [self.handler handleMethodCall:call result:^(id result) {
         OCMVerifyAll(self.validatorMock);
         [e fulfill];
     }];
@@ -164,7 +164,7 @@
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMReject(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));
     
-    [self.plugin handleMethodCall:call result:^(id result) {
+    [self.handler handleMethodCall:call result:^(id result) {
         OCMVerifyAll(sdkMock);
         [e fulfill];
     }];
@@ -178,7 +178,7 @@
     OCMExpect([self.validatorMock controlMethodSupported:[OCMArg any]]);
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"foo" arguments:@{}];
-    [self.plugin handleMethodCall:call result:^(id result) {
+    [self.handler handleMethodCall:call result:^(id result) {
         expect(result).notTo.equal(@"Ok");
         OCMVerifyAll(self.validatorMock);
         [e fulfill];

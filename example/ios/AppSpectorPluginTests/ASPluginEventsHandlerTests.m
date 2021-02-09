@@ -10,9 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-//#import <AppSpectorSDK/AppSpector.h>
 #import "ASPluginEventsHandler.h"
-//#import <appspector/ASPluginEventsHandler.h>
 
 @interface ASPluginEventsHandlerTests : XCTestCase
 
@@ -36,18 +34,15 @@
 - (void)testHandlerReturnsErrorForInvalidCall {
     XCTestExpectation *e = [self expectationWithDescription:@""];
     OCMStub([self.callValidatorMock eventMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.callValidatorMock argumentsValid:[OCMArg any] call:[OCMArg any] errorMessage:[OCMArg checkWithBlock:^BOOL(id errMsgRef) {
-        errMsgRef = @""
-        return YES;
-    }]]);
+    OCMStub([self.callValidatorMock argumentsValid:[OCMArg any] call:[OCMArg any] error:[OCMArg anyObjectRef]]).andReturn(YES);
     
-    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{}];
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"foo" arguments:@{}];
     [self.handler handleMethodCall:call result:^(id result) {
-        expect([result isKindOfClass:[NSString class]]).to.beTruthy();
+        expect(result).toNot.beNil();
         [e fulfill];
     }];
     
-    [self waitForExpectations:@[e] timeout:0.1];
+    [self waitForExpectations:@[e] timeout:1.1];
 }
 
 @end
