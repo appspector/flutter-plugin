@@ -4,7 +4,6 @@ set -ex
 
 cd ./example/ios
 
-flutter upgrade
 flutter pub get
 pod install
 
