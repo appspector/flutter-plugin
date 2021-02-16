@@ -128,7 +128,12 @@ public class AppSpectorPlugin implements MethodCallHandler {
     }
 
     private void checkSdkStarted(@NonNull Result result) {
-        withSharedInstance(result, AppSpector::isStarted);
+        final AppSpector sharedInstance = AppSpector.shared();
+        if (sharedInstance != null) {
+            result.success(sharedInstance.isStarted());
+            return;
+        }
+        result.success(false);
     }
 
     private void stopSdk(@NonNull Result result) {
