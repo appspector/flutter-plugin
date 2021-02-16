@@ -107,7 +107,7 @@ class AppSpectorPlugin {
 
   /// Method for starting AppSpector with supplied configs
   static Future<dynamic> run(Config config) {
-    AppSpectorPlugin.shared()?.isStarted().then((started) {
+    return AppSpectorPlugin.shared().isStarted().then((started) {
       if (!started) {
         return new AppSpectorPlugin._withConfig(config)._init(config);
       } else {
