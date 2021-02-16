@@ -60,12 +60,15 @@ class Config {
 /// </pre></p>
 /// <p>For more information visit the <a href="https://docs.appspector.com">AppSpector Page</a>.</p>
 class AppSpectorPlugin {
-  static AppSpectorPlugin _appSpectorPlugin;
+  static AppSpectorPlugin _appSpectorPlugin =
+      AppSpectorPlugin._privateConstructor();
 
   final MethodChannel _channel = const MethodChannel('appspector_plugin');
   final RequestReceiver _requestReceiver = new RequestReceiver();
 
   Function(String) sessionUrlListener;
+
+  AppSpectorPlugin._privateConstructor();
 
   AppSpectorPlugin._withConfig(Config config) {
     HttpOverrides.global = AppSpectorHttpOverrides();
@@ -104,7 +107,13 @@ class AppSpectorPlugin {
 
   /// Method for starting AppSpector with supplied configs
   static Future<dynamic> run(Config config) {
-    return new AppSpectorPlugin._withConfig(config)._init(config);
+    AppSpectorPlugin.shared()?.isStarted().then((started) {
+      if (!started) {
+        return new AppSpectorPlugin._withConfig(config)._init(config);
+      } else {
+        return _appSpectorPlugin;
+      }
+    });
   }
 
   _initAppSpector(String apiKey, Iterable<Monitor> monitors,

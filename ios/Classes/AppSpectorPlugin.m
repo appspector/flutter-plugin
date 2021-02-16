@@ -98,9 +98,9 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
   
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
-      [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
+        [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
     };
-  
+    
     [AppSpector runWithConfig:config];
   
     result(@"Ok");

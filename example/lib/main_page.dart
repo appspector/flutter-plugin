@@ -35,12 +35,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String _sessionUrl;
 
   _MyHomePageState(DataObservable<String> sessionUrlObserver) {
-    sessionUrlObserver.observer = (sessionUrl) =>
-    {
-      setState(() {
-        _sessionUrl = sessionUrl;
-      })
-    };
+    sessionUrlObserver.observer = (sessionUrl) => {
+          setState(() {
+            _sessionUrl = sessionUrl;
+          })
+        };
     _sessionUrl = sessionUrlObserver.getValue() ?? "Unknown";
   }
 
@@ -93,8 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Fluttertoast.showToast(
-      msg: isStarted ? "SDK is started" : "SDK is stopped"
-    );
+        msg: isStarted ? "SDK is started" : "SDK is stopped");
   }
 
   @override
@@ -131,9 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              _sessionUrl
-            ),
+            Text(_sessionUrl),
             const SizedBox(height: 124),
             _createSwitchSdkStateButton(),
             const SizedBox(height: 124),
@@ -171,19 +167,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Widget _buildSwitchSdkStateButton(String text, Color color, Function() onPressed) {
+  Widget _buildSwitchSdkStateButton(
+      String text, Color color, Function() onPressed) {
     return ButtonTheme(
         minWidth: 120,
         height: 120,
         child: RaisedButton(
-            child: Text(text, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
+            child: Text(text,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24)),
             color: color,
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(60),
-                side: BorderSide(color: Colors.transparent)
-            ),
-            onPressed: onPressed
-        )
-    );
+                side: BorderSide(color: Colors.transparent)),
+            onPressed: onPressed));
   }
 }
