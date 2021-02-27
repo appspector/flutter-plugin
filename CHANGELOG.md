@@ -1,4 +1,4 @@
-## 0.6.0 16 Dec 2020
+## 0.6.0 28 Feb 2021
 * Fix losing connection after the hot restart
 
 ## 0.5.0 16 Dec 2020
