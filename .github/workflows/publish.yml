@@ -19,6 +19,6 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '1.22.6'
-      - run: mkdir $FLUTTER_HOME/.pub-cache && echo $CREDENTIALS_JSON > $FLUTTER_HOME/.pub-cache/credentials.json
+      - run: mkdir -p $FLUTTER_HOME/.pub-cache && echo $CREDENTIALS_JSON > $FLUTTER_HOME/.pub-cache/credentials.json
       - run: flutter pub get
       - run: flutter pub publish -f
