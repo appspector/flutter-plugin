@@ -60,13 +60,15 @@ class Config {
 /// </pre></p>
 /// <p>For more information visit the <a href="https://docs.appspector.com">AppSpector Page</a>.</p>
 class AppSpectorPlugin {
-
-  static AppSpectorPlugin _appSpectorPlugin;
+  static AppSpectorPlugin _appSpectorPlugin =
+      AppSpectorPlugin._privateConstructor();
 
   final MethodChannel _channel = const MethodChannel('appspector_plugin');
   final RequestReceiver _requestReceiver = new RequestReceiver();
 
   Function(String) sessionUrlListener;
+
+  AppSpectorPlugin._privateConstructor();
 
   AppSpectorPlugin._withConfig(Config config) {
     HttpOverrides.global = AppSpectorHttpOverrides();
@@ -79,12 +81,16 @@ class AppSpectorPlugin {
     final monitors = config.monitors ?? Monitors.all();
     if (Platform.isAndroid) {
       ArgumentError.checkNotNull(config.androidApiKey, "androidApiKey");
-      return _initAppSpector(config.androidApiKey, _filterByPlatform(monitors, SupportedPlatform.android), config.metadata);
+      return _initAppSpector(
+          config.androidApiKey,
+          _filterByPlatform(monitors, SupportedPlatform.android),
+          config.metadata);
     } else if (Platform.isIOS) {
       ArgumentError.checkNotNull(config.iosApiKey, "iosApiKey");
-      return _initAppSpector(config.iosApiKey, _filterByPlatform(monitors, SupportedPlatform.ios), config.metadata);
+      return _initAppSpector(config.iosApiKey,
+          _filterByPlatform(monitors, SupportedPlatform.ios), config.metadata);
     } else {
-      return Future.error("AppSpector doesn't support currect platform");
+      return Future.error("AppSpector doesn't support current platform");
     }
   }
 
@@ -101,11 +107,17 @@ class AppSpectorPlugin {
 
   /// Method for starting AppSpector with supplied configs
   static Future<dynamic> run(Config config) {
-    return new AppSpectorPlugin._withConfig(config)
-        ._init(config);
+    return AppSpectorPlugin.shared().isStarted().then((started) {
+      if (!started) {
+        return new AppSpectorPlugin._withConfig(config)._init(config);
+      } else {
+        return _appSpectorPlugin;
+      }
+    });
   }
 
-  _initAppSpector(String apiKey, Iterable<Monitor> monitors, Map<String, String> metadata) =>
+  _initAppSpector(String apiKey, Iterable<Monitor> monitors,
+          Map<String, String> metadata) =>
       _channel.invokeMethod("run", {
         "apiKey": apiKey,
         "enabledMonitors": monitors.map((m) => m.id).toList(),
@@ -123,18 +135,14 @@ class AppSpectorPlugin {
 
   /// Set metadata value
   Future<void> setMetadataValue(String key, String value) =>
-      _channel.invokeMethod("setMetadata", {
-        "key": key,
-        "value": value
-      });
+      _channel.invokeMethod("setMetadata", {"key": key, "value": value});
 
   /// Remove metadata value
   Future<void> removeMetadataValue(String key) =>
-      _channel.invokeMethod("removeMetadata", {
-        "key": key
-      });
+      _channel.invokeMethod("removeMetadata", {"key": key});
 
-  Iterable<Monitor> _filterByPlatform(List<Monitor> monitors, SupportedPlatform platform) {
+  Iterable<Monitor> _filterByPlatform(
+      List<Monitor> monitors, SupportedPlatform platform) {
     return monitors.where((m) => m.platforms.contains(platform));
   }
 }

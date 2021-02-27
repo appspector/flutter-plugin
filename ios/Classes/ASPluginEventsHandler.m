@@ -32,11 +32,11 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([self.callValidator eventMethodSupported:call.method]) {
         // Validate arguments
-        NSString *validationErrorMessage = nil;
+        NSError *validationError = nil;
         if (![self.callValidator argumentsValid:call.arguments
-                                           call:call.method
-                                   errorMessage:&validationErrorMessage]) {
-            result(validationErrorMessage);
+                                           call:call.method       
+                                          error:&validationError]) {
+            result(validationError.localizedDescription);
             return;
         }
         
@@ -52,9 +52,9 @@
         if ([call.method isEqualToString:kLogEventMethodName]) {
             [self handleLogEventCall:call.arguments result:result];
         }
-    } else {
-        result(FlutterMethodNotImplemented);
     }
+      
+    result(FlutterMethodNotImplemented);
 }
 
 #pragma mark - Call handlers -

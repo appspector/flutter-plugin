@@ -42,7 +42,7 @@
                                                                                               @"metadata" : @{}
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMExpect(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));
@@ -61,7 +61,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"stop" arguments:@{}];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMExpect(ClassMethod([sdkMock stop]));
@@ -80,7 +80,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"isStarted" arguments:@{}];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMStub(ClassMethod([sdkMock isRunning])).andReturn(YES);
@@ -100,7 +100,7 @@
                                                                                               @"value" : @"device name"
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     ASMetadata *expectedMetadata = @{AS_DEVICE_NAME_KEY:@"device name"};
   
@@ -122,7 +122,7 @@
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"removeMetadata" arguments:@{ @"key" : @"userSpecifiedDeviceName"
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
 
     ASMetadata *expectedMetadata = @{};
   
@@ -144,7 +144,7 @@
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"invalidArg" : @"DEADBEEF" }];
     
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMExpect([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMExpect([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
     
     [self.handler handleMethodCall:call result:^(id result) {
         OCMVerifyAll(self.validatorMock);
@@ -159,7 +159,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"invalidArg" : @"DEADBEEF" }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method errorMessage:[OCMArg anyObjectRef]]).andReturn(NO);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(NO);
     
     id sdkMock = OCMClassMock([AppSpector class]);
     OCMReject(ClassMethod([sdkMock runWithConfig:[OCMArg any]]));

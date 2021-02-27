@@ -18,7 +18,8 @@ void main() {
 
   logger.Logger.root.level = logger.Level.ALL;
   logger.Logger.root.onRecord.listen((logger.LogRecord rec) {
-    Logger.log(LogLevel.DEBUG, rec.loggerName, "(${rec.level.name}) ${rec.message}");
+    Logger.log(
+        LogLevel.DEBUG, rec.loggerName, "(${rec.level.name}) ${rec.message}");
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 }
@@ -44,15 +45,12 @@ void runAppSpector(DataObservable<String> sessionObserver) {
     ];
 
   AppSpectorPlugin.run(config);
-
-  AppSpectorPlugin.shared()?.sessionUrlListener = (sessionUrl) => {
-    sessionObserver.setValue(sessionUrl)
-  };
+  AppSpectorPlugin.shared()?.sessionUrlListener =
+      (sessionUrl) => {sessionObserver.setValue(sessionUrl)};
 }
 
 class MyApp extends StatelessWidget {
-
- final DataObservable<String> _sessionUrlObserver;
+  final DataObservable<String> _sessionUrlObserver;
 
   MyApp(this._sessionUrlObserver);
 
@@ -61,14 +59,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
+          // counter didn't reset back to zero; the application is not restarted.
           primarySwatch: appSpectorPrimary,
           accentColor: appSpectorAccent),
       home: MyHomePage(_sessionUrlObserver, title: 'Flutter Demo Home Page'),

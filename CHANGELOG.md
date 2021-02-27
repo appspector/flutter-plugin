@@ -1,3 +1,6 @@
+## 0.6.0 28 Feb 2021
+* Fix losing connection after the hot restart
+
 ## 0.5.0 16 Dec 2020
 * Use 1.4.+ AppSpector Android SDK
 * Fix issue with missing Content-Length header

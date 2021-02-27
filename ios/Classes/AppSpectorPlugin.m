@@ -57,11 +57,11 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([self.callValidator controlMethodSupported:call.method]) {
         // Validate arguments
-        NSString *validationErrorMessage = nil;
+        NSError *validationError = nil;
         if (![self.callValidator argumentsValid:call.arguments
-                                           call:call.method
-                                   errorMessage:&validationErrorMessage]) {
-            result(validationErrorMessage);
+                                           call:call.method       
+                                          error:&validationError]) {
+            result(validationError.localizedDescription);
             return;
         }
         
@@ -98,9 +98,9 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
   
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
-      [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
+        [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
     };
-  
+    
     [AppSpector runWithConfig:config];
   
     result(@"Ok");

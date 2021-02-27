@@ -8,13 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0EB522F02260D6F40076C990 /* AppSpectorPluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB522EF2260D6F40076C990 /* AppSpectorPluginTests.m */; };
-		104DC7BD73330E56BB0AD306 /* libPods-AppSpectorPluginTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA921735034EB929884224E /* libPods-AppSpectorPluginTests.a */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
-		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
-		9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9740EEB21CF90195004384FC /* Debug.xcconfig */; };
 		978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */; };
 		97C146F31CF9000F007C117D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C146F21CF9000F007C117D /* main.m */; };
@@ -22,6 +17,9 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9C4C6BE719A3BF5A96BA2A91 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F88522C84F84D6E2A18364F /* libPods-Runner.a */; };
+		A05BDD6E2248D39F3256BB80 /* libPods-Runner-AppSpectorPluginTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB81C08C1246CD224C7B8404 /* libPods-Runner-AppSpectorPluginTests.a */; };
+		D90BF8CF23B281FA007FF31B /* ASPluginEventsHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D90BF8CE23B281FA007FF31B /* ASPluginEventsHandlerTests.m */; };
+		D9DD8EDD23AFC31200DD3029 /* ASPluginCallValidatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +39,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */,
-				9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,26 +51,30 @@
 		0EB522F12260D6F40076C990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		1EA921735034EB929884224E /* libPods-AppSpectorPluginTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AppSpectorPluginTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1940C5BF2B578461BAF8541A /* Pods-Runner-AppSpectorPluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner-AppSpectorPluginTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Runner-AppSpectorPluginTests/Pods-Runner-AppSpectorPluginTests.release.xcconfig"; sourceTree = "<group>"; };
 		1F88522C84F84D6E2A18364F /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		64AE48E85D9ED94BC9234633 /* Pods-AppSpectorPluginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppSpectorPluginTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppSpectorPluginTests/Pods-AppSpectorPluginTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8011CB3AD33A62827D4BBCC0 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		88A253C34594F0969FF5841B /* Pods-Runner-AppSpectorPluginTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner-AppSpectorPluginTests.profile.xcconfig"; path = "Pods/Target Support Files/Pods-Runner-AppSpectorPluginTests/Pods-Runner-AppSpectorPluginTests.profile.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
-		9740EEBA1CF902C7004384FC /* Flutter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Flutter.framework; path = Flutter/Flutter.framework; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C146F21CF9000F007C117D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		97C146FB1CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DEEEC75EA0F24AFD07673BA /* Pods-Runner-AppSpectorPluginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner-AppSpectorPluginTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Runner-AppSpectorPluginTests/Pods-Runner-AppSpectorPluginTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B91A4303FD1012A0AA40A996 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		BB81C08C1246CD224C7B8404 /* libPods-Runner-AppSpectorPluginTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner-AppSpectorPluginTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3A9CE843C1DAB0B2BD4E3B /* Pods-AppSpectorPluginTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppSpectorPluginTests.profile.xcconfig"; path = "Pods/Target Support Files/Pods-AppSpectorPluginTests/Pods-AppSpectorPluginTests.profile.xcconfig"; sourceTree = "<group>"; };
+		D90BF8CE23B281FA007FF31B /* ASPluginEventsHandlerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASPluginEventsHandlerTests.m; sourceTree = "<group>"; };
+		D948D6EA25D2799D006F795C /* AppSpectorPluginTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AppSpectorPluginTestPlan.xctestplan; sourceTree = "<group>"; };
+		D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASPluginCallValidatorTests.m; sourceTree = "<group>"; };
 		DB203E060E1FB4D7A4350465 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		FC08905B5326445FF96F3DD5 /* Pods-AppSpectorPluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppSpectorPluginTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppSpectorPluginTests/Pods-AppSpectorPluginTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				104DC7BD73330E56BB0AD306 /* libPods-AppSpectorPluginTests.a in Frameworks */,
+				A05BDD6E2248D39F3256BB80 /* libPods-Runner-AppSpectorPluginTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,8 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
-				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				9C4C6BE719A3BF5A96BA2A91 /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				1F88522C84F84D6E2A18364F /* libPods-Runner.a */,
-				1EA921735034EB929884224E /* libPods-AppSpectorPluginTests.a */,
+				BB81C08C1246CD224C7B8404 /* libPods-Runner-AppSpectorPluginTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,8 +111,10 @@
 		0EB522EE2260D6F40076C990 /* AppSpectorPluginTests */ = {
 			isa = PBXGroup;
 			children = (
-				0EB522EF2260D6F40076C990 /* AppSpectorPluginTests.m */,
 				0EB522F12260D6F40076C990 /* Info.plist */,
+				0EB522EF2260D6F40076C990 /* AppSpectorPluginTests.m */,
+				D9DD8EDC23AFC31200DD3029 /* ASPluginCallValidatorTests.m */,
+				D90BF8CE23B281FA007FF31B /* ASPluginEventsHandlerTests.m */,
 			);
 			path = AppSpectorPluginTests;
 			sourceTree = "<group>";
@@ -122,9 +122,7 @@
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
-				3B80C3931E831B6300D905FE /* App.framework */,
 				3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */,
-				9740EEBA1CF902C7004384FC /* Flutter.framework */,
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
 				9740EEB31CF90195004384FC /* Generated.xcconfig */,
@@ -135,6 +133,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				D948D6EA25D2799D006F795C /* AppSpectorPluginTestPlan.xctestplan */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				0EB522EE2260D6F40076C990 /* AppSpectorPluginTests */,
@@ -186,6 +185,9 @@
 				64AE48E85D9ED94BC9234633 /* Pods-AppSpectorPluginTests.debug.xcconfig */,
 				FC08905B5326445FF96F3DD5 /* Pods-AppSpectorPluginTests.release.xcconfig */,
 				CF3A9CE843C1DAB0B2BD4E3B /* Pods-AppSpectorPluginTests.profile.xcconfig */,
+				9DEEEC75EA0F24AFD07673BA /* Pods-Runner-AppSpectorPluginTests.debug.xcconfig */,
+				1940C5BF2B578461BAF8541A /* Pods-Runner-AppSpectorPluginTests.release.xcconfig */,
+				88A253C34594F0969FF5841B /* Pods-Runner-AppSpectorPluginTests.profile.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -197,10 +199,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0EB522F42260D6F40076C990 /* Build configuration list for PBXNativeTarget "AppSpectorPluginTests" */;
 			buildPhases = (
-				4AB51F076BBC2CDF22F9EFD0 /* [CP] Check Pods Manifest.lock */,
+				98465C7DE9687EC54DC01F75 /* [CP] Check Pods Manifest.lock */,
 				0EB522E92260D6F40076C990 /* Sources */,
 				0EB522EA2260D6F40076C990 /* Frameworks */,
 				0EB522EB2260D6F40076C990 /* Resources */,
+				5E3D9B62E5813134C43729F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -223,7 +226,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				FB79791A01D456F5B0BFB69C /* [CP] Embed Pods Frameworks */,
+				4471F8FB86172591D6FEFB29 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -247,11 +250,13 @@
 					0EB522EC2260D6F40076C990 = {
 						CreatedOnToolsVersion = 10.2;
 						DevelopmentTeam = AM5334753U;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = 97C146ED1CF9000F007C117D;
 					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = EEJA65ZWYD;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -310,28 +315,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" thin";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		4AB51F076BBC2CDF22F9EFD0 /* [CP] Check Pods Manifest.lock */ = {
+		4471F8FB86172591D6FEFB29 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
+				"${PODS_ROOT}/AppSpectorSDK/AppSpectorSDK.framework",
+				"${PODS_ROOT}/../Flutter/Flutter.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AppSpectorPluginTests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppSpectorSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E3D9B62E5813134C43729F8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner-AppSpectorPluginTests/Pods-Runner-AppSpectorPluginTests-frameworks.sh",
+				"${PODS_ROOT}/AppSpectorSDK/AppSpectorSDK.framework",
+				"${PODS_ROOT}/../Flutter/Flutter.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppSpectorSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner-AppSpectorPluginTests/Pods-Runner-AppSpectorPluginTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7E6EDD02DAEE406F8792D7D2 /* [CP] Check Pods Manifest.lock */ = {
@@ -366,24 +389,26 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
-		FB79791A01D456F5B0BFB69C /* [CP] Embed Pods Frameworks */ = {
+		98465C7DE9687EC54DC01F75 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/AppSpectorSDK/AppSpectorSDK.framework",
-				"${PODS_ROOT}/Flutter/Flutter.framework",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppSpectorSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
+				"$(DERIVED_FILE_DIR)/Pods-Runner-AppSpectorPluginTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -394,6 +419,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EB522F02260D6F40076C990 /* AppSpectorPluginTests.m in Sources */,
+				D90BF8CF23B281FA007FF31B /* ASPluginEventsHandlerTests.m in Sources */,
+				D9DD8EDD23AFC31200DD3029 /* ASPluginCallValidatorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +466,7 @@
 /* Begin XCBuildConfiguration section */
 		0EB522F52260D6F40076C990 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64AE48E85D9ED94BC9234633 /* Pods-AppSpectorPluginTests.debug.xcconfig */;
+			baseConfigurationReference = 9DEEEC75EA0F24AFD07673BA /* Pods-Runner-AppSpectorPluginTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -450,7 +477,8 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = AM5334753U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AppSpectorPluginTests/Info.plist;
@@ -460,6 +488,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = AS.AppSpectorPluginTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -467,7 +497,7 @@
 		};
 		0EB522F62260D6F40076C990 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC08905B5326445FF96F3DD5 /* Pods-AppSpectorPluginTests.release.xcconfig */;
+			baseConfigurationReference = 1940C5BF2B578461BAF8541A /* Pods-Runner-AppSpectorPluginTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -478,7 +508,8 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = AM5334753U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AppSpectorPluginTests/Info.plist;
@@ -487,6 +518,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = AS.AppSpectorPluginTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -494,7 +527,7 @@
 		};
 		0EB522F72260D6F40076C990 /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF3A9CE843C1DAB0B2BD4E3B /* Pods-AppSpectorPluginTests.profile.xcconfig */;
+			baseConfigurationReference = 88A253C34594F0969FF5841B /* Pods-Runner-AppSpectorPluginTests.profile.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -505,7 +538,8 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = AM5334753U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AppSpectorPluginTests/Info.plist;
@@ -514,6 +548,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = AS.AppSpectorPluginTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -521,7 +557,6 @@
 		};
 		249021D3217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -560,7 +595,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -572,8 +606,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = S8QB4VV633;
+				DEVELOPMENT_TEAM = EEJA65ZWYD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,7 +616,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -589,13 +624,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -640,7 +675,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -649,7 +683,6 @@
 		};
 		97C147041CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -688,7 +721,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -700,7 +732,10 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = EEJA65ZWYD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -708,7 +743,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -716,6 +751,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -725,7 +761,10 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = EEJA65ZWYD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -733,7 +772,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -741,6 +780,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
