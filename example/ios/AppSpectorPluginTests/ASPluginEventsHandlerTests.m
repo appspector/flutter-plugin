@@ -11,6 +11,7 @@
 #import <OCMock/OCMock.h>
 
 #import "ASPluginEventsHandler.h"
+#import <AppSpectorSDK/AppSpector.h>
 
 @interface ASPluginEventsHandlerTests : XCTestCase
 
@@ -33,8 +34,7 @@
 
 - (void)testHandlerReturnsErrorForInvalidCall {
     XCTestExpectation *e = [self expectationWithDescription:@""];
-    OCMStub([self.callValidatorMock eventMethodSupported:[OCMArg any]]).andReturn(YES);
-    OCMStub([self.callValidatorMock argumentsValid:[OCMArg any] call:[OCMArg any] error:[OCMArg anyObjectRef]]).andReturn(YES);
+    OCMStub([self.callValidatorMock eventMethodSupported:[OCMArg any]]).andReturn(NO);
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"foo" arguments:@{}];
     [self.handler handleMethodCall:call result:^(id result) {
@@ -50,12 +50,23 @@
     OCMStub([self.callValidatorMock eventMethodSupported:[OCMArg any]]).andReturn(YES);
     OCMStub([self.callValidatorMock argumentsValid:[OCMArg any] call:[OCMArg any] error:[OCMArg anyObjectRef]]).andReturn(YES);
     
-    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:kLogEventMethodName arguments:@{ @"level" : @"warning",
-                                                                                                           @"message" : @"test" }];
+    NSDictionary *payload = @{ @"level" : @"warning",
+                               @"message" : @"test" };
+    
+    id sdkMock = [OCMockObject mockForClass:[AppSpector class]];
+    OCMExpect([sdkMock sendEvent:[OCMArg checkWithBlock:^BOOL(ASExternalEvent *event) {
+        return [event.monitorID isEqualToString:AS_LOG_MONITOR] &&
+                [event.eventID isEqualToString:@"log"] &&
+                [event.payload isEqualToDictionary:payload];
+    }]]);
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:kLogEventMethodName arguments:payload];
     [self.handler handleMethodCall:call result:^(id result) {
         expect(result).toNot.beNil();
         [e fulfill];
     }];
+    
+    OCMVerifyAll(sdkMock);
     
     [self waitForExpectations:@[e] timeout:1.1];
 }
