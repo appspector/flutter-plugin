@@ -45,4 +45,19 @@
     [self waitForExpectations:@[e] timeout:1.1];
 }
 
+- (void)testHandlerSendsLogEvent {
+    XCTestExpectation *e = [self expectationWithDescription:@""];
+    OCMStub([self.callValidatorMock eventMethodSupported:[OCMArg any]]).andReturn(YES);
+    OCMStub([self.callValidatorMock argumentsValid:[OCMArg any] call:[OCMArg any] error:[OCMArg anyObjectRef]]).andReturn(YES);
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:kLogEventMethodName arguments:@{ @"level" : @"warning",
+                                                                                                           @"message" : @"test" }];
+    [self.handler handleMethodCall:call result:^(id result) {
+        expect(result).toNot.beNil();
+        [e fulfill];
+    }];
+    
+    [self waitForExpectations:@[e] timeout:1.1];
+}
+
 @end

@@ -624,7 +624,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector wildcard development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -751,7 +751,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector wildcard development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -761,7 +761,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = EEJA65ZWYD;
@@ -780,7 +780,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AppSpector development wildcard";
+				PROVISIONING_PROFILE_SPECIFIER = "AppSpector Distribution";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

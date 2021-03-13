@@ -41,34 +41,37 @@
         }
         
         // Handle call
+        // HTTP monitor
         if ([call.method isEqualToString:kHTTPRequestMethodName]) {
-            [self handleRequestCall:call.arguments result:result];
+            [self handleHTTPRequestCall:call.arguments result:result];
         }
         
         if ([call.method isEqualToString:kHTTPResponseMethodName]) {
-            [self handleResponseCall:call.arguments result:result];
+            [self handleHTTPResponseCall:call.arguments result:result];
         }
         
+        // Logs monitor
         if ([call.method isEqualToString:kLogEventMethodName]) {
             [self handleLogEventCall:call.arguments result:result];
         }
+    } else {
+        result(FlutterMethodNotImplemented);
     }
-      
-    result(FlutterMethodNotImplemented);
 }
 
 #pragma mark - Call handlers -
+#pragma mark - HTTP monitor
 
-- (void)handleRequestCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+- (void)handleHTTPRequestCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
-    NSData *body = [NSData data];
-    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
-        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
-    }
+//    NSData *body = [NSData data];
+//    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
+//        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
+//    }
     NSDictionary *payload = @{ @"uuid"          : arguments[@"uid"],
                                @"url"           : arguments[@"url"],
                                @"method"        : arguments[@"method"],
-                               @"body"          : body,
+                               @"body"          : [self unwrapData:arguments[@"body"]],
                                @"hasLargeBody"  : @(NO),
                                @"headers"       : arguments[@"headers"] };
     
@@ -79,11 +82,15 @@
     result(@"Ok");
 }
 
-- (void)handleResponseCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
+- (void)handleHTTPResponseCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
+//    NSData *body = [NSData data];
+//    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
+//        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
+//    }
     NSDictionary *payload = @{ @"uuid"              : arguments[@"uid"],
                                @"statusCode"        : arguments[@"code"],
-                               @"body"              : [(FlutterStandardTypedData *)arguments[@"body"] data],
+                               @"body"              : [self unwrapData:arguments[@"body"]],
                                @"hasLargeBody"      : @(NO),
                                @"headers"           : arguments[@"headers"],
                                @"responseDuration"  : arguments[@"tookMs"],
@@ -95,6 +102,8 @@
     
     result(@"Ok");
 }
+
+#pragma mark - Logs monitor
 
 - (void)handleLogEventCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
@@ -108,5 +117,15 @@
     result(@"Ok");
 }
 
+#pragma mark - Tools
+
+- (NSData *)unwrapData:(id)flutterData {
+    NSData *unwrappedData = [NSData data];
+    if ([flutterData isKindOfClass:[FlutterStandardTypedData class]]) {
+        unwrappedData = [(FlutterStandardTypedData *)flutterData data];
+    }
+    
+    return unwrappedData;
+}
 
 @end
