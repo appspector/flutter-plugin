@@ -14,6 +14,6 @@ AppSpector SDK
   s.dependency 'Flutter'
   s.dependency 'AppSpectorSDK'
 
-  s.ios.deployment_target = '9.3'
+  s.ios.deployment_target = '10.0'
 end
 
