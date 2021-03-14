@@ -1,3 +1,6 @@
+## 0.6.1 14 Mar 2021
+* Fix for incorrect HTTP response handling on iOS
+
 ## 0.6.0 28 Feb 2021
 * Fix losing connection after the hot restart
 
