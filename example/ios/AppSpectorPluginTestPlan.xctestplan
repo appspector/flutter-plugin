@@ -13,7 +13,15 @@
     }
   ],
   "defaultOptions" : {
-
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Pods\/Pods.xcodeproj",
+          "identifier" : "8EE4B296639698DC467B95DEA0D6285A",
+          "name" : "appspector"
+        }
+      ]
+    }
   },
   "testTargets" : [
     {

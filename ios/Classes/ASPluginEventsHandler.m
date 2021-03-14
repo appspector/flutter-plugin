@@ -64,10 +64,6 @@
 
 - (void)handleHTTPRequestCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
-//    NSData *body = [NSData data];
-//    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
-//        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
-//    }
     NSDictionary *payload = @{ @"uuid"          : arguments[@"uid"],
                                @"url"           : arguments[@"url"],
                                @"method"        : arguments[@"method"],
@@ -84,10 +80,6 @@
 
 - (void)handleHTTPResponseCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     // Build event payload
-//    NSData *body = [NSData data];
-//    if ([arguments[@"body"] isKindOfClass:[FlutterStandardTypedData class]]) {
-//        body = [(FlutterStandardTypedData *)arguments[@"body"] data];
-//    }
     NSDictionary *payload = @{ @"uuid"              : arguments[@"uid"],
                                @"statusCode"        : arguments[@"code"],
                                @"body"              : [self unwrapData:arguments[@"body"]],
