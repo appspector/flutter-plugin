@@ -94,8 +94,20 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     NSSet<ASMonitorID> *monitorIds = [self validateAndMapRawMonitorIds:arguments[@"enabledMonitors"]];
   
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    config.metadata = [self validateAndMapRawMeatdata:arguments[@"metadata"]];
   
+    // Handle special case when private SDK options are transferred via metadata
+    if ([arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"] isKindOfClass:[NSNumber class]]) {
+        NSNumber *checkOption = arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
+        [config setValue:@(!checkOption.boolValue) forKey:@"disableProductionCheck"];
+        
+        // Drop flag to not include in metadata
+        NSMutableDictionary *mutableArgs = [arguments mutableCopy];
+        [[arguments mutableCopy] removeObjectForKey:@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
+        arguments = [mutableArgs copy];
+    }
+    
+    config.metadata = [self validateAndMapRawMeatdata:arguments[@"metadata"]];
+    
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
         [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
@@ -124,10 +136,10 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
 - (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *key = arguments[@"key"];
     NSString *value = arguments[@"value"];
-  
+
     if (key != nil && (id)key != NSNull.null && value != nil && (id)value != NSNull.null) {
-      ASMetadata *metadata = @{key : value};
-      [AppSpector updateMetadata:metadata];
+        ASMetadata *metadata = @{key : value};
+        [AppSpector updateMetadata:metadata];
     }
 
     result(@"Ok");
