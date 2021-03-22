@@ -192,7 +192,7 @@
     
     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"apiKey" : @"DEADBEEF",
                                                                                               @"enabledMonitors" : @[],
-                                                                                              @"metadata" : @{ @"APPSPECTOR_CHECK_STORE_ENVIRONMENT" : @(NO) }
+                                                                                              @"metadata" : @{ @"APPSPECTOR_CHECK_STORE_ENVIRONMENT" : @"false" }
     }];
     OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
     OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);

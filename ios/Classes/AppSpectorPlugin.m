@@ -96,9 +96,9 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
   
     // Handle special case when private SDK options are transferred via metadata
-    if ([arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"] isKindOfClass:[NSNumber class]]) {
-        NSNumber *checkOption = arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
-        [config setValue:@(!checkOption.boolValue) forKey:@"disableProductionCheck"];
+    if ([arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"] isKindOfClass:[NSString class]]) {
+        NSString *checkOption = arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
+        [config setValue:[checkOption isEqualToString:@"true"] ? @(YES) : @(NO) forKey:@"disableProductionCheck"];
         
         // Drop flag to not include in metadata
         NSMutableDictionary *mutableArgs = [arguments mutableCopy];
