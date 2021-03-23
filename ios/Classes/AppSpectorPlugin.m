@@ -13,6 +13,8 @@
 static NSString * const kControlChannelName = @"appspector_plugin";
 static NSString * const kEventChannelName   = @"appspector_event_channel";
 
+static NSString * const kEnvCheckOptionKey  = @"APPSPECTOR_CHECK_STORE_ENVIRONMENT";
+
 @interface AppSpectorPlugin ()
 
 @property (strong, nonatomic) ASPluginCallValidator *callValidator;
@@ -53,6 +55,8 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     [registrar addMethodCallDelegate:plugin channel:controlChannel];
     [registrar addMethodCallDelegate:plugin.eventsHandler channel:eventChannel];
 }
+
+#pragma mark - Call handlers -
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([self.callValidator controlMethodSupported:call.method]) {
@@ -96,13 +100,14 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
   
     // Handle special case when private SDK options are transferred via metadata
-    if ([arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"] isKindOfClass:[NSString class]]) {
-        NSString *checkOption = arguments[@"metadata"][@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
-        [config setValue:[checkOption isEqualToString:@"true"] ? @(YES) : @(NO) forKey:@"disableProductionCheck"];
+    if (arguments[@"metadata"] != [NSNull null] && [arguments[@"metadata"][kEnvCheckOptionKey] isKindOfClass:[NSString class]]) {
+        NSString *checkOption = arguments[@"metadata"][kEnvCheckOptionKey];
+        NSNumber *productionCheck = [checkOption isEqualToString:@"true"] ? @(NO) : @(YES);
+        [config setValue:productionCheck forKey:@"disableProductionCheck"];
         
-        // Drop flag to not include in metadata
+        // Drop flag to not include in session metadata
         NSMutableDictionary *mutableArgs = [arguments mutableCopy];
-        [[arguments mutableCopy] removeObjectForKey:@"APPSPECTOR_CHECK_STORE_ENVIRONMENT"];
+        [[arguments mutableCopy] removeObjectForKey:kEnvCheckOptionKey];
         arguments = [mutableArgs copy];
     }
     
@@ -150,6 +155,8 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     [AppSpector updateMetadata:emptyMetadata];
     result(@"Ok");
 }
+
+#pragma mark - Validators -
 
 - (ASMetadata *)validateAndMapRawMeatdata:(NSDictionary *)rawMetadata {
   if (rawMetadata == nil || (id)rawMetadata == NSNull.null) {

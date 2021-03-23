@@ -29,7 +29,6 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  
   target 'AppSpectorPluginTests' do
     pod 'Expecta', '~> 1.0.5'
     pod 'OCMock', '~> 3.4'
