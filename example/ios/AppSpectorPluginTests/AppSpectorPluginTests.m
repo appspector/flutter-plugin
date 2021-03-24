@@ -187,4 +187,29 @@
     [self waitForExpectations:@[e] timeout:0.1];
 }
 
+- (void)testHandlerExtractsEnvFlagFromArgs {
+    XCTestExpectation *e = [self expectationWithDescription:@""];
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"run" arguments:@{ @"apiKey" : @"DEADBEEF",
+                                                                                              @"enabledMonitors" : @[],
+                                                                                              @"metadata" : @{ @"APPSPECTOR_CHECK_STORE_ENVIRONMENT" : @"false" }
+    }];
+    OCMStub([self.validatorMock controlMethodSupported:[OCMArg any]]).andReturn(YES);
+    OCMStub([self.validatorMock argumentsValid:call.arguments call:call.method error:[OCMArg anyObjectRef]]).andReturn(YES);
+    
+    id sdkMock = OCMClassMock([AppSpector class]);
+    OCMExpect(ClassMethod([sdkMock runWithConfig:[OCMArg checkWithBlock:^BOOL(AppSpectorConfig *config) {
+        expect([config valueForKey:@"disableProductionCheck"]).to.beTruthy();
+        return YES;
+    }]]));
+    
+    [self.handler handleMethodCall:call result:^(id result) {
+        expect(result).equal(@"Ok");
+        OCMVerifyAll(sdkMock);
+        [e fulfill];
+    }];
+    
+    [self waitForExpectations:@[e] timeout:0.1];
+}
+
 @end

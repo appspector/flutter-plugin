@@ -13,6 +13,8 @@
 static NSString * const kControlChannelName = @"appspector_plugin";
 static NSString * const kEventChannelName   = @"appspector_event_channel";
 
+static NSString * const kEnvCheckOptionKey  = @"APPSPECTOR_CHECK_STORE_ENVIRONMENT";
+
 @interface AppSpectorPlugin ()
 
 @property (strong, nonatomic) ASPluginCallValidator *callValidator;
@@ -54,6 +56,8 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     [registrar addMethodCallDelegate:plugin.eventsHandler channel:eventChannel];
 }
 
+#pragma mark - Call handlers -
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([self.callValidator controlMethodSupported:call.method]) {
         // Validate arguments
@@ -94,8 +98,21 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     NSSet<ASMonitorID> *monitorIds = [self validateAndMapRawMonitorIds:arguments[@"enabledMonitors"]];
   
     AppSpectorConfig *config = [AppSpectorConfig configWithAPIKey:apiKey monitorIDs:monitorIds];
-    config.metadata = [self validateAndMapRawMeatdata:arguments[@"metadata"]];
   
+    // Handle special case when private SDK options are transferred via metadata
+    if (arguments[@"metadata"] != [NSNull null] && [arguments[@"metadata"][kEnvCheckOptionKey] isKindOfClass:[NSString class]]) {
+        NSString *checkOption = arguments[@"metadata"][kEnvCheckOptionKey];
+        NSNumber *productionCheck = [checkOption isEqualToString:@"true"] ? @(NO) : @(YES);
+        [config setValue:productionCheck forKey:@"disableProductionCheck"];
+        
+        // Drop flag to not include in session metadata
+        NSMutableDictionary *mutableArgs = [arguments mutableCopy];
+        [[arguments mutableCopy] removeObjectForKey:kEnvCheckOptionKey];
+        arguments = [mutableArgs copy];
+    }
+    
+    config.metadata = [self validateAndMapRawMeatdata:arguments[@"metadata"]];
+    
     __weak __auto_type weakSelf = self;
     config.startCallback = ^(NSURL * _Nonnull sessionURL) {
         [weakSelf.controlChannel invokeMethod:@"onSessionUrl" arguments:sessionURL.absoluteString];
@@ -124,10 +141,10 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
 - (void)handleSetMetadataCall:(ASPluginMethodArgumentsList *)arguments result:(FlutterResult)result {
     NSString *key = arguments[@"key"];
     NSString *value = arguments[@"value"];
-  
+
     if (key != nil && (id)key != NSNull.null && value != nil && (id)value != NSNull.null) {
-      ASMetadata *metadata = @{key : value};
-      [AppSpector updateMetadata:metadata];
+        ASMetadata *metadata = @{key : value};
+        [AppSpector updateMetadata:metadata];
     }
 
     result(@"Ok");
@@ -138,6 +155,8 @@ static NSString * const kEventChannelName   = @"appspector_event_channel";
     [AppSpector updateMetadata:emptyMetadata];
     result(@"Ok");
 }
+
+#pragma mark - Validators -
 
 - (ASMetadata *)validateAndMapRawMeatdata:(NSDictionary *)rawMetadata {
   if (rawMetadata == nil || (id)rawMetadata == NSNull.null) {

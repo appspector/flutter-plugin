@@ -66,7 +66,6 @@
     [self waitForExpectations:@[e] timeout:1.1];
 }
 
-
 - (void)testHandlerSendsLogEvent {
     NSDictionary *payload = @{ @"level" : @"warning",
                                @"message" : @"test" };
