@@ -1,3 +1,6 @@
+## 0.6.2 30 Mar 2021
+* Add internal updates
+
 ## 0.6.1 14 Mar 2021
 * Fix for incorrect HTTP response handling on iOS
 
