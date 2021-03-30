@@ -1,3 +1,7 @@
+## 0.7.0 31 Mar 2021
+* Support Flutter 2 and Dart null-safety
+* Fix issue with missing OnSessionUrlListener
+
 ## 0.6.2 30 Mar 2021
 * Add internal updates
 
