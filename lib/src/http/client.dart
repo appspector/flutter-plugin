@@ -11,19 +11,19 @@ class AppSpectorHttpClient implements HttpClient {
   AppSpectorHttpClient(this._httpClient, this._uidGenerator);
 
   @override
-  bool autoUncompress;
+  late bool autoUncompress;
 
   @override
-  Duration connectionTimeout;
+  Duration? connectionTimeout;
 
   @override
-  Duration idleTimeout;
+  late Duration idleTimeout;
 
   @override
-  int maxConnectionsPerHost;
+  int? maxConnectionsPerHost;
 
   @override
-  String userAgent;
+  String? userAgent;
 
   @override
   void addCredentials(
@@ -39,25 +39,25 @@ class AppSpectorHttpClient implements HttpClient {
 
   @override
   set authenticate(
-      Future<bool> Function(Uri url, String scheme, String realm) f) {
+      Future<bool> Function(Uri url, String scheme, String realm)? f) {
     _httpClient.authenticate = f;
   }
 
   @override
   set authenticateProxy(
-      Future<bool> Function(String host, int port, String scheme, String realm)
+      Future<bool> Function(String host, int port, String scheme, String realm)?
           f) {
     _httpClient.authenticateProxy = f;
   }
 
   @override
   set badCertificateCallback(
-      bool Function(X509Certificate cert, String host, int port) callback) {
+      bool Function(X509Certificate cert, String host, int port)? callback) {
     _httpClient.badCertificateCallback = callback;
   }
 
   @override
-  set findProxy(String Function(Uri url) f) {
+  set findProxy(String Function(Uri url)? f) {
     _httpClient.findProxy = f;
   }
 

@@ -14,7 +14,7 @@ class Config {
   ///
   /// If you don't specify it and try to launch the app on iOS
   /// SDK will throw ArgumentError
-  String iosApiKey;
+  String? iosApiKey;
 
   /// API_KEY of your Android Application.
   ///
@@ -23,21 +23,21 @@ class Config {
   ///
   /// If you don't specify it and try to launch the app on Android
   /// SDK will throw ArgumentError
-  String androidApiKey;
+  String? androidApiKey;
 
   /// Collection of metadata information
   ///
   /// Property is optional. It allows to attach some additional
   /// information to session. For example, you can specify device name by
   /// putting it with MetaDataKeys.deviceName key
-  Map<String, String> metadata;
+  Map<String, String>? metadata;
 
   /// List of monitor which will be enabled
   ///
   /// Property is optional. By default all available monitors will be enabled.
   /// E.g. to enable necessary monitors you need to provide list
   /// like [Monitors.http, Monitors.screenshot]
-  List<Monitor> monitors;
+  List<Monitor>? monitors;
 }
 
 /// This is the main class for using AppSpector. AppSpector captures various
@@ -66,7 +66,7 @@ class AppSpectorPlugin {
   final MethodChannel _channel = const MethodChannel('appspector_plugin');
   final RequestReceiver _requestReceiver = new RequestReceiver();
 
-  Function(String) sessionUrlListener;
+  Function(String?)? sessionUrlListener;
 
   AppSpectorPlugin._privateConstructor();
 
@@ -96,9 +96,7 @@ class AppSpectorPlugin {
 
   Future<dynamic> _handlePluginCalls(MethodCall methodCall) async {
     if (methodCall.method == "onSessionUrl") {
-      if (sessionUrlListener != null) {
-        sessionUrlListener(methodCall.arguments);
-      }
+      sessionUrlListener?.call(methodCall.arguments);
     }
   }
 
@@ -116,8 +114,8 @@ class AppSpectorPlugin {
     });
   }
 
-  _initAppSpector(String apiKey, Iterable<Monitor> monitors,
-          Map<String, String> metadata) =>
+  _initAppSpector(String? apiKey, Iterable<Monitor> monitors,
+          Map<String, String>? metadata) =>
       _channel.invokeMethod("run", {
         "apiKey": apiKey,
         "enabledMonitors": monitors.map((m) => m.id).toList(),
@@ -131,7 +129,7 @@ class AppSpectorPlugin {
   Future<void> start() => _channel.invokeMethod("start");
 
   /// Returns true if sdk is started
-  Future<bool> isStarted() => _channel.invokeMethod("isStarted");
+  Future<bool> isStarted() => _channel.invokeMethod("isStarted").then((value) => value ?? false);
 
   /// Set metadata value
   Future<void> setMetadataValue(String key, String value) =>

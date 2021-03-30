@@ -29,16 +29,20 @@ class RequestReceiver {
   }
 }
 
-Future<Uint8List> _takeScreenshot(dynamic args) async {
+Future<Uint8List?> _takeScreenshot(dynamic args) async {
   int maxWidth = args["max_width"];
   var renderViewElement =
       WidgetsFlutterBinding.ensureInitialized().renderViewElement;
-  var renderObject = renderViewElement.findRenderObject();
+  var renderObject = renderViewElement?.findRenderObject();
+  if (renderObject == null) {
+    return null;
+  }
   var ratio = maxWidth / renderObject.paintBounds.width;
 
+  // ignore: invalid_use_of_protected_member
   var image = await (renderObject.layer as OffsetLayer)
       .toImage(renderObject.paintBounds, pixelRatio: ratio > 1.0 ? 1.0 : ratio);
 
   var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  return byteData.buffer.asUint8List();
+  return byteData != null ? byteData.buffer.asUint8List() : null;
 }

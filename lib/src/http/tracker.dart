@@ -9,7 +9,7 @@ class HttpEventTracker {
   final String _uid;
   final String _method;
   final int _startTime;
-  Uint8List data;
+  Uint8List? data;
 
   HttpEventTracker.fromUri(this._method, this._uid, Uri uri)
       : this._url = uri.toString(),
