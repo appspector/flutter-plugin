@@ -50,9 +50,9 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
   ];
 
   int _selectedClient = _CLIENT_HTTP_LIB;
-  int _statusCode;
-  String _error;
-  int _requestDuration;
+  int? _statusCode;
+  String? _error;
+  int? _requestDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -120,14 +120,10 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
               child: Text(item.title),
               onPressed: () {
                 Stopwatch stopwatch = Stopwatch()..start();
-                try {
-                  item.action(_provideClient(), _url).then((responseCode) {
-                    _onHttpResponse(
-                        responseCode, stopwatch.elapsedMilliseconds);
-                  });
-                } catch(e) {
-                  _onHttpError(e);
-                }
+                item.action(_provideClient(), _url).then((responseCode) {
+                  _onHttpResponse(responseCode, stopwatch.elapsedMilliseconds);
+                }).onError(
+                    (error, stackTrace) => _onHttpError(error as Exception));
               }));
     }).toList();
   }
@@ -170,9 +166,9 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     return [TextSpan(text: "Click any button")];
   }
 
-  _onClientSelectChanged(int newValue) {
+  _onClientSelectChanged(int? newValue) {
     setState(() {
-      _selectedClient = newValue;
+      _selectedClient = newValue ?? _CLIENT_HTTP_LIB;
     });
   }
 }
