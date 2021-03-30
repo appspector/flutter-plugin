@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'app_drawer.dart';
@@ -123,7 +124,7 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
                 item.action(_provideClient(), _url).then((responseCode) {
                   _onHttpResponse(responseCode, stopwatch.elapsedMilliseconds);
                 }).onError(
-                    (error, stackTrace) => _onHttpError(error as Exception));
+                    (error, stackTrace) => _onHttpError(error as Exception, stopwatch.elapsedMilliseconds));
               }));
     }).toList();
   }
@@ -145,11 +146,11 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     });
   }
 
-  _onHttpError(Exception e) {
+  _onHttpError(Exception e, int requestDuration) {
     setState(() {
       _statusCode = null;
-      _requestDuration = null;
-      _error = e.toString();
+      _requestDuration = requestDuration;
+      _error = e is DioError ? e.message + " (" + requestDuration.toString() + " ms)" : e.toString();
     });
   }
 
