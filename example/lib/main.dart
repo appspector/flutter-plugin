@@ -45,7 +45,7 @@ void runAppSpector(DataObservable<String> sessionObserver) {
     ];
 
   AppSpectorPlugin.run(config);
-  AppSpectorPlugin.shared()?.sessionUrlListener =
+  AppSpectorPlugin.shared().sessionUrlListener =
       (sessionUrl) => {sessionObserver.setValue(sessionUrl)};
 }
 

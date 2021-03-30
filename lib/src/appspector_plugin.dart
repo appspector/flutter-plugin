@@ -65,15 +65,19 @@ class AppSpectorPlugin {
 
   final MethodChannel _channel = const MethodChannel('appspector_plugin');
   final RequestReceiver _requestReceiver = new RequestReceiver();
+  Function(String)? _sessionUrlListener;
 
-  Function(String?)? sessionUrlListener;
+  set sessionUrlListener(Function(String)? listener) {
+    _sessionUrlListener = listener;
+  }
 
   AppSpectorPlugin._privateConstructor();
 
-  AppSpectorPlugin._withConfig(Config config) {
+  AppSpectorPlugin._withConfig(Config config, Function(String)? sessionUrlListener) {
     HttpOverrides.global = AppSpectorHttpOverrides();
     _requestReceiver.observeChannel();
     _channel.setMethodCallHandler(_handlePluginCalls);
+    _sessionUrlListener = sessionUrlListener;
     _appSpectorPlugin = this;
   }
 
@@ -96,7 +100,7 @@ class AppSpectorPlugin {
 
   Future<dynamic> _handlePluginCalls(MethodCall methodCall) async {
     if (methodCall.method == "onSessionUrl") {
-      sessionUrlListener?.call(methodCall.arguments);
+      _sessionUrlListener?.call(methodCall.arguments);
     }
   }
 
@@ -104,14 +108,12 @@ class AppSpectorPlugin {
   static AppSpectorPlugin shared() => _appSpectorPlugin;
 
   /// Method for starting AppSpector with supplied configs
-  static Future<dynamic> run(Config config) {
-    return AppSpectorPlugin.shared().isStarted().then((started) {
-      if (!started) {
-        return new AppSpectorPlugin._withConfig(config)._init(config);
-      } else {
-        return _appSpectorPlugin;
-      }
-    });
+  static Future<dynamic> run(Config config) async {
+    final sharedInstance = shared();
+    final isStarted = await sharedInstance.isStarted();
+    if (!isStarted) {
+      return new AppSpectorPlugin._withConfig(config, sharedInstance._sessionUrlListener)._init(config);
+    }
   }
 
   _initAppSpector(String? apiKey, Iterable<Monitor> monitors,
