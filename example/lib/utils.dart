@@ -1,16 +1,16 @@
 class DataObservable<T> {
 
-  T _value;
+  T? _value;
 
-  Function(T) observer;
+  Function(T)? observer;
 
   void setValue(T value) {
     this._value = value;
     if (observer != null) {
-      observer(value);
+      observer!(value);
     }
   }
 
-  T getValue() => _value;
+  T? getValue() => _value;
 
 }

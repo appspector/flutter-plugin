@@ -54,14 +54,16 @@ class HttpRequestWrapper extends HttpClientRequest {
   }
 
   @override
-  void addError(Object error, [StackTrace stackTrace]) {
+  void addError(Object error, [StackTrace? stackTrace]) {
     _httpClientRequest.addError(error, stackTrace);
   }
 
   @override
   Future addStream(Stream<List<int>> stream) {
-    final body = List<int>();
-    final streamTransformer = StreamTransformer.fromHandlers(handleData: (List<int> data, EventSink<List<int>> sink) {
+    final List<int> body = [];
+    final StreamTransformer<List<int>, List<int>> streamTransformer =
+        StreamTransformer.fromHandlers(
+            handleData: (List<int> data, EventSink<List<int>> sink) {
       sink.add(data);
       body.addAll(data);
     }, handleDone: (sink) {
@@ -76,8 +78,8 @@ class HttpRequestWrapper extends HttpClientRequest {
   Future<HttpClientResponse> close() async {
     _httpEventTracker.sendRequestEvent(headers);
 
-    final body = List<int>();
-    final response = await _httpClientRequest.close();
+    final List<int> body = [];
+    final HttpClientResponse response = await _httpClientRequest.close();
     return new HttpResponseWrapper(
         response,
         response
@@ -94,7 +96,7 @@ class HttpRequestWrapper extends HttpClientRequest {
   }
 
   @override
-  HttpConnectionInfo get connectionInfo => _httpClientRequest.connectionInfo;
+  HttpConnectionInfo? get connectionInfo => _httpClientRequest.connectionInfo;
 
   @override
   List<Cookie> get cookies => _httpClientRequest.cookies;
@@ -115,7 +117,7 @@ class HttpRequestWrapper extends HttpClientRequest {
   Uri get uri => _httpClientRequest.uri;
 
   @override
-  void write(Object obj) {
+  void write(Object? obj) {
     _httpClientRequest.write(obj);
   }
 
@@ -130,12 +132,12 @@ class HttpRequestWrapper extends HttpClientRequest {
   }
 
   @override
-  void writeln([Object obj = ""]) {
+  void writeln([Object? obj = ""]) {
     _httpClientRequest.writeln(obj);
   }
 
   @override
-  void abort([Object exception, StackTrace stackTrace]) {
+  void abort([Object? exception, StackTrace? stackTrace]) {
     _httpClientRequest.abort(exception, stackTrace);
   }
 }

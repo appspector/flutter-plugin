@@ -9,7 +9,7 @@ import 'utils.dart';
 class MyHomePage extends StatefulWidget {
   final DataObservable<String> _sessionUrlObserver;
 
-  MyHomePage(this._sessionUrlObserver, {Key key, this.title}) : super(key: key);
+  MyHomePage(this._sessionUrlObserver, {Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   bool isSdkRunning = true;
-  String _sessionUrl;
+  late String _sessionUrl;
 
   _MyHomePageState(DataObservable<String> sessionUrlObserver) {
     sessionUrlObserver.observer = (sessionUrl) => {

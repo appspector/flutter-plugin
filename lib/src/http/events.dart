@@ -7,8 +7,8 @@ class HttpResponseEvent extends Event {
   final int timeMs;
   final int code;
   final Map<String, String> headers;
-  final String error;
-  final Uint8List body;
+  final String? error;
+  final Uint8List? body;
 
   HttpResponseEvent(
       this.uid, this.timeMs, this.code, this.headers, this.error, this.body);
@@ -32,7 +32,7 @@ class HttpRequestEvent extends Event {
   final String url;
   final String method;
   final Map<String, String> headers;
-  final Uint8List body;
+  final Uint8List? body;
 
   @override
   String get name => "http-request";

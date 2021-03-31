@@ -3,37 +3,37 @@ import 'package:appspector/src/event_sender.dart';
 class Logger {
 
   static void v(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.VERBOSE, tag, message, error, stackTrace);
   }
 
   static void d(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.DEBUG, tag, message, error, stackTrace);
   }
 
   static void i(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.INFO, tag, message, error, stackTrace);
   }
 
   static void w(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.WARN, tag, message, error, stackTrace);
   }
 
   static void e(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.ERROR, tag, message, error, stackTrace);
   }
 
   static void wtf(String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.ASSERT, tag, message, error, stackTrace);
   }
 
   static void log(LogLevel level, String tag, String message,
-      [Object error, StackTrace stackTrace]) {
+      [Object? error, StackTrace? stackTrace]) {
     if (error != null) {
       message = "$message\n$error";
     }

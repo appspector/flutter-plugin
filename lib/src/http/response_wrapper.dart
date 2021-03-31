@@ -9,10 +9,10 @@ class HttpResponseWrapper extends StreamView<List<int>>
       : super(stream);
 
   @override
-  X509Certificate get certificate => _httpClientResponse.certificate;
+  X509Certificate? get certificate => _httpClientResponse.certificate;
 
   @override
-  HttpConnectionInfo get connectionInfo => _httpClientResponse.connectionInfo;
+  HttpConnectionInfo? get connectionInfo => _httpClientResponse.connectionInfo;
 
   @override
   int get contentLength => _httpClientResponse.contentLength;
@@ -37,7 +37,7 @@ class HttpResponseWrapper extends StreamView<List<int>>
 
   @override
   Future<HttpClientResponse> redirect(
-      [String method, Uri url, bool followLoops]) {
+      [String? method, Uri? url, bool? followLoops]) {
     return _httpClientResponse.redirect(method, url, followLoops);
   }
 

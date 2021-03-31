@@ -1,11 +1,11 @@
 name: appspector
 description: A plugin that integrate AppSpector to your Flutter project.
-version: 0.6.2
+version: 0.7.0
 homepage: https://github.com/appspector/flutter-plugin
 
 environment:
-  sdk: ">=2.3.1 <3.0.0"
-  flutter: ">=1.22.0 <2.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.22.0"
 
 dependencies:
   flutter:

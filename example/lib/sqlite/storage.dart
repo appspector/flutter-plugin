@@ -1,3 +1,4 @@
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,7 +11,7 @@ abstract class RecordStorage {
 }
 
 class RecordStorageImpl implements RecordStorage {
-  static Database _db;
+  static Database? _db;
   static const _tableName = "records";
   static const _columnId = "id";
   static const _columnName = "name";
@@ -18,16 +19,15 @@ class RecordStorageImpl implements RecordStorage {
   static const _columnPhone = "phone";
 
   Future<Database> get db async {
-    if (_db != null) return _db;
-    _db = await initDb();
-    return _db;
+    return _db ?? await initDb();
   }
 
   //Creating a database with name test.db in your directory
   initDb() async {
     var dbPath = await getDatabasesPath() + "/test.db";
-    var theDb = await openDatabase(dbPath, version: 1, onCreate: _onCreate);
-    return theDb;
+    var db = await openDatabase(dbPath, version: 1, onCreate: _onCreate);
+    _db = db;
+    return db;
   }
 
   // Creating a table name Employee with fields
