@@ -7,7 +7,7 @@ class AppSpectorHttpOverrides extends HttpOverrides {
   final Random _random = new Random();
 
   @override
-  HttpClient createHttpClient(SecurityContext context) {
+  HttpClient createHttpClient(SecurityContext? context) {
     return AppSpectorHttpClient(super.createHttpClient(context), _generateUuid);
   }
 
