@@ -138,13 +138,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline3,
             ),
-            FlatButton(
+            TextButton(
               child: Text('Click here to log error'),
               onPressed: _clickLogErrorButton,
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Check SDK state'),
               onPressed: _checkSdkState,
             )
