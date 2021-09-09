@@ -30,16 +30,19 @@ class MainAppSpectorHandler implements MethodChannel.MethodCallHandler {
 
     private final Application application;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final MethodChannel mainChannel;
     private final EventReceiver eventReceiver;
     private final RequestSender requestSender;
     private final SessionUrlListener sessionUrlListener;
     private final Map<String, MonitorInitializer> monitorInitializerMap;
 
     private MainAppSpectorHandler(Application application,
-                             SessionUrlListener sessionUrlListener,
-                             EventReceiver eventReceiver,
-                             RequestSender requestSender) {
+                                  MethodChannel mainChannel,
+                                  SessionUrlListener sessionUrlListener,
+                                  EventReceiver eventReceiver,
+                                  RequestSender requestSender) {
         this.application = application;
+        this.mainChannel = mainChannel;
         this.eventReceiver = eventReceiver;
         this.requestSender = requestSender;
         this.sessionUrlListener = sessionUrlListener;
@@ -53,7 +56,13 @@ class MainAppSpectorHandler implements MethodChannel.MethodCallHandler {
         eventReceiver.registerEventHandler(new LogEventHandler());
     }
 
-    void release() {
+    void register() {
+        mainChannel.setMethodCallHandler(this);
+    }
+
+    void unregister() {
+        mainChannel.setMethodCallHandler(null);
+        eventReceiver.unsubscribe();
     }
 
     @Override
@@ -191,18 +200,19 @@ class MainAppSpectorHandler implements MethodChannel.MethodCallHandler {
 
     static MainAppSpectorHandler internalRegister(Context appContext, BinaryMessenger messenger) {
         final Handler mainHandler = new Handler();
-        final MethodChannel channel = new MethodChannel(messenger, "appspector_plugin");
+        final MethodChannel mainChannel = new MethodChannel(messenger, "appspector_plugin");
         final MethodChannel eventChannel = new MethodChannel(messenger, "appspector_event_channel");
         final MethodChannel requestChannel = new MethodChannel(messenger, "appspector_request_channel");
 
         final MainAppSpectorHandler handler = new MainAppSpectorHandler(
                 (Application) appContext,
-                new InternalAppSpectorSessionListener(mainHandler, channel),
+                mainChannel,
+                new InternalAppSpectorSessionListener(mainHandler, mainChannel),
                 new EventReceiver(eventChannel),
                 new RequestSender(mainHandler, requestChannel)
         );
 
-        channel.setMethodCallHandler(handler);
+        handler.register();
         return handler;
     }
 
@@ -224,7 +234,7 @@ class MainAppSpectorHandler implements MethodChannel.MethodCallHandler {
 
     private interface SharedInstanceAction {
         @Nullable
-        Object run(@NonNull  AppSpector appSpector);
+        Object run(@NonNull AppSpector appSpector);
     }
 
     private interface MonitorInitializer {

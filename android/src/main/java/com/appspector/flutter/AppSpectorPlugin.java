@@ -23,7 +23,7 @@ public class AppSpectorPlugin implements FlutterPlugin {
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         if (mainAppSpectorHandler != null) {
-            mainAppSpectorHandler.release();
+            mainAppSpectorHandler.unregister();
             mainAppSpectorHandler = null;
         }
     }
