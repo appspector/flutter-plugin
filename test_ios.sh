@@ -4,8 +4,9 @@ set -ex
 
 cd ./example/ios
 
-flutter pub get
 gem install cocoapods
+flutter pub get
+flutter build ios
 pod install
 
 # Build and test
