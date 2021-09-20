@@ -11,19 +11,44 @@ class AppSpectorHttpClient implements HttpClient {
   AppSpectorHttpClient(this._httpClient, this._uidGenerator);
 
   @override
-  late bool autoUncompress;
+  get autoUncompress => _httpClient.autoUncompress;
 
   @override
-  Duration? connectionTimeout;
+  set autoUncompress(value) {
+    _httpClient.autoUncompress = value;
+  }
 
   @override
-  late Duration idleTimeout;
+  get connectionTimeout => _httpClient.connectionTimeout;
 
   @override
-  int? maxConnectionsPerHost;
+  set connectionTimeout(value) {
+    _httpClient.connectionTimeout = value;
+  }
 
   @override
-  String? userAgent;
+  get idleTimeout => _httpClient.idleTimeout;
+
+  @override
+  set idleTimeout(value) {
+    _httpClient.idleTimeout = value;
+  }
+
+  @override
+  get maxConnectionsPerHost => _httpClient.maxConnectionsPerHost;
+
+  @override
+  set maxConnectionsPerHost(value) {
+    _httpClient.maxConnectionsPerHost = value;
+  }
+
+  @override
+  get userAgent => _httpClient.userAgent;
+
+  @override
+  set userAgent(value) {
+    _httpClient.userAgent = value;
+  }
 
   @override
   void addCredentials(
