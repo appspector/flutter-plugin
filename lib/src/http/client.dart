@@ -63,22 +63,18 @@ class AppSpectorHttpClient implements HttpClient {
   }
 
   @override
-  set authenticate(
-      Future<bool> Function(Uri url, String scheme, String? realm)? f) {
-    _httpClient.authenticate = f;
+  set authenticate(value) {
+    _httpClient.authenticate = value;
   }
 
   @override
-  set authenticateProxy(
-      Future<bool> Function(String host, int port, String scheme, String? realm)?
-          f) {
-    _httpClient.authenticateProxy = f;
+  set authenticateProxy(value) {
+    _httpClient.authenticateProxy = value;
   }
 
   @override
-  set badCertificateCallback(
-      bool Function(X509Certificate cert, String host, int port)? callback) {
-    _httpClient.badCertificateCallback = callback;
+  set badCertificateCallback(value) {
+    _httpClient.badCertificateCallback = value;
   }
 
   @override
@@ -136,8 +132,8 @@ class AppSpectorHttpClient implements HttpClient {
   @override
   Future<HttpClientRequest> open(
       String method, String host, int port, String path) {
-    final tracker = HttpEventTracker.fromHost(
-        method, _uidGenerator(), host, port, path);
+    final tracker =
+        HttpEventTracker.fromHost(method, _uidGenerator(), host, port, path);
     return _httpClient.open(method, host, port, path).then((request) {
       return HttpRequestWrapper(request, tracker);
     }).catchError((e) {

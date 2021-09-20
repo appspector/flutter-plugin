@@ -4,17 +4,18 @@ enum SupportedPlatform { android, ios }
 class Monitor {
   /// Monitor identifier
   final String id;
+
   /// List of platforms which support this monitor
   final List<SupportedPlatform> platforms;
 
-  const Monitor._androidMonitor(this.id) :
-        platforms = const [SupportedPlatform.android];
+  const Monitor._androidMonitor(this.id)
+      : platforms = const [SupportedPlatform.android];
 
-  const Monitor._iosMonitor(this.id) :
-        platforms = const [SupportedPlatform.ios];
+  const Monitor._iosMonitor(this.id)
+      : platforms = const [SupportedPlatform.ios];
 
-  const Monitor._commonMonitor(this.id) :
-        platforms = const [SupportedPlatform.android, SupportedPlatform.ios];
+  const Monitor._commonMonitor(this.id)
+      : platforms = const [SupportedPlatform.android, SupportedPlatform.ios];
 }
 
 /// Identifiers for supported monitors
@@ -29,15 +30,26 @@ class Monitors {
   static const location = const Monitor._commonMonitor("location");
   static const performance = const Monitor._commonMonitor("performance");
   static const sqLite = const Monitor._commonMonitor("sqlite");
-  static const sharedPreferences = const Monitor._androidMonitor("shared-preferences");
+  static const sharedPreferences =
+      const Monitor._androidMonitor("shared-preferences");
   static const analytics = const Monitor._iosMonitor("analytics");
   static const notification = const Monitor._iosMonitor("notification-center");
   static const userDefaults = const Monitor._iosMonitor("user-defaults");
   static const coreData = const Monitor._iosMonitor("ios-core-data");
 
   static List<Monitor> all() => [
-    http, logs, screenshot, environment, location, performance, sqLite, fileSystem,
-    analytics, notification, userDefaults, coreData,
-    sharedPreferences
-  ];
+        http,
+        logs,
+        screenshot,
+        environment,
+        location,
+        performance,
+        sqLite,
+        fileSystem,
+        analytics,
+        notification,
+        userDefaults,
+        coreData,
+        sharedPreferences
+      ];
 }

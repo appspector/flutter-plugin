@@ -1,7 +1,6 @@
 import 'package:appspector/src/event_sender.dart';
 
 class Logger {
-
   static void v(String tag, String message,
       [Object? error, StackTrace? stackTrace]) {
     log(LogLevel.VERBOSE, tag, message, error, stackTrace);
@@ -42,7 +41,6 @@ class Logger {
     }
     EventSender.sendEvent(new _LogEvent(level, tag, message));
   }
-
 }
 
 class _LogEvent extends Event {
