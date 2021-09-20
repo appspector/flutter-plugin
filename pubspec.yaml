@@ -1,5 +1,5 @@
 name: appspector
-description: A plugin that integrate AppSpector to your Flutter project.
+description: Flutter Plugin that integrate AppSpector to your mobile project. It provides remote access to application data to simplify developing process.
 version: 0.8.1
 homepage: https://github.com/appspector/flutter-plugin
 
