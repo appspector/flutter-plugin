@@ -19,6 +19,8 @@ Debugging doesn't have to be painful!
 * [Configure](#configure)
   * [Start/Stop data collection](#startstop-data-collection)
   * [Custom device name](#custom-device-name)
+  * [Getting session URL](#getting-session-url)
+  * [Correct SQLite setup for the SDK](#correct-sqlite-setup-for-the-sdk)
 * [Features](#features)
   * [SQLite monitor](#sqlite-monitor)
   * [HTTP monitor](#http-monitor)
