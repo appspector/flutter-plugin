@@ -4,9 +4,14 @@ set -ex
 
 cd ./example/ios
 
+if ! command -v pod &> /dev/null
+then
+    gem install cocoapods    
+fi
+
 flutter pub get
-gem install cocoapods
+flutter build ios
 pod install
 
 # Build and test
-xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -derivedDataPath /tmp/dd -destination "platform=iOS Simulator,name=iPhone 12 Pro Max,OS=14.4" build test
+xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -derivedDataPath /tmp/dd -destination "platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.4" build test
