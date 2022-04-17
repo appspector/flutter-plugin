@@ -1,3 +1,9 @@
+## 0.8.1 20 Sep 2021
+* Fix the issue with incorrect User-Agent
+
+## 0.8.0 09 Sep 2021
+* Support Flutter 2.5
+
 ## 0.7.0 31 Mar 2021
 * Support Flutter 2 and Dart null-safety
 * Fix issue with missing OnSessionUrlListener

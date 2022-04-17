@@ -7,6 +7,7 @@ on:
 
 env:
   CREDENTIALS_JSON: ${{secrets.CREDENTIALS_JSON}}
+  PUB_CACHE: $HOME/.pub-cache
 
 jobs:
   release:
@@ -18,7 +19,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.3'
-      - run: mkdir -p $FLUTTER_HOME/.pub-cache && echo $CREDENTIALS_JSON > $FLUTTER_HOME/.pub-cache/credentials.json
+          flutter-version: '2.5.0'
+      - run: mkdir -p $PUB_CACHE && echo $CREDENTIALS_JSON > $PUB_CACHE/credentials.json
       - run: flutter pub get
       - run: flutter pub publish -f

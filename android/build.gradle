@@ -4,11 +4,11 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:7.0.2'
     }
 }
 
@@ -42,5 +42,5 @@ dependencies {
     implementation("com.appspector:android-sdk:1.4.+") {
         exclude group:"org.jetbrains.kotlin"
     }
-    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.2.0'
 }

@@ -23,6 +23,10 @@ public final class EventReceiver {
         this.methodChannel = eventMethodChannel;
     }
 
+    public void unsubscribe() {
+        methodChannel.setMethodCallHandler(null);
+    }
+    
     /**
      * Registration of Sdk Method. In case when sdk method with the same name is already
      * registered at current dispatcher method will throw IllegalStateException

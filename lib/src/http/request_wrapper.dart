@@ -10,10 +10,10 @@ class HttpRequestWrapper extends HttpClientRequest {
   final HttpEventTracker _httpEventTracker;
 
   @override
-  Encoding get encoding =>  _httpClientRequest.encoding;
+  Encoding get encoding => _httpClientRequest.encoding;
 
   @override
-  set encoding(Encoding value) =>  _httpClientRequest.encoding = value;
+  set encoding(Encoding value) => _httpClientRequest.encoding = value;
 
   @override
   int get contentLength => _httpClientRequest.contentLength;
@@ -37,7 +37,8 @@ class HttpRequestWrapper extends HttpClientRequest {
   bool get persistentConnection => _httpClientRequest.persistentConnection;
 
   @override
-  set persistentConnection(bool value) => _httpClientRequest.persistentConnection = value;
+  set persistentConnection(bool value) =>
+      _httpClientRequest.persistentConnection = value;
 
   @override
   int get maxRedirects => _httpClientRequest.maxRedirects;
@@ -82,8 +83,8 @@ class HttpRequestWrapper extends HttpClientRequest {
     final HttpClientResponse response = await _httpClientRequest.close();
     return new HttpResponseWrapper(
         response,
-        response
-            .transform(StreamTransformer.fromHandlers(handleData: (List<int> data, EventSink<List<int>> sink) {
+        response.transform(StreamTransformer.fromHandlers(
+            handleData: (List<int> data, EventSink<List<int>> sink) {
           sink.add(data);
           body.addAll(data);
         }, handleError: (error, stackTrace, sink) {

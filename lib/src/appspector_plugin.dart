@@ -73,7 +73,8 @@ class AppSpectorPlugin {
 
   AppSpectorPlugin._privateConstructor();
 
-  AppSpectorPlugin._withConfig(Config config, Function(String)? sessionUrlListener) {
+  AppSpectorPlugin._withConfig(
+      Config config, Function(String)? sessionUrlListener) {
     HttpOverrides.global = AppSpectorHttpOverrides();
     _requestReceiver.observeChannel();
     _channel.setMethodCallHandler(_handlePluginCalls);
@@ -112,7 +113,9 @@ class AppSpectorPlugin {
     final sharedInstance = shared();
     final isStarted = await sharedInstance.isStarted();
     if (!isStarted) {
-      return new AppSpectorPlugin._withConfig(config, sharedInstance._sessionUrlListener)._init(config);
+      return new AppSpectorPlugin._withConfig(
+              config, sharedInstance._sessionUrlListener)
+          ._init(config);
     }
   }
 
@@ -131,7 +134,8 @@ class AppSpectorPlugin {
   Future<void> start() => _channel.invokeMethod("start");
 
   /// Returns true if sdk is started
-  Future<bool> isStarted() => _channel.invokeMethod("isStarted").then((value) => value ?? false);
+  Future<bool> isStarted() =>
+      _channel.invokeMethod("isStarted").then((value) => value ?? false);
 
   /// Set metadata value
   Future<void> setMetadataValue(String key, String value) =>
