@@ -11,6 +11,8 @@ doc/
 
 *.iml
 
+lib/.idea
+
 /.idea/workspace.xml
 /.idea/markdown-*.xml
 /.idea/checkstyle-idea.xml
