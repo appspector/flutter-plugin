@@ -9,7 +9,8 @@ import 'utils.dart';
 class MyHomePage extends StatefulWidget {
   final DataObservable<String> _sessionUrlObserver;
 
-  MyHomePage(this._sessionUrlObserver, {Key? key, required this.title}) : super(key: key);
+  MyHomePage(this._sessionUrlObserver, {Key? key, required this.title})
+      : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -172,16 +173,19 @@ class _MyHomePageState extends State<MyHomePage> {
     return ButtonTheme(
         minWidth: 120,
         height: 120,
-        child: RaisedButton(
-            child: Text(text,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24)),
-            color: color,
+        child: ElevatedButton(
+          child: Text(
+            text,
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: color,
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(60),
                 side: BorderSide(color: Colors.transparent)),
-            onPressed: onPressed));
+          ),
+          onPressed: onPressed,
+        ));
   }
 }

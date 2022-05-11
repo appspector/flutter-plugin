@@ -67,12 +67,12 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(children: <Widget>[
                 const Text(
-                    "Choose HTTP client:",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        height: 2
-                    )
+                  "Choose HTTP client:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    height: 2,
+                  ),
                 ),
                 Row(children: <Widget>[
                   Expanded(
@@ -80,25 +80,24 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
                           value: _CLIENT_HTTP_LIB,
                           groupValue: _selectedClient,
                           title: const Text("HTTP Lib"),
-                          onChanged: _onClientSelectChanged)
-                  ),
-                  Expanded(child: RadioListTile(
-                      value: _CLIENT_IO,
-                      title: const Text("IO"),
-                      groupValue: _selectedClient,
-                      onChanged: _onClientSelectChanged)
-                  ),
-                  Expanded(child: RadioListTile(
-                      value: _CLIENT_DIO,
-                      title: const Text("DIO"),
-                      groupValue: _selectedClient,
-                      onChanged: _onClientSelectChanged)
-                  )
+                          onChanged: _onClientSelectChanged)),
+                  Expanded(
+                      child: RadioListTile(
+                          value: _CLIENT_IO,
+                          title: const Text("IO"),
+                          groupValue: _selectedClient,
+                          onChanged: _onClientSelectChanged)),
+                  Expanded(
+                      child: RadioListTile(
+                          value: _CLIENT_DIO,
+                          title: const Text("DIO"),
+                          groupValue: _selectedClient,
+                          onChanged: _onClientSelectChanged))
                 ]),
                 Container(
                     margin: EdgeInsets.only(top: 24.0),
-                    child: Text.rich(TextSpan(children: _createResultedText()))
-                ),
+                    child:
+                        Text.rich(TextSpan(children: _createResultedText()))),
                 GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,
@@ -106,9 +105,7 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
                   childAspectRatio: 3,
                   children: createRequestMethodWidgetList(),
                 )
-              ])
-          )
-      ),
+              ]))),
     );
   }
 
@@ -117,23 +114,26 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
       return Container(
           alignment: Alignment.center,
 //          margin: EdgeInsets.only(top: 24.0),
-          child: RaisedButton(
+          child: ElevatedButton(
               child: Text(item.title),
               onPressed: () {
                 Stopwatch stopwatch = Stopwatch()..start();
                 item.action(_provideClient(), _url).then((responseCode) {
                   _onHttpResponse(responseCode, stopwatch.elapsedMilliseconds);
-                }).onError(
-                    (error, stackTrace) => _onHttpError(error as Exception, stopwatch.elapsedMilliseconds));
+                }).onError((error, stackTrace) => _onHttpError(
+                    error as Exception, stopwatch.elapsedMilliseconds));
               }));
     }).toList();
   }
 
   AppHttpClient _provideClient() {
     switch (_selectedClient) {
-      case _CLIENT_HTTP_LIB: return _flutterHttpClient;
-      case _CLIENT_IO: return _ioHttpClient;
-      case _CLIENT_DIO: return _dioHttpClient;
+      case _CLIENT_HTTP_LIB:
+        return _flutterHttpClient;
+      case _CLIENT_IO:
+        return _ioHttpClient;
+      case _CLIENT_DIO:
+        return _dioHttpClient;
     }
     throw Exception("Unknown client id");
   }
@@ -150,7 +150,9 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     setState(() {
       _statusCode = null;
       _requestDuration = requestDuration;
-      _error = e is DioError ? e.message + " (" + requestDuration.toString() + " ms)" : e.toString();
+      _error = e is DioError
+          ? e.message + " (" + requestDuration.toString() + " ms)"
+          : e.toString();
     });
   }
 
@@ -160,7 +162,8 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     }
     if (_statusCode != null) {
       List<TextSpan> lines = [];
-      lines.add(TextSpan(text: "Request finished with code: $_statusCode \n\n"));
+      lines
+          .add(TextSpan(text: "Request finished with code: $_statusCode \n\n"));
       lines.add(TextSpan(text: "$_requestDuration ms"));
       return lines;
     }
