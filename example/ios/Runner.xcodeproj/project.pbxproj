@@ -244,7 +244,7 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "The Chromium Authors";
 				TargetAttributes = {
 					0EB522EC2260D6F40076C990 = {
@@ -761,6 +761,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = EEJA65ZWYD;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = EEJA65ZWYD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -777,6 +778,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.appspector.flutter.appspectorPluginExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "AppSpector Distribution";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AppSpector AdHoc";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
