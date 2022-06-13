@@ -10,6 +10,7 @@ jobs:
   check:
     runs-on: macos-latest
     steps:
+      - uses: dart-lang/setup-dart@v1.3
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
@@ -17,7 +18,12 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.5.0'
-      - run: flutter pub get
-      - run: flutter pub publish -n
-      - run: ./test_ios.sh
+      
+      - name: Install dependencies
+        run: dart pub get
+        run: flutter pub get
+        run: flutter pub publish -n
+      
+      - name: Test iOS
+        run: ./test_ios.sh
 
