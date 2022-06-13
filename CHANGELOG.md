@@ -1,3 +1,6 @@
+## 0.9.0 13 Jun 2022
+* Adds support for Flutter 3
+
 ## 0.8.1 20 Sep 2021
 * Fix the issue with incorrect User-Agent
 
