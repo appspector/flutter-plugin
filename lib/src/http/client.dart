@@ -150,4 +150,12 @@ class AppSpectorHttpClient implements HttpClient {
       tracker.onError(e);
     });
   }
+
+  set connectionFactory(
+          Future<ConnectionTask<Socket>> Function(
+                  Uri url, String? proxyHost, int? proxyPort)?
+              f) =>
+      _httpClient.connectionFactory = f;
+
+  set keyLog(Function(String line)? callback) => _httpClient.keyLog = callback;
 }

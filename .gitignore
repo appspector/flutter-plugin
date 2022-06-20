@@ -26,3 +26,4 @@ AppSpector Flutter/.idea
 example/.flutter-plugins-dependencies
 example/ios/Flutter/Flutter.podspec
 .packages_
+lib/.idea

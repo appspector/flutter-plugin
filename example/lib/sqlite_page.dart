@@ -4,14 +4,11 @@ import 'sqlite/storage.dart';
 import 'sqlite/record.dart';
 
 class SQLitePage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => SQLitePageState();
-
 }
 
 class SQLitePageState extends State<SQLitePage> {
-
   final _nameController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -31,38 +28,32 @@ class SQLitePageState extends State<SQLitePage> {
         drawer: SampleAppDrawer(),
         body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-                children: [
-                  TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(labelText: "Name"),
-                    keyboardType: TextInputType.text,
-                    onChanged: _onNameChanged,
-                    autofocus: true,
-                  ),
-                  TextField(
-                    controller: _addressController,
-                    decoration: InputDecoration(labelText: "Address"),
-                    keyboardType: TextInputType.text,
-                    onChanged: _onAddressChanged,
-                  ),
-                  TextField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(labelText: "Phone"),
-                    keyboardType: TextInputType.phone,
-                    onChanged: _onPhoneChanged,
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(top: 24.0),
-                      child: RaisedButton(
-                          child: Text("Add"),
-                          onPressed: _saveButtonEnable ? _onSave : null
-                      )
-                  ),
-                ]
-            )
-        )
-    );
+            child: Column(children: [
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: "Name"),
+                keyboardType: TextInputType.text,
+                onChanged: _onNameChanged,
+                autofocus: true,
+              ),
+              TextField(
+                controller: _addressController,
+                decoration: InputDecoration(labelText: "Address"),
+                keyboardType: TextInputType.text,
+                onChanged: _onAddressChanged,
+              ),
+              TextField(
+                controller: _phoneController,
+                decoration: InputDecoration(labelText: "Phone"),
+                keyboardType: TextInputType.phone,
+                onChanged: _onPhoneChanged,
+              ),
+              Container(
+                  margin: EdgeInsets.only(top: 24.0),
+                  child: ElevatedButton(
+                      child: Text("Add"),
+                      onPressed: _saveButtonEnable ? _onSave : null)),
+            ])));
   }
 
   _onNameChanged(String text) {
