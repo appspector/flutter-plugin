@@ -155,8 +155,7 @@ class AppSpectorHttpClient implements HttpClient {
           Future<ConnectionTask<Socket>> Function(
                   Uri url, String? proxyHost, int? proxyPort)?
               f) =>
-      throw UnsupportedError("connectionFactory not implemented");
+      _httpClient.connectionFactory = f;
 
-  set keyLog(Function(String line)? callback) =>
-      throw UnsupportedError("keyLog not implemented");
+  set keyLog(Function(String line)? callback) => _httpClient.keyLog = callback;
 }
