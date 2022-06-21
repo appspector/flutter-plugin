@@ -22,7 +22,9 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.0'
+          flutter-version: '3.0.0'
+
       - run: mkdir -p $PUB_CACHE && echo $CREDENTIALS_JSON > $PUB_CACHE/credentials.json
+      - run: dart pub get
       - run: flutter pub get
       - run: flutter pub publish -f
