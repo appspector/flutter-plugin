@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: macos-latest
     steps:
-     - uses: dart-lang/setup-dart@v1.3
+      - uses: dart-lang/setup-dart@v1.3
         with:
           sdk: '2.17.3'
       - uses: actions/checkout@v2
