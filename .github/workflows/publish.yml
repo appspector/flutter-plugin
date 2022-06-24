@@ -24,6 +24,7 @@ jobs:
         with:
           flutter-version: '3.0.0'
 
+      - run: rm -rf $HOME/.pub-cache
       - run: mkdir -p $PUB_CACHE && echo $CREDENTIALS_JSON > $PUB_CACHE/credentials.json
       - run: dart pub get
       - run: flutter pub get
