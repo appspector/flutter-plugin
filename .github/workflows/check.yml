@@ -6,6 +6,9 @@ on:
       - master
       - develop
 
+env:
+  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/.config/dart
+
 jobs:
   check:
     runs-on: macos-latest
@@ -20,5 +23,7 @@ jobs:
           flutter-version: '3.0.3'
 
       - run: flutter pub get
+      - run: mkdir -p CREDENTIALS_PATH && echo $CREDENTIALS_JSON > CREDENTIALS_PATH/pub-credentials.json
+      - run: flutter pub login
       - run: flutter pub publish -n
       - run: ./test_ios.sh
