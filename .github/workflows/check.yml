@@ -7,7 +7,7 @@ on:
       - develop
 
 env:
-  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/.config/dart
+  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/flutter/.pub-cache
 
 jobs:
   check:
@@ -23,7 +23,7 @@ jobs:
           flutter-version: '3.0.3'
 
       - run: flutter pub get
-      - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/pub-credentials.json
+      - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/credentials.json
       
       - run: flutter pub publish -n
       - run: ./test_ios.sh

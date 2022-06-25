@@ -7,7 +7,7 @@ on:
 
 env:
   CREDENTIALS_JSON: ${{secrets.CREDENTIALS_JSON}}
-  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/.config/dart
+  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/flutter/.pub-cache
 
 jobs:
   release:
@@ -23,6 +23,12 @@ jobs:
           flutter-version: '3.0.3'
 
       - run: flutter pub get
-      - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/pub-credentials.json
+      - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/credentials.json
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        with:
+          limit-access-to-actor: true
+          limit-access-to-users: fylfot
 
       - run: flutter pub publish -f
