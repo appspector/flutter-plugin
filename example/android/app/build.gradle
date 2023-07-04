@@ -25,7 +25,8 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
+    namespace "com.appspector.flutter.example"
 
     lintOptions {
         disable 'InvalidPackage'
@@ -34,7 +35,8 @@ android {
     defaultConfig {
         applicationId "com.appspector.flutter.example"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
+
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -44,6 +46,15 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == "org.jetbrains.kotlin") {
+            details.useVersion "1.8.0"
+            details.because "Use the newest kotlin version"
         }
     }
 }

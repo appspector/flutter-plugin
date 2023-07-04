@@ -150,8 +150,8 @@ class HttpMonitorPageState extends State<HttpMonitorPage> {
     setState(() {
       _statusCode = null;
       _requestDuration = requestDuration;
-      _error = e is DioError
-          ? e.message + " (" + requestDuration.toString() + " ms)"
+      _error = e is DioException
+          ? "${e.message} (${requestDuration}ms)"
           : e.toString();
     });
   }
