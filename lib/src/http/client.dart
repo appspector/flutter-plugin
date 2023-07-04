@@ -136,8 +136,9 @@ class AppSpectorHttpClient implements HttpClient {
         HttpEventTracker.fromHost(method, _uidGenerator(), host, port, path);
     return _httpClient.open(method, host, port, path).then((request) {
       return HttpRequestWrapper(request, tracker);
-    }).catchError((e) {
-      tracker.onError(e);
+    }).onError((Exception error, stackTrace) {
+      tracker.onError(error);
+      return Future.error(error, stackTrace);
     });
   }
 
@@ -146,8 +147,9 @@ class AppSpectorHttpClient implements HttpClient {
     final tracker = HttpEventTracker.fromUri(method, _uidGenerator(), url);
     return _httpClient.openUrl(method, url).then((request) {
       return HttpRequestWrapper(request, tracker);
-    }).catchError((e) {
-      tracker.onError(e);
+    }).onError((Exception error, stackTrace) {
+      tracker.onError(error);
+      return Future.error(error, stackTrace);
     });
   }
 

@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -32,7 +31,7 @@ class RequestReceiver {
 Future<Uint8List?> _takeScreenshot(dynamic args) async {
   int maxWidth = args["max_width"];
   var renderViewElement =
-      WidgetsFlutterBinding.ensureInitialized().renderViewElement;
+      WidgetsFlutterBinding.ensureInitialized().rootElement;
   var renderObject = renderViewElement?.findRenderObject();
   if (renderObject == null) {
     return null;
