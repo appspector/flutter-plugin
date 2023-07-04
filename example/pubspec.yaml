@@ -10,11 +10,10 @@ dependencies:
     sdk: flutter
   appspector:
     path: ../
-  http: ^0.13.1
-  sqflite: ^2.0.0+3
-  logging: ^1.0.1
-  dio: ^4.0.0
-  fluttertoast: ^8.0.3
+  http: ^0.13.6
+  sqflite: ^2.2.8+4
+  logging: ^1.2.0
+  dio: ^5.2.1+1
 
 flutter:
   uses-material-design: true

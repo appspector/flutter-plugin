@@ -1,3 +1,7 @@
+## 0.10.0 6 Jul 2023
+* Update Android SDK to v1.5
+* Use CompileSdkVersion = 33
+
 ## 0.9.0 13 Jun 2022
 * Adds support for Flutter 3
 

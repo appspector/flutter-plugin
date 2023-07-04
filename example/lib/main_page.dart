@@ -1,6 +1,5 @@
 import 'package:appspector/appspector.dart' show Logger, AppSpectorPlugin;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logging/logging.dart' as logger;
 
 import 'app_drawer.dart';
@@ -92,8 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
       isSdkRunning = isStarted;
     });
 
-    Fluttertoast.showToast(
-        msg: isStarted ? "SDK is started" : "SDK is stopped");
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(isStarted ? "SDK is started" : "SDK is stopped"),
+    ));
   }
 
   @override

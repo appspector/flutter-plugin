@@ -20,15 +20,9 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.0.3'
+          flutter-version: '3.10.5'
 
       - run: flutter pub get
       - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/credentials.json
-
-      # - name: Setup upterm session
-      #   uses: lhotari/action-upterm@v1
-      #   with:
-      #     limit-access-to-actor: true
-      #     limit-access-to-users: fylfot
 
       - run: flutter pub publish -f

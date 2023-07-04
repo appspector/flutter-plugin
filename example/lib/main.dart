@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
           // counter didn't reset back to zero; the application is not restarted.
           primarySwatch: appSpectorPrimary,
-          accentColor: appSpectorAccent),
+          highlightColor: appSpectorAccent),
       home: MyHomePage(_sessionUrlObserver, title: 'Flutter Demo Home Page'),
       routes: {
         Routes.SQLiteMonitorPage: (BuildContext context) => SQLitePage(),
