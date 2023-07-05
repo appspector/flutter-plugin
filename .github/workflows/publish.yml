@@ -7,7 +7,7 @@ on:
 
 env:
   CREDENTIALS_JSON: ${{secrets.CREDENTIALS_JSON}}
-  CREDENTIALS_PATH: /Users/runner/hostedtoolcache/flutter/.pub-cache
+  CREDENTIALS_PATH: /Users/runner/Library/Application Support/dart/.pub-credentials.json
 
 jobs:
   release:
