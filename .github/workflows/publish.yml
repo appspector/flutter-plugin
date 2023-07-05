@@ -7,7 +7,7 @@ on:
 
 env:
   CREDENTIALS_JSON: ${{secrets.CREDENTIALS_JSON}}
-  CREDENTIALS_PATH: /Users/runner/Library/Application Support/dart/.pub-credentials.json
+  CREDENTIALS_PATH: /Users/runner/Library/Application Support/dart/
 
 jobs:
   release:
@@ -23,6 +23,6 @@ jobs:
           flutter-version: '3.10.5'
 
       - run: flutter pub get
-      - run: mkdir -p $CREDENTIALS_PATH && echo $CREDENTIALS_JSON > $CREDENTIALS_PATH/credentials.json
+      - run: echo $CREDENTIALS_JSON > $PUB_CACHE/credentials.json
 
       - run: flutter pub publish -f
